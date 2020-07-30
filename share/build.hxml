@@ -1,8 +1,11 @@
 --class-path src
 --define analyzer-optimize
+--library thenshim
 
 akismet.Author
 akismet.Blog
 akismet.CheckResult
+akismet.Client
+akismet.ClientException
 akismet.Comment
 akismet.CommentType
