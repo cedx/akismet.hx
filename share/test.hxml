@@ -1,0 +1,8 @@
+--class-path src
+--class-path test
+--define coverage-lcov-reporter=var/lcov.info
+--library instrument
+--library utest
+--macro instrument.Instrumentation.coverage(['akismet'], ['src'])
+--main TestAll
+--resource test/fixtures/akismet.info@report

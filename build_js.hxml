@@ -1,0 +1,3 @@
+--define js-es=6
+--js lib/js/akismet.js
+share/build.hxml
