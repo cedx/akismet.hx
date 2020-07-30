@@ -3,4 +3,6 @@
 
 akismet.Author
 akismet.Blog
+akismet.CheckResult
 akismet.Comment
+akismet.CommentType
