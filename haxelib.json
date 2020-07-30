@@ -1,0 +1,11 @@
+{
+	"classPath": "src/",
+	"contributors": ["cedx"],
+	"description": "Prevent comment spam using the Akismet service. Add Akismet to your applications so you don't have to worry about spam again.",
+	"license": "MIT",
+	"name": "akismet",
+	"releasenote": "Initial release.",
+	"tags": ["akismet", "api", "client", "comment", "cross", "spam", "validation"],
+	"url": "https://docs.belin.io/akismet.hx",
+	"version": "1.0.0"
+}
