@@ -1,7 +1,7 @@
 package akismet;
 
 /** Represents the front page or home URL transmitted when making requests. **/
-@:expose class Blog #if php implements JsonSerializable<DynamicAccess<Any>> #end {
+@:expose class Blog #if php implements JsonSerializable<DynamicAccess<String>> #end {
 
 	/** The character encoding for the values included in comments. **/
 	public var charset = "";
@@ -29,7 +29,7 @@ package akismet;
 
 	/** Converts this object to a map in JSON format. **/
 	public function toJson() {
-		final map: DynamicAccess<Any> = {blog: url};
+		final map: DynamicAccess<String> = {blog: url};
 		if (charset.length > 0) map["blog_charset"] = charset;
 		if (languages.length > 0) map["blog_lang"] = languages.join(",");
 		return map;

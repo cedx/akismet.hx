@@ -1,7 +1,7 @@
 package akismet;
 
 /** Represents the author of a comment. **/
-@:expose class Author #if php implements JsonSerializable<DynamicAccess<Any>> #end {
+@:expose class Author #if php implements JsonSerializable<DynamicAccess<String>> #end {
 
 	/** The author's mail address. If you set it to `"akismet-guaranteed-spam@example.com"`, Akismet will always return `true`. **/
 	public var email = "";
@@ -43,7 +43,7 @@ package akismet;
 
 	/** Converts this object to a map in JSON format. **/
 	public function toJson() {
-		final map: DynamicAccess<Any> = {user_agent: userAgent, user_ip: ipAddress};
+		final map: DynamicAccess<String> = {user_agent: userAgent, user_ip: ipAddress};
 		if (name.length > 0) map["comment_author"] = name;
 		if (email.length > 0) map["comment_author_email"] = email;
 		if (url.length > 0) map["comment_author_url"] = url;

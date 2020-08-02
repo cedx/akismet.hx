@@ -3,7 +3,7 @@ package akismet;
 using DateTools;
 
 /** Represents a comment submitted by an author. **/
-@:expose class Comment #if php implements JsonSerializable<DynamicAccess<Any>> #end {
+@:expose class Comment #if php implements JsonSerializable<DynamicAccess<String>> #end {
 
 	/** The comment's author. **/
 	public var author: Author;

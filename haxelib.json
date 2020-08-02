@@ -1,7 +1,7 @@
 {
 	"classPath": "src/",
 	"contributors": ["cedx"],
-	"dependencies": {"thenshim": "1.1.1"},
+	"dependencies": {"thenshim": "1.1.1", "tink_url": "0.4.2"},
 	"description": "Prevent comment spam using the Akismet service. Add Akismet to your applications so you don't have to worry about spam again.",
 	"license": "MIT",
 	"name": "akismet",

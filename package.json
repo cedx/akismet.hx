@@ -46,7 +46,7 @@
 		"url": "https://git.belin.io/cedx/akismet.hx.git"
 	},
 	"scripts": {
-		"coverage": "coveralls var/akismet.info",
+		"coverage": "coveralls var/lcov.info",
 		"prepack": "pwsh tool/dist.ps1"
 	}
 }
