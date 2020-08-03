@@ -6,7 +6,7 @@ import sys.io.File;
 class Version {
 
 	/** Gets the version of the Haxe compiler. **/
-	macro public static function getHaxeVersion(): ExprOf<String>
+	macro public static function getCompilerVersion(): ExprOf<String>
 		return macro $v{Context.definedValue("haxe")};
 
 	/** Gets the package version of this program. **/

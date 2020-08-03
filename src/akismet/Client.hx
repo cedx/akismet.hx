@@ -33,7 +33,7 @@ using StringTools;
 	public var isTest = false;
 
 	/** The user agent string to use when making requests. **/
-	public var userAgent = 'Haxe/${Version.getHaxeVersion()}-${Target.getName()} | Akismet/${Version.getPackageVersion()}';
+	public var userAgent = 'Haxe/${Version.getCompilerVersion()}-${Target.getName()} | Akismet/${Version.getPackageVersion()}';
 
 	/** Creates a new client. **/
 	public function new(apiKey: String, blog: Blog, ?options: #if php NativeStructArray<ClientOptions> #else ClientOptions #end) {
