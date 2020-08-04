@@ -85,9 +85,6 @@ using StringTools;
 		if (isTest) body["is_test"] = "1";
 
 		#if nodejs
-			function headersToMap(headers: Headers): Map<String, String>
-				return [for (entry in headers.entries()) entry[0] => entry[1]];
-
 			final params: RequestInit = {
 				body: new URLSearchParams(body),
 				headers: {"Content-Type": "application/x-www-form-urlencoded", "User-Agent": userAgent},
@@ -95,11 +92,9 @@ using StringTools;
 			};
 
 			return Fetch.fetch(endPoint, params).then(
-				response -> {
-					if (!response.ok) throw new Exception(response.statusText);
-					if (response.headers.has("X-akismet-debug-help")) throw new Exception(response.headers.get("X-akismet-debug-help"));
-					response.text().then(text -> {body: text, headers: headersToMap(response.headers)});
-				},
+				response -> if (!response.ok) throw new Exception(response.statusText) else response.headers.has("X-akismet-debug-help")
+					? throw new Exception(response.headers.get("X-akismet-debug-help"))
+					: response.text().then(text -> {body: text, headers: [for (entry in response.headers.entries()) entry[0] => entry[1]]}),
 				error -> throw new ClientException(error.toString(), endPoint)
 			);
 		#else
