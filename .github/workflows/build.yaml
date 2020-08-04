@@ -21,7 +21,10 @@ jobs:
       - name: Install dependencies
         run: haxelib install all --always
       - name: Run tests
+        env:
+          AKISMET_API_KEY: ${{secrets.AKISMET_API_KEY}}
         run: haxe test_eval.hxml
+
   js:
     runs-on: ubuntu-latest
     steps:
@@ -44,6 +47,8 @@ jobs:
           haxelib install all --always
           npm install
       - name: Run tests
+        env:
+          AKISMET_API_KEY: ${{secrets.AKISMET_API_KEY}}
         run: haxe test_js.hxml
       - name: Collect code coverage
         env:
@@ -64,6 +69,8 @@ jobs:
       - name: Install dependencies
         run: haxelib install all --always
       - name: Run tests
+        env:
+          AKISMET_API_KEY: ${{secrets.AKISMET_API_KEY}}
         run: haxe test_neko.hxml
   php:
     runs-on: ubuntu-latest
@@ -89,4 +96,6 @@ jobs:
           haxelib install all --always
           composer install --no-interaction
       - name: Run tests
+        env:
+          AKISMET_API_KEY: ${{secrets.AKISMET_API_KEY}}
         run: haxe test_php.hxml
