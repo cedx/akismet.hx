@@ -8,7 +8,6 @@ import tink.Url;
 import npm.Fetch;
 import haxe.Exception;
 import haxe.http.HttpMethod;
-import js.html.Headers;
 import js.html.RequestInit;
 import js.html.URLSearchParams;
 using js.lib.HaxeIterator;
@@ -127,12 +126,12 @@ typedef ClientOptions = {
 	var ?userAgent: String;
 }
 
-/** TODO **/
-typedef ClientResponse = {
+/** The response to a `Client` request. **/
+private typedef ClientResponse = {
 
-	/** TODO **/
+	/** The response body. **/
 	var body: String;
 
-	/** TODO **/
+	/** The response headers. **/
 	var headers: Map<String, String>;
 }
