@@ -1,4 +1,4 @@
 --define js-es=6
 --js lib/js/akismet.js
---library hxnodejs
+--library hxnodejs:12.1.0
 share/build.hxml

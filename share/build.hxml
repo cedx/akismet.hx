@@ -1,7 +1,7 @@
 --class-path src
 --define analyzer-optimize
---library thenshim
---library tink_url
+--library thenshim:1.1.1
+--library tink_url:0.4.2
 
 akismet.Author
 akismet.Blog

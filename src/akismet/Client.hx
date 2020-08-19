@@ -94,7 +94,7 @@ using StringTools;
 				response -> if (!response.ok) throw new Exception(response.statusText) else response.headers.has("X-akismet-debug-help")
 					? throw new Exception(response.headers.get("X-akismet-debug-help"))
 					: response.text().then(text -> {body: text, headers: [for (entry in response.headers.entries()) entry[0] => entry[1]]}),
-				error -> throw new ClientException(error.toString(), endPoint)
+				error -> throw new ClientException(Std.string(error), endPoint)
 			);
 		#else
 			final http = new Http(endPoint);
