@@ -80,7 +80,7 @@ class Author implements \JsonSerializable {
 	 * 
 	 * @return mixed
 	 */
-	public function jsonSerialize () {
+	final public function jsonSerialize () {
 		return $this->toJson();
 	}
 

@@ -69,10 +69,10 @@ using DateTools;
 
 	#if js
 		/** Converts this object to a map in JSON format. **/
-		public function toJSON() return toJson();
+		public final function toJSON() return toJson();
 	#elseif php
 		/** Converts this object to a map in JSON format. **/
-		public function jsonSerialize() return toJson();
+		public final function jsonSerialize() return toJson();
 	#end
 }
 
