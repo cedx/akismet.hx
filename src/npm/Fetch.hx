@@ -7,7 +7,7 @@ import js.html.RequestInit;
 import js.html.Response;
 import js.lib.Promise;
 
-/** Fetches resources from the network. **/
+/** Performs HTTP requests. **/
 @:jsRequire("node-fetch")
 extern class Fetch {
 

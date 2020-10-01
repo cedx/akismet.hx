@@ -14,13 +14,13 @@
 		"url": "https://belin.io"
 	},
 	"dependencies": {
-		"node-fetch": "^2.6.0"
+		"node-fetch": "^2.6.1"
 	},
 	"devDependencies": {
 		"@cedx/coveralls": "^10.1.0"
 	},
 	"engines": {
-		"node": ">=14.8.0"
+		"node": ">=14.12.0"
 	},
 	"exports": {
 		"import": "./lib/js/index.mjs",

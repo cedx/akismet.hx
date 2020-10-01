@@ -1,7 +1,7 @@
 site_name: Akismet.hx
 site_description: >
   Prevent comment spam using the Akismet service in Haxe, JavaScript and PHP.
-  Add Akismet to your Dart applications so you don't have to worry about spam again.
+  Add Akismet to your applications so you don't have to worry about spam again.
 site_author: Cédric Belin - cedric@belin.io
 site_url: https://docs.belin.io/akismet.hx
 
@@ -43,6 +43,12 @@ nav:
   - Overview: index.md
   - Installation: installation.md
   - Usage: usage.md
+  - Features:
+      - Key verification: features/key_verification.md
+      - Comment check: features/comment_check.md
+      - Submit spam: features/submit_spam.md
+      - Submit ham: features/submit_ham.md
+  - Testing: testing.md
   - About:
       - License: about/license.md
       - See also: about/see_also.md
