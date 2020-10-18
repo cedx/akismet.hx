@@ -5,7 +5,7 @@ import thenshim.Promise;
 import tink.Url;
 
 #if nodejs
-import npm.Fetch;
+import npm.NodeFetch;
 import haxe.Exception;
 import haxe.http.HttpMethod;
 import js.html.RequestInit;
@@ -32,7 +32,7 @@ using StringTools;
 	public var isTest = false;
 
 	/** The user agent string to use when making requests. **/
-	public var userAgent = 'Haxe/${Version.getCompilerVersion()}-${Target.getName()} | Akismet/${Version.getPackageVersion()}';
+	public var userAgent = 'Haxe/${Version.getHaxeVersion()}-${Target.getName()} | Akismet/${Version.getPackageVersion()}';
 
 	/** Creates a new client. **/
 	public function new(apiKey: String, blog: Blog, ?options: #if php NativeStructArray<ClientOptions> #else ClientOptions #end) {
@@ -90,7 +90,7 @@ using StringTools;
 				method: HttpMethod.Post
 			};
 
-			return Fetch.fetch(endPoint, params).then(
+			return NodeFetch.fetch(endPoint, params).then(
 				response -> if (!response.ok) throw new Exception(response.statusText) else response.headers.has("X-akismet-debug-help")
 					? throw new Exception(response.headers.get("X-akismet-debug-help"))
 					: response.text().then(text -> {body: text, headers: [for (entry in response.headers.entries()) entry[0] => entry[1]]}),

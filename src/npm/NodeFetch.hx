@@ -9,7 +9,7 @@ import js.lib.Promise;
 
 /** Performs HTTP requests. **/
 @:jsRequire("node-fetch")
-extern class Fetch {
+extern class NodeFetch {
 
 	/** Fetches the resource corresponding to the specified `request`. **/
 	@:selfCall
