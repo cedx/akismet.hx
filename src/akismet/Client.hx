@@ -5,11 +5,11 @@ import thenshim.Promise;
 import tink.Url;
 
 #if nodejs
-import npm.NodeFetch;
 import haxe.Exception;
 import haxe.http.HttpMethod;
 import js.html.RequestInit;
 import js.html.URLSearchParams;
+import js.npm.NodeFetch;
 using js.lib.HaxeIterator;
 #else
 import haxe.Http;

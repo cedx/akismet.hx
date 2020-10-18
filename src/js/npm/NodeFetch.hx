@@ -1,4 +1,4 @@
-package npm;
+package js.npm;
 
 #if nodejs
 import haxe.extern.EitherType;
