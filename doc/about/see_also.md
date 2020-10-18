@@ -3,6 +3,7 @@
 ## Development
 - [API reference](https://api.belin.io/akismet.hx)
 - [Submit an issue](https://git.belin.io/cedx/akismet.hx/issues)
+- [Akismet for developers](https://akismet.com/development)
 
 ## Packages
 - Haxe: `akismet` on [Haxelib](https://lib.haxe.org/p/akismet)
