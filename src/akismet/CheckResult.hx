@@ -1,7 +1,7 @@
 package akismet;
 
 /** Specifies the result of a comment check. **/
-enum abstract CheckResult(Int) from Int to Int {
+enum abstract CheckResult(Int) to Int {
 
 	/** The comment is not a spam (i.e. a ham). **/
 	var IsHam;

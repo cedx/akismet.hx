@@ -1,7 +1,7 @@
 package akismet;
 
 /** Specifies the type of a comment. **/
-enum abstract CommentType(String) from String to String {
+enum abstract CommentType(String) to String {
 
 	/** A blog post. **/
 	var BlogPost = "blog-post";
