@@ -2,8 +2,9 @@
 Set-StrictMode -Version Latest
 Set-Location (Split-Path $PSScriptRoot)
 
-composer update --no-interaction
 haxelib install all --always
 haxelib update --always
+
+composer update --no-interaction
 npm install --production=false
 npm update --dev
