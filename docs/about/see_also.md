@@ -1,8 +1,8 @@
 # See also
 
 ## Development
-- [API reference](https://api.belin.io/akismet.hx)
-- [Submit an issue](https://git.belin.io/cedx/akismet.hx/issues)
+- [API reference](https://cedx.github.io/akismet.hx/api)
+- [Submit an issue](https://github.com/cedx/akismet.hx/issues)
 - [Akismet for developers](https://akismet.com/development)
 
 ## Packages

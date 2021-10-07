@@ -2,11 +2,11 @@
 	"classPath": "src/",
 	"contributors": ["cedx"],
 	"dependencies": {"coconut.data": "", "tink_http": "", "tink_url": ""},
-	"description": "Prevent comment spam using the Akismet service. Add Akismet to your applications so you don't have to worry about spam again.",
+	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
 	"releasenote": "Initial release.",
 	"tags": ["akismet", "api", "client", "comment", "cross", "spam", "validation"],
-	"url": "https://docs.belin.io/akismet.hx",
+	"url": "https://cedx.github.io/akismet.hx",
 	"version": "1.0.0"
 }
