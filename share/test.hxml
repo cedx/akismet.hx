@@ -6,6 +6,8 @@
 --library coconut.data
 --library instrument
 --library tink_http
+--library tink_json
 --library tink_unittest
+--library tink_url
 --macro instrument.Instrumentation.coverage(['akismet'], ['src'])
 --main RunTests
