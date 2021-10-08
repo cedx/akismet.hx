@@ -1,51 +1,56 @@
 # Submit ham
 This call is intended for the submission of false positives - items that were incorrectly classified as spam by Akismet.
-It takes identical arguments as [comment check](comment_check.md) and [submit spam](submit_spam.md).
+It takes identical arguments as [comment check](features/comment_check.md) and [submit spam](features/submit_spam.md).
 
-```javascript
-Client.submitHam(comment: Comment): Promise<void>
+```haxe
+Client.submitHam(comment: Comment): Promise<Noise>
 ```
 
-Remember that, as explained in the [submit spam](submit_spam.md) documentation, you should ensure
-that any values you're passing here match up with the original and corresponding [comment check](comment_check.md) call.
+Remember that, as explained in the [submit spam](features/submit_spam.md) documentation, you should ensure
+that any values you're passing here match up with the original and corresponding [comment check](features/comment_check.md) call.
 
 See the [Akismet API documentation](https://akismet.com/development/api/#submit-ham) for more information.
 
 ## Parameters
 
 ### **comment**: Comment
-The user `Comment` to be submitted, incorrectly classified as spam.
+The user's `Comment` to be submitted, incorrectly classified as spam.
 
-?> Ideally, it should be the same object as the one passed to the original [comment check](comment_check.md) API call.
+?> Ideally, it should be the same object as the one passed to the original [comment check](features/comment_check.md) API call.
 
 ## Return value
 A `Promise` that resolves when the given `Comment` has been submitted.
 
-The promise rejects with a `ClientError` exception when an error occurs.
-The exception `message` usually includes some debug information, provided by the `X-akismet-debug-help` HTTP header, about what exactly was invalid about the call.
+The promise rejects with an `UnprocessableEntity` error when an issue occurs.
+The error `message` usually includes some debug information, provided by the `X-akismet-debug-help` HTTP header,
+about what exactly was invalid about the call.
 
 ## Example
 
-```javascript
-import {Author, Blog, Client, Comment} from "@cedx/akismet";
+```haxe
+import akismet.Author;
+import akismet.Blog;
+import akismet.Client;
+import akismet.Comment;
 
-async function main() {
-	try {
-		const author = new Author("127.0.0.1", "Mozilla/5.0");
-		const comment = new Comment(author, {content: "A valid user comment (ham)"});
+using tink.CoreApi;
 
-		const blog = new Blog(new URL("https://www.yourblog.com"));
-		const client = new Client("123YourAPIKey", blog);
+function main() {
+	final comment = new Comment({
+		author: new Author({ipAddress: "127.0.0.1", userAgent: "Mozilla/5.0"}),
+		content: "A valid user comment (i.e. ham)"
+	});
 
-		const result = await client.checkComment(comment);
-		// Got `CheckResult.isSpam`, but `CheckResult.isHam` expected.
-
-		console.log("The comment was incorrectly classified as spam.");
-		await client.submitHam(comment);
-	}
-		
-	catch (err) {
-		console.log(`An error occurred: ${err.message}`);
-	}
+	final blog = new Blog("https://www.yourblog.com");
+	new Client("123YourAPIKey", blog).checkComment(comment)
+		.next(result -> {
+			// Got `CheckResult.Spam`, but `CheckResult.Ham` expected.
+			trace("The comment was incorrectly classified as spam.");
+			client.submitHam(comment);
+		})
+		.handle(outcome -> switch outcome {
+			case Success(_): trace("The comment was successfully submitted as ham.");
+			case Failure(error): trace('An error occurred: ${error.message}');
+		});
 }
 ```

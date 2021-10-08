@@ -1,14 +1,14 @@
 # Submit spam
 This call is for submitting comments that weren't marked as spam but should have been.
 
-```javascript
-Client.submitSpam(comment: Comment): Promise<void>
+```haxe
+Client.submitSpam(comment: Comment): Promise<Noise>
 ```
 
-It is very important that the values you submit with this call match those of your [comment check](comment_check.md) calls as closely as possible.
+It is very important that the values you submit with this call match those of your [comment check](features/comment_check.md) calls as closely as possible.
 In order to learn from its mistakes, Akismet needs to match your missed spam and false positive reports
-to the original [comment check](comment_check.md) API calls made when the content was first posted. While it is normal for less information
-to be available for [submit spam](submit_spam.md) and [submit ham](submit_ham.md) calls (most comment systems and forums will not store all metadata),
+to the original [comment check](features/comment_check.md) API calls made when the content was first posted. While it is normal for less information
+to be available for [submit spam](features/submit_spam.md) and [submit ham](features/submit_ham.md) calls (most comment systems and forums will not store all metadata),
 you should ensure that the values that you do send match those of the original content.
 
 See the [Akismet API documentation](https://akismet.com/development/api/#submit-spam) for more information.
@@ -16,38 +16,43 @@ See the [Akismet API documentation](https://akismet.com/development/api/#submit-
 ## Parameters
 
 ### **comment**: Comment
-The user `Comment` to be submitted, incorrectly classified as ham.
+The user's `Comment` to be submitted, incorrectly classified as ham.
 
-?> Ideally, it should be the same object as the one passed to the original [comment check](comment_check.md) API call.
+?> Ideally, it should be the same object as the one passed to the original [comment check](features/comment_check.md) API call.
 
 ## Return value
 A `Promise` that resolves when the given `Comment` has been submitted.
 
-The promise rejects with a `ClientError` exception when an error occurs.
-The exception `message` usually includes some debug information, provided by the `X-akismet-debug-help` HTTP header, about what exactly was invalid about the call.
+The promise rejects with an `UnprocessableEntity` error when an issue occurs.
+The error `message` usually includes some debug information, provided by the `X-akismet-debug-help` HTTP header,
+about what exactly was invalid about the call.
 
 ## Example
 
-```javascript
-import {Author, Blog, Client, Comment} from "@cedx/akismet";
+```haxe
+import akismet.Author;
+import akismet.Blog;
+import akismet.Client;
+import akismet.Comment;
 
-async function main() {
-	try {
-		const author = new Author("127.0.0.1", "Mozilla/5.0");
-		const comment = new Comment(author, {content: "An invalid user comment (spam)"});
+using tink.CoreApi;
 
-		const blog = new Blog(new URL("https://www.yourblog.com"));
-		const client = new Client("123YourAPIKey", blog);
+function main() {
+	final comment = new Comment({
+		author: new Author({ipAddress: "127.0.0.1", userAgent: "Mozilla/5.0"}),
+		content: "An invalid user comment (i.e. spam)"
+	});
 
-		const result = await client.checkComment(comment);
-		// Got `CheckResult.isHam`, but `CheckResult.isSpam` expected.
-		
-		console.log("The comment was incorrectly classified as ham.");
-		await client.submitSpam(comment);
-	}
-		
-	catch (err) {
-		console.log(`An error occurred: ${err.message}`);
-	}
+	final blog = new Blog("https://www.yourblog.com");
+	new Client("123YourAPIKey", blog).checkComment(comment)
+		.next(result -> {
+			// Got `CheckResult.Ham`, but `CheckResult.Spam` expected.
+			trace("The comment was incorrectly classified as ham.");
+			client.submitSpam(comment);
+		})
+		.handle(outcome -> switch outcome {
+			case Success(_): trace("The comment was successfully submitted as spam.");
+			case Failure(error): trace('An error occurred: ${error.message}');
+		});
 }
 ```
