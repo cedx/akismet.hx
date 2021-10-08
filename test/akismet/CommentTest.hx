@@ -25,14 +25,14 @@ using Lambda;
 			content: "A user comment.",
 			date: Date.fromString("2000-01-01 00:00:00"),
 			referrer: "https://belin.io",
-			type: Pingback
+			type: BlogPost
 		}).toMap();
 
 		asserts.assert(map.count() == 7);
 		asserts.assert(map["comment_author"] == "Cédric Belin");
 		asserts.assert(map["comment_content"] == "A user comment.");
 		asserts.assert(map["comment_date_gmt"] == "2000-01-01T00:00:00Z");
-		asserts.assert(map["comment_type"] == "pingback");
+		asserts.assert(map["comment_type"] == "blog-post");
 		asserts.assert(map["referrer"] == "https://belin.io");
 		asserts.assert(map["user_agent"] == "Doom/6.6.6");
 		asserts.assert(map["user_ip"] == "127.0.0.1");

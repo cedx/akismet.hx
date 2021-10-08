@@ -1,4 +1,4 @@
-# Submit spam
+# Submit spam (missed spam)
 This call is for submitting comments that weren't marked as spam but should have been.
 
 ```haxe

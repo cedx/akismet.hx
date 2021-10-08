@@ -33,7 +33,7 @@ package akismet;
 			userAgent: "Spam Bot/6.6.6"
 		}),
 		content: "Spam!",
-		type: Trackback
+		type: BlogPost
 	});
 
 	/** Creates a new test. **/

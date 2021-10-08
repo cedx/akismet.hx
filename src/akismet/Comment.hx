@@ -61,7 +61,7 @@ class Comment implements Model {
 enum abstract CommentType(String) from String to String {
 
 	/** A blog post. **/
-	var BlogPost = "comment-post";
+	var BlogPost = "blog-post";
 
 	/** A blog comment. **/
 	var Comment = "comment";

@@ -1,4 +1,4 @@
-# Submit ham
+# Submit ham (false positives)
 This call is intended for the submission of false positives - items that were incorrectly classified as spam by Akismet.
 It takes identical arguments as [comment check](features/comment_check.md) and [submit spam](features/submit_spam.md).
 
