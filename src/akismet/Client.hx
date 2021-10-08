@@ -71,7 +71,7 @@ class Client {
 		final body = Query.build();
 		for (key => value in blog.toMap()) body.add(key, value);
 		for (key => value in fields) body.add(key, value);
-		if (isTest) body.add("is_test", "1");
+		if (isTest) body.add("is_test", "true");
 
 		final bytes = Bytes.ofString(body.toString());
 		final headers = [

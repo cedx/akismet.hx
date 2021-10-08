@@ -15,7 +15,7 @@ function main() {
 		"--define", "source-path", "https://github.com/cedx/akismet.hx/blob/main/src",
 		"--define", "themeColor", "0xffc105",
 		"--define", "version", Json.parse(getContent("haxelib.json")).version,
-		"--define", "website", "https://github.com/cedx/akismet.hx",
+		"--define", "website", "https://cedx.github.io/akismet.hx",
 		"--input-path", "var",
 		"--output-path", "docs/api",
 		"--title", "Akismet for Haxe",

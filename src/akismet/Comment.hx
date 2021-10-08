@@ -60,10 +60,10 @@ class Comment implements Model {
 /** Specifies the type of a comment. **/
 enum abstract CommentType(String) from String to String {
 
-	/** A comment post. **/
+	/** A blog post. **/
 	var BlogPost = "comment-post";
 
-	/** A comment comment. **/
+	/** A blog comment. **/
 	var Comment = "comment";
 
 	/** A contact form or feedback form submission. **/
@@ -72,12 +72,12 @@ enum abstract CommentType(String) from String to String {
 	/** A top-level forum post. **/
 	var ForumPost = "forum-post";
 
-	/** A [pingback](https://en.wikipedia.org/wiki/Pingback) post. **/
-	var Pingback = "pingback";
+	/** A message sent between just a few users. **/
+	var Message = "message";
 
-	/** A [trackback](https://en.wikipedia.org/wiki/Trackback) post. **/
-	var Trackback = "trackback";
+	/** A reply to a top-level forum post. **/
+	var Reply = "reply";
 
-	/** A [Twitter](https://twitter.com) message. **/
-	var Tweet = "tweet";
+	/** A new user account. **/
+	var Signup = "signup";
 }
