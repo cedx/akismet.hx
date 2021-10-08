@@ -4,5 +4,4 @@
 --js var/bundle.js
 --library coconut.data
 --library tink_http
---library tink_json
 --library tink_url
