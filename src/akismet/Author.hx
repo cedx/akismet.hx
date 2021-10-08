@@ -26,7 +26,7 @@ class Author implements Model {
 	@:editable var name: String = @byDefault "";
 
 	/** The role of the author. If you set it to `"administrator"`, Akismet will always return `false`. **/
-	@:editable var role: String = @byDefault "";
+	@:editable var role: AuthorRole = @byDefault "";
 
 	/** The URL of the author's website. **/
 	@:editable var url: Null<Url> = @byDefault null;
@@ -39,8 +39,15 @@ class Author implements Model {
 		final map: Map<String, String> = ["user_agent" => userAgent, "user_ip" => ipAddress];
 		if (email.length > 0) map["comment_author_email"] = email;
 		if (name.length > 0) map["comment_author"] = name;
-		if (role.length > 0) map["user_role"] = role;
+		if ((role: String).length > 0) map["user_role"] = role;
 		if (url != null) map["comment_author_url"] = url;
 		return map;
 	}
+}
+
+/** Specifies the role of an author. **/
+enum abstract AuthorRole(String) from String to String {
+
+	/** The author is an administrator. **/
+	var Administrator = "administrator";
 }
