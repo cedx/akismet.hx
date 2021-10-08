@@ -26,7 +26,7 @@ function main() {
 		})
 	});
 
-	final blog = new Blog("https://www.yourblog.com");
+	final blog = new Blog({url: "https://www.yourblog.com"});
 	new Client("123YourAPIKey", blog)
 		.checkComment(comment)
 		.next(result -> trace('It should be "CheckResult.Spam": $result'));
@@ -55,7 +55,7 @@ function main() {
 		})
 	});
 
-	final blog = new Blog("https://www.yourblog.com");
+	final blog = new Blog({url: "https://www.yourblog.com"});
 	new Client("123YourAPIKey", blog)
 		.checkComment(comment)
 		.next(result -> trace('It should be "CheckResult.Ham": $result'));
@@ -75,7 +75,7 @@ import akismet.Client;
 import akismet.Comment;
 
 function main() {
-	final blog = new Blog("https://www.yourblog.com");
+	final blog = new Blog({url: "https://www.yourblog.com"});
 	final client = new Client("123YourAPIKey", blog, {isTest: true});
 
 	final comment = new Comment({

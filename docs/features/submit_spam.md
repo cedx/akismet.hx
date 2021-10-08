@@ -43,7 +43,7 @@ function main() {
 		content: "An invalid user comment (i.e. spam)"
 	});
 
-	final blog = new Blog("https://www.yourblog.com");
+	final blog = new Blog({url: "https://www.yourblog.com"});
 	new Client("123YourAPIKey", blog).checkComment(comment)
 		.next(result -> {
 			// Got `CheckResult.Ham`, but `CheckResult.Spam` expected.
