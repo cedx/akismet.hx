@@ -1,5 +1,3 @@
-# --define servlet
-# --java-lib share/javax.servlet.jar
 --jvm var/tests.jar
 --library hxjava
 share/test.hxml
