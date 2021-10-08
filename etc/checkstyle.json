@@ -3,6 +3,7 @@
 	"exclude": {
 		"path": "RELATIVE_TO_PROJECT",
 		"MemberName": [
+			"src/akismet/Author",
 			"src/akismet/CheckResult",
 			"src/akismet/Comment"
 		]

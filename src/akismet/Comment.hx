@@ -47,7 +47,7 @@ class Comment implements Model {
 	public function toMap() {
 		final map = author.toMap();
 		if (content.length > 0) map["comment_content"] = content;
-		if (date != null) map["comment_date_gmt"] = date.format("%FT%TZ"); // TODO ??? UTC !!! Date.fromTime(comment.date.getTime()).format("%FT%TZ")
+		if (date != null) map["comment_date_gmt"] = date.format("%FT%TZ");
 		if (permalink != null) map["permalink"] = permalink;
 		if (postModified != null) map["comment_post_modified_gmt"] = postModified.format("%FT%TZ");
 		if (recheckReason.length > 0) map["recheck_reason"] = recheckReason;
