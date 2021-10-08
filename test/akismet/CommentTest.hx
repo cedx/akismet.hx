@@ -1,31 +1,42 @@
 package akismet;
 
-/** Tests the features of the `Comment` class. **/
-class CommentTest extends Test {
+using Lambda;
 
-	/** Tests the `toJson()` method. **/
-	function testToJson() {
+/** Tests the features of the `Comment` class. **/
+@:asserts class CommentTest {
+
+	/** Creates a new test. **/
+	public function new() {}
+
+	/** Tests the `toMap()` method. **/
+	public function testToMap() {
 		// It should return only the author info with a newly created instance.
-		var data = new Comment(new Author("127.0.0.1", "Doom/6.6.6")).toJson();
-		Assert.equals(2, data.keys().length);
-		Assert.equals("Doom/6.6.6", data["user_agent"]);
-		Assert.equals("127.0.0.1", data["user_ip"]);
+		var map = new Comment({
+			author: new Author({ipAddress: "127.0.0.1", userAgent: "Doom/6.6.6"})
+		}).toMap();
+
+		asserts.assert(map.count() == 2);
+		asserts.assert(map["user_agent"] == "Doom/6.6.6");
+		asserts.assert(map["user_ip"] == "127.0.0.1");
 
 		// It should return a non-empty map with an initialized instance.
-		data = new Comment(new Author("127.0.0.1", "Doom/6.6.6", {name: "Cédric Belin"}), {
+		map = new Comment({
+			author: new Author({ipAddress: "127.0.0.1", name: "Cédric Belin", userAgent: "Doom/6.6.6"}),
 			content: "A user comment.",
 			date: Date.fromString("2000-01-01 00:00:00"),
 			referrer: "https://belin.io",
-			type: CommentType.Pingback
-		}).toJson();
+			type: Pingback
+		}).toMap();
 
-		Assert.equals(7, data.keys().length);
-		Assert.equals("Cédric Belin", data["comment_author"]);
-		Assert.equals("A user comment.", data["comment_content"]);
-		Assert.equals("2000-01-01T00:00:00Z", data["comment_date_gmt"]);
-		Assert.equals("pingback", data["comment_type"]);
-		Assert.equals("https://belin.io", data["referrer"]);
-		Assert.equals("Doom/6.6.6", data["user_agent"]);
-		Assert.equals("127.0.0.1", data["user_ip"]);
+		asserts.assert(map.count() == 7);
+		asserts.assert(map["comment_author"] == "Cédric Belin");
+		asserts.assert(map["comment_content"] == "A user comment.");
+		asserts.assert(map["comment_date_gmt"] == "2000-01-01T00:00:00Z");
+		asserts.assert(map["comment_type"] == "pingback");
+		asserts.assert(map["referrer"] == "https://belin.io");
+		asserts.assert(map["user_agent"] == "Doom/6.6.6");
+		asserts.assert(map["user_ip"] == "127.0.0.1");
+
+		return asserts.done();
 	}
 }

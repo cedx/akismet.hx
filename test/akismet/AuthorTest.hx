@@ -1,28 +1,37 @@
 package akismet;
 
-/** Tests the features of the `Author` class. **/
-class AuthorTest extends Test {
+using Lambda;
 
-	/** Tests the `toJson()` method. **/
-	function testToJson() {
+/** Tests the features of the `Author` class. **/
+@:asserts class AuthorTest {
+
+	/** Creates a new test. **/
+	public function new() {}
+
+	/** Tests the `toMap()` method. **/
+	public function testToMap() {
 		// It should return only the IP address and user agent with a newly created instance.
-		var data = new Author("127.0.0.1", "Doom/6.6.6").toJson();
-		Assert.equals(2, data.keys().length);
-		Assert.equals("Doom/6.6.6", data["user_agent"]);
-		Assert.equals("127.0.0.1", data["user_ip"]);
+		var map = new Author({ipAddress: "127.0.0.1", userAgent: "Doom/6.6.6"}).toMap();
+		asserts.assert(map.count() == 2);
+		asserts.assert(map["user_agent"] == "Doom/6.6.6");
+		asserts.assert(map["user_ip"] == "127.0.0.1");
 
 		// It should return a non-empty map with an initialized instance.
-		data = new Author("192.168.0.1", "Mozilla/5.0", {
+		map = new Author({
 			email: "cedric@belin.io",
+			ipAddress: "192.168.0.1",
 			name: "Cédric Belin",
-			url: "https://belin.io"
-		}).toJson();
+			url: "https://belin.io",
+			userAgent: "Mozilla/5.0"
+		}).toMap();
 
-		Assert.equals(5, data.keys().length);
-		Assert.equals("Cédric Belin", data["comment_author"]);
-		Assert.equals("cedric@belin.io", data["comment_author_email"]);
-		Assert.equals("https://belin.io", data["comment_author_url"]);
-		Assert.equals("Mozilla/5.0", data["user_agent"]);
-		Assert.equals("192.168.0.1", data["user_ip"]);
+		asserts.assert(map.count() == 5);
+		asserts.assert(map["comment_author"] == "Cédric Belin");
+		asserts.assert(map["comment_author_email"] == "cedric@belin.io");
+		asserts.assert(map["comment_author_url"] == "https://belin.io");
+		asserts.assert(map["user_agent"] == "Mozilla/5.0");
+		asserts.assert(map["user_ip"] == "192.168.0.1");
+
+		return asserts.done();
 	}
 }
