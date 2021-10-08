@@ -2,8 +2,8 @@
 Key verification authenticates your key before calling the [comment check](comment_check.md),
 [submit spam](submit_spam.md) or [submit ham](submit_ham.md) methods.
 
-```javascript
-Client.verifyKey(): Promise<boolean>
+```haxe
+Client.verifyKey(): Promise<Bool>
 ```
 
 This is the first call that you should make to Akismet and is especially useful
@@ -15,29 +15,27 @@ See the [Akismet API documentation](https://akismet.com/development/api/#verify-
 None.
 
 ## Return value
-A `Promise` that resolves with a `boolean` value indicating whether the client's API key is valid.
+A `Promise` that resolves with a boolean value indicating whether the client's API key is valid.
 
-The promise rejects with a `ClientError` exception when an error occurs.
-The exception `message` usually includes some debug information, provided by the `X-akismet-debug-help` HTTP header, about what exactly was invalid about the call.
+The promise rejects with an `UnprocessableEntity` error when an issue occurs.
+The error `message` usually includes some debug information, provided by the `X-akismet-debug-help` HTTP header,
+about what exactly was invalid about the call.
 
 ## Example
 
-```javascript
-import {Blog, Client} from "@cedx/akismet";
+```haxe
+import akismet.Blog;
+import akismet.Client;
+using tink.CoreApi;
 
-async function main() {
-	try {
-		const blog = new Blog(new URL("https://www.yourblog.com"));
-		const client = new Client("123YourAPIKey", blog);
-
-		const isValid = await client.verifyKey();
-		console.log(isValid ? "The API key is valid." : "The API key is invalid.");
-	}
-		
-	catch (err) {
-		console.log(`An error occurred: ${err.message}`);
-	}
+function main() {
+	final blog = new Blog("https://www.yourblog.com");
+	new Client("123YourAPIKey", blog).verifyKey().handle(outcome -> switch outcome {
+		case Success(isValid): trace(isValid ? "The API key is valid." : "The API key is invalid.");
+		case Failure(error): trace('An error occurred: ${error.message}');
+	});
 }
 ```
 
-See the [API reference](https://cedx.github.io/akismet.js/api) for detailed information about the `Client` and `Blog` classes, and their properties and methods.
+See the [API reference](https://cedx.github.io/akismet.hx/api) for detailed information
+about the `Client` and `Blog` classes, and their properties and methods.
