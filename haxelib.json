@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"name": "akismet",
 	"releasenote": "Initial release.",
-	"tags": ["akismet", "api", "client", "comment", "cross", "spam", "validation"],
+	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://cedx.github.io/akismet.hx",
 	"version": "1.0.0"
 }
