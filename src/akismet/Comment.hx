@@ -1,102 +1,83 @@
 package akismet;
 
+import tink.Url;
 using DateTools;
 
 /** Represents a comment submitted by an author. **/
-@:expose class Comment #if php implements JsonSerializable<DynamicAccess<String>> #end {
+#if tink_json
+@:jsonParse(json -> new akismet.Comment(json))
+@:jsonStringify(comment -> {
+	author: comment.author,
+	content: comment.content,
+	date: comment.date,
+	permalink: comment.permalink,
+	postModified: comment.postModified,
+	recheckReason: comment.recheckReason,
+	referrer: comment.referrer,
+	type: comment.type
+})
+#end
+class Comment implements Model {
 
 	/** The comment's author. **/
-	public var author: Author;
+	@:editable var author: Author;
 
 	/** The comment's content. **/
-	public var content = "";
+	@:editable var content: String = @byDefault "";
 
 	/** The UTC timestamp of the creation of the comment. **/
-	public var date: Null<Date> = null;
+	@:editable var date: Null<Date> = @byDefault null;
 
 	/** The permanent location of the entry the comment is submitted to. **/
-	public var permalink = "";
+	@:editable var permalink: Null<Url> = @byDefault null;
 
 	/** The UTC timestamp of the publication time for the post, page or thread on which the comment was posted. **/
-	public var postModified: Null<Date> = null;
+	@:editable var postModified: Null<Date> = @byDefault null;
 
 	/** A string describing why the content is being rechecked. **/
-	public var recheckReason = "";
+	@:editable var recheckReason: String = @byDefault "";
 
 	/** The URL of the webpage that linked to the entry being requested. **/
-	public var referrer = "";
+	@:editable var referrer: Null<Url> = @byDefault null;
 
 	/** The comment's type. **/
-	public var type = "";
+	@:editable var type: CommentType = @byDefault "";
 
-	/** Creates a new comment. **/
-	public function new(author: Author, ?options: #if php NativeStructArray<CommentOptions> #else CommentOptions #end) {
-		this.author = author;
-
-		if (options != null) {
-			#if php
-				if (isset(options["content"])) content = options["content"];
-				if (isset(options["date"])) date = options["date"];
-				if (isset(options["permalink"])) permalink = options["permalink"];
-				if (isset(options["postModified"])) postModified = options["postModified"];
-				if (isset(options["recheckReason"])) recheckReason = options["recheckReason"];
-				if (isset(options["referrer"])) referrer = options["referrer"];
-				if (isset(options["type"])) type = options["type"];
-			#else
-				if (options.content != null) content = options.content;
-				if (options.date != null) date = options.date;
-				if (options.permalink != null) permalink = options.permalink;
-				if (options.postModified != null) postModified = options.postModified;
-				if (options.recheckReason != null) recheckReason = options.recheckReason;
-				if (options.referrer != null) referrer = options.referrer;
-				if (options.type != null) type = options.type;
-			#end
-		}
-	}
-
-	/** Converts this object to a map in JSON format. **/
-	public function toJson() {
-		final map = author.toJson();
+	/** Converts this object to a map. **/
+	public function toMap() {
+		final map = author.toMap();
 		if (content.length > 0) map["comment_content"] = content;
-		if (date != null) map["comment_date_gmt"] = date.format("%FT%TZ");
-		if (permalink.length > 0) map["permalink"] = permalink;
+		if (date != null) map["comment_date_gmt"] = date.format("%FT%TZ"); // TODO ??? UTC !!! Date.fromTime(comment.date.getTime()).format("%FT%TZ")
+		if (permalink != null) map["permalink"] = permalink;
 		if (postModified != null) map["comment_post_modified_gmt"] = postModified.format("%FT%TZ");
 		if (recheckReason.length > 0) map["recheck_reason"] = recheckReason;
-		if (referrer.length > 0) map["referrer"] = referrer;
-		if (type.length > 0) map["comment_type"] = type;
+		if (referrer != null) map["referrer"] = referrer;
+		if ((type: String).length > 0) map["comment_type"] = type;
 		return map;
 	}
-
-	#if js
-		/** Converts this object to a map in JSON format. **/
-		public final function toJSON() return toJson();
-	#elseif php
-		/** Converts this object to a map in JSON format. **/
-		public final function jsonSerialize() return toJson();
-	#end
 }
 
-/** Defines the options of a `Comment` instance. **/
-typedef CommentOptions = {
+/** Specifies the type of a comment. **/
+enum abstract CommentType(String) from String to String {
 
-	/** The comment's content. **/
-	var ?content: String;
+	/** A comment post. **/
+	var BlogPost = "comment-post";
 
-	/** The UTC timestamp of the creation of the comment. **/
-	var ?date: Date;
+	/** A comment comment. **/
+	var Comment = "comment";
 
-	/** The permanent location of the entry the comment is submitted to. **/
-	var ?permalink: String;
+	/** A contact form or feedback form submission. **/
+	var ContactForm = "contact-form";
 
-	/** The UTC timestamp of the publication time for the post, page or thread on which the comment was posted. **/
-	var ?postModified: Date;
+	/** A top-level forum post. **/
+	var ForumPost = "forum-post";
 
-	/** A string describing why the content is being rechecked. **/
-	var ?recheckReason: String;
+	/** A [pingback](https://en.wikipedia.org/wiki/Pingback) post. **/
+	var Pingback = "pingback";
 
-	/** The URL of the webpage that linked to the entry being requested. **/
-	var ?referrer: String;
+	/** A [trackback](https://en.wikipedia.org/wiki/Trackback) post. **/
+	var Trackback = "trackback";
 
-	/** The comment's type. **/
-	var ?type: String;
+	/** A [Twitter](https://twitter.com) message. **/
+	var Tweet = "tweet";
 }

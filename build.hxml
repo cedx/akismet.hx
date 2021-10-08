@@ -5,3 +5,9 @@
 --library coconut.data
 --library tink_http
 --library tink_url
+
+akismet.Author
+akismet.Blog
+akismet.CheckResult
+akismet.Client
+akismet.Comment

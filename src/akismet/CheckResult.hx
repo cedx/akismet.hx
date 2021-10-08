@@ -1,14 +1,14 @@
 package akismet;
 
 /** Specifies the result of a comment check. **/
-enum abstract CheckResult(Int) to Int {
+enum CheckResult {
 
 	/** The comment is not a spam (i.e. a ham). **/
-	var IsHam;
+	Ham;
 
 	/** The comment is a spam. **/
-	var IsSpam;
+	Spam;
 
 	/** The comment is a pervasive spam (i.e. it can be safely discarded). **/
-	var IsPervasiveSpam;
+	PervasiveSpam;
 }

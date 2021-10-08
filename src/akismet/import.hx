@@ -1,7 +1,4 @@
-import haxe.DynamicAccess;
+import coconut.data.List;
+import coconut.data.Model;
 
-#if php
-import php.Global.isset;
-import php.JsonSerializable;
-import php.NativeStructArray;
-#end
+using tink.CoreApi;

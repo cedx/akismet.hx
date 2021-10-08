@@ -1,77 +1,46 @@
 package akismet;
 
+import tink.Url;
+
 /** Represents the author of a comment. **/
-@:expose class Author #if php implements JsonSerializable<DynamicAccess<String>> #end {
+#if tink_json
+@:jsonParse(json -> new akismet.Author(json))
+@:jsonStringify(author -> {
+	email: author.email,
+	ipAddress: author.ipAddress,
+	name: author.name,
+	role: author.role,
+	url: author.url,
+	userAgent: author.userAgent
+})
+#end
+class Author implements Model {
 
 	/** The author's mail address. If you set it to `"akismet-guaranteed-spam@example.com"`, Akismet will always return `true`. **/
-	public var email = "";
+	@:editable var email: String = @byDefault "";
 
 	/** The author's IP address. **/
-	public var ipAddress: String;
+	@:editable var ipAddress: String;
 
 	/** The author's name. If you set it to `"viagra-test-123"`, Akismet will always return `true`. **/
-	public var name = "";
+	@:editable var name: String = @byDefault "";
 
 	/** The role of the author. If you set it to `"administrator"`, Akismet will always return `false`. **/
-	public var role = "";
+	@:editable var role: String = @byDefault "";
 
 	/** The URL of the author's website. **/
-	public var url = "";
+	@:editable var url: Null<Url> = @byDefault null;
 
 	/** The author's user agent, that is the string identifying the Web browser used to submit comments. **/
-	public var userAgent: String;
+	@:editable var userAgent: String;
 
-	/** Creates a new author. **/
-	public function new(ipAddress: String, userAgent: String, ?options: #if php NativeStructArray<AuthorOptions> #else AuthorOptions #end) {
-		this.ipAddress = ipAddress;
-		this.userAgent = userAgent;
-
-		if (options != null) {
-			#if php
-				if (isset(options["email"])) email = options["email"];
-				if (isset(options["name"])) name = options["name"];
-				if (isset(options["role"])) role = options["role"];
-				if (isset(options["url"])) url = options["url"];
-			#else
-				if (options.email != null) email = options.email;
-				if (options.name != null) name = options.name;
-				if (options.role != null) role = options.role;
-				if (options.url != null) url = options.url;
-			#end
-		}
-	}
-
-	/** Converts this object to a map in JSON format. **/
-	public function toJson() {
-		final map: DynamicAccess<String> = {user_agent: userAgent, user_ip: ipAddress};
-		if (name.length > 0) map["comment_author"] = name;
+	/** Converts this object to a map. **/
+	public function toMap() {
+		final map: Map<String, String> = ["user_agent" => userAgent, "user_ip" => ipAddress];
 		if (email.length > 0) map["comment_author_email"] = email;
-		if (url.length > 0) map["comment_author_url"] = url;
+		if (name.length > 0) map["comment_author"] = name;
 		if (role.length > 0) map["user_role"] = role;
+		if (url != null) map["comment_author_url"] = url;
 		return map;
 	}
-
-	#if js
-		/** Converts this object to a map in JSON format. **/
-		public final function toJSON() return toJson();
-	#elseif php
-		/** Converts this object to a map in JSON format. **/
-		public final function jsonSerialize() return toJson();
-	#end
-}
-
-/** Defines the options of an `Author` instance. **/
-typedef AuthorOptions = {
-
-	/** The author's mail address. **/
-	var ?email: String;
-
-	/** The author's name. **/
-	var ?name: String;
-
-	/** The role of the author. **/
-	var ?role: String;
-
-	/** The URL of the author's website. **/
-	var ?url: String;
 }

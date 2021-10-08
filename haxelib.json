@@ -1,7 +1,7 @@
 {
 	"classPath": "src/",
 	"contributors": ["cedx"],
-	"dependencies": {"coconut.data": "", "tink_http": "", "tink_json": "", "tink_url": ""},
+	"dependencies": {"coconut.data": "", "tink_http": "", "tink_url": ""},
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
