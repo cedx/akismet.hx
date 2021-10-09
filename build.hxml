@@ -2,7 +2,7 @@
 --define analyzer-optimize
 --define js-es=6
 --define no-deprecation-warnings
---js var/bundle.js
+--hl var/build.hl
 --library coconut.data
 --library tink_http
 --library tink_url
