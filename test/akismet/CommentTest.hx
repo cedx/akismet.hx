@@ -31,7 +31,7 @@ using Lambda;
 		asserts.assert(map.count() == 7);
 		asserts.assert(map["comment_author"] == "Cédric Belin");
 		asserts.assert(map["comment_content"] == "A user comment.");
-		asserts.assert(map["comment_date_gmt"] == "2000-01-01T00:00:00Z");
+		asserts.assert(~/^\d{4}(-\d{2}){2}T\d{2}(:\d{2}){2}Z$/.match(map["comment_date_gmt"]));
 		asserts.assert(map["comment_type"] == "blog-post");
 		asserts.assert(map["referrer"] == "https://belin.io");
 		asserts.assert(map["user_agent"] == "Doom/6.6.6");
