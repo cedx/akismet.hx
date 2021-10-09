@@ -56,9 +56,9 @@ class Comment implements Model {
 		return map;
 	}
 
-	/** Converts a `date` to a ISO 8601 string, using the UTC time zone. **/
-	static function toIsoString(date: Date)
-		return Date.fromTime(date.getTime() + date.getTimezoneOffset().minutes()).format("%FT%TZ");
+	/** Converts a date to an ISO 8601 string, using the UTC time zone. **/
+	static function toIsoString(dateTime: Date)
+		return Date.fromTime(dateTime.getTime() + dateTime.getTimezoneOffset().minutes()).format("%FT%TZ");
 }
 
 /** Specifies the type of a comment. **/
