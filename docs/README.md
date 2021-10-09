@@ -6,7 +6,7 @@ Prevent comment spam using [Akismet](https://akismet.com) service, in [Haxe](htt
 ## Quick start
 
 ### Get an API key
-Akismet service requires an API key. If you are not already registered, [sign up for an Akismet account](https://akismet.com/development).
+The Akismet service requires an API key. If you are not already registered, [sign up for an Akismet account](https://akismet.com/development).
 
 ### Get the library
 Install the latest version of **Akismet for Haxe** with [lix](https://github.com/lix-pm/lix.client) package manager:

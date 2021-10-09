@@ -1,5 +1,5 @@
 # Key verification
-Key verification authenticates your key before calling the [comment check](features/comment_check.md),
+Key verification authenticates your API key before calling the [comment check](features/comment_check.md),
 [submit spam](features/submit_spam.md) or [submit ham](features/submit_ham.md) methods.
 
 ```haxe
