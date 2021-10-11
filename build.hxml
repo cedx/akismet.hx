@@ -1,6 +1,5 @@
 --class-path src
 --define analyzer-optimize
---define js-es=6
 --define no-deprecation-warnings
 --hl var/build.hl
 --library coconut.data
