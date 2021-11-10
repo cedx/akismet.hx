@@ -6,7 +6,7 @@ package akismet;
 	/** The client used to query the service database. **/
 	final client = new Client(
 		Sys.getEnv("AKISMET_API_KEY"),
-		new Blog({url: "https://cedx.github.io/akismet.hx"}),
+		new Blog({url: "https://bitbucket.org/cedx/akismet.hx"}),
 		{isTest: true}
 	);
 
@@ -16,7 +16,7 @@ package akismet;
 			ipAddress: "192.168.0.1",
 			name: "Akismet",
 			role: Administrator,
-			url: "https://cedx.github.io/akismet.hx",
+			url: "https://bitbucket.org/cedx/akismet.hx",
 			userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 Edg/94.0.992.38"
 		}),
 		content: "I'm testing out the Service API.",

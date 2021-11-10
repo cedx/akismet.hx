@@ -19,7 +19,7 @@ function main() {
 		author: author,
 		date: Date.now(),
 		content: "A user comment",
-		referrer: "https://cedx.github.io/akismet.hx",
+		referrer: "https://bitbucket.org/cedx/akismet.hx",
 		type: ContactForm
 	});
 
