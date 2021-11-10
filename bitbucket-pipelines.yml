@@ -5,28 +5,28 @@ pipelines:
     - parallel:
         - step:
             name: HashLink
-            image: cedxbelin:haxe.hl
+            image: cedxbelin/haxe.hl
             script:
               - ls -la
               - lix download
               - haxe test_hl.hxml
         - step:
             name: Java
-            image: cedxbelin:haxe.java
+            image: cedxbelin/haxe.java
             script:
               - ls -la
               - lix download
               - haxe test_jvm.hxml
         - step:
             name: JavaScript
-            image: cedxbelin:haxe.node
+            image: cedxbelin/haxe.node
             script:
               - ls -la
               - lix download
               - haxe test_js.hxml
         - step:
             name: PHP
-            image: cedxbelin:haxe.php
+            image: cedxbelin/haxe.php
             script:
               - ls -la
               - lix download
