@@ -7,23 +7,27 @@ pipelines:
             name: HashLink
             image: cedxbelin:haxe.hl
             script:
+              - ls -la
               - lix download
               - haxe test_hl.hxml
         - step:
             name: Java
             image: cedxbelin:haxe.java
             script:
+              - ls -la
               - lix download
               - haxe test_jvm.hxml
         - step:
             name: JavaScript
             image: cedxbelin:haxe.node
             script:
+              - ls -la
               - lix download
               - haxe test_js.hxml
         - step:
             name: PHP
             image: cedxbelin:haxe.php
             script:
+              - ls -la
               - lix download
               - haxe test_php.hxml
