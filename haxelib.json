@@ -5,8 +5,8 @@
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
-	"releasenote": "Fixed the handling of UTC dates.",
+	"releasenote": "Updated the documentation, updated the project URL.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
-	"url": "https://cedx.github.io/akismet.hx",
-	"version": "1.0.1"
+	"url": "https://bitbucket.org/cedx/akismet.hx",
+	"version": "1.0.2"
 }
