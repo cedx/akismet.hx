@@ -1,0 +1,29 @@
+clone:
+  depth: 1
+pipelines:
+  default:
+    - parallel:
+        - step:
+            name: HashLink
+            image: cedxbelin:haxe.hl
+            script:
+              - lix download
+              - haxe test_hl.hxml
+        - step:
+            name: Java
+            image: cedxbelin:haxe.java
+            script:
+              - lix download
+              - haxe test_jvm.hxml
+        - step:
+            name: JavaScript
+            image: cedxbelin:haxe.node
+            script:
+              - lix download
+              - haxe test_js.hxml
+        - step:
+            name: PHP
+            image: cedxbelin:haxe.php
+            script:
+              - lix download
+              - haxe test_php.hxml
