@@ -4,43 +4,34 @@ definitions:
   caches:
     haxe: ~/haxe
 pipelines:
-  default:
-    - parallel:
-        - step:
-            name: HashLink
-            caches: [haxe]
-            image: cedxbelin/haxe.hl
-            script:
-              - lix download
-              - haxe test_hl.hxml
-              # - coveralls --flag-name=HashLink --parallel var/lcov.info
-        - step:
-            name: Java
-            caches: [haxe]
-            image: cedxbelin/haxe.java
-            script:
-              - lix download
-              - haxe test_jvm.hxml
-              # - coveralls --flag-name=Java --parallel var/lcov.info
-        - step:
-            name: JavaScript
-            caches: [haxe]
-            image: cedxbelin/haxe.node
-            script:
-              - lix download
-              - haxe test_js.hxml
-              # - coveralls --flag-name=JavaScript --parallel var/lcov.info
-        - step:
-            name: PHP
-            caches: [haxe]
-            image: cedxbelin/haxe.php
-            script:
-              - lix download
-              - haxe test_php.hxml
-              # - coveralls --flag-name=PHP --parallel var/lcov.info
-    # - step:
-    #     name: Code coverage
-    #     caches: [haxe]
-    #     image: cedxbelin/haxe.node
-    #     script:
-    #       - coveralls --parallel-finished
+  branches:
+    main:
+      - parallel:
+          - step:
+              name: HashLink
+              caches: [haxe]
+              image: cedxbelin/haxe.hl
+              script:
+                - lix download
+                - haxe test_hl.hxml
+          - step:
+              name: Java
+              caches: [haxe]
+              image: cedxbelin/haxe.java
+              script:
+                - lix download
+                - haxe test_jvm.hxml
+          - step:
+              name: JavaScript
+              caches: [haxe]
+              image: cedxbelin/haxe.node
+              script:
+                - lix download
+                - haxe test_js.hxml
+          - step:
+              name: PHP
+              caches: [haxe]
+              image: cedxbelin/haxe.php
+              script:
+                - lix download
+                - haxe test_php.hxml
