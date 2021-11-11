@@ -20,7 +20,7 @@ pipelines:
               image: cedxbelin/haxe.java
               script:
                 - lix download
-                - haxe test_jvm.hxml
+                - haxe test_java.hxml
           - step:
               name: JavaScript
               caches: [haxe]
