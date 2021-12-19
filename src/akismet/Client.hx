@@ -26,7 +26,7 @@ class Client {
 	public final isTest = false;
 
 	/** The user agent string to use when making requests. **/
-	public final userAgent = 'Haxe/${Version.getHaxeVersion()} | Akismet/${Version.getPackageVersion()}';
+	public final userAgent = 'Haxe/${Version.haxeVersion} | Akismet/${Version.packageVersion}';
 
 	/** The resolved API endpoint. **/
 	final endPoint: Url;
