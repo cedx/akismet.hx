@@ -9,6 +9,7 @@ import tink.url.Query;
 
 using StringTools;
 using haxe.io.Path;
+using tink.CoreApi;
 
 /** Submits comments to the [Akismet](https://akismet.com) service. **/
 class Client {

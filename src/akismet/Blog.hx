@@ -1,5 +1,7 @@
 package akismet;
 
+import coconut.data.List;
+import coconut.data.Model;
 import tink.Url;
 
 /** Represents the front page or home URL transmitted when making requests. **/

@@ -1,6 +1,8 @@
 package akismet;
 
+import coconut.data.Model;
 import tink.Url;
+
 using DateTools;
 
 /** Represents a comment submitted by an author. **/

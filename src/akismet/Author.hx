@@ -1,5 +1,6 @@
 package akismet;
 
+import coconut.data.Model;
 import tink.Url;
 
 /** Represents the author of a comment. **/
