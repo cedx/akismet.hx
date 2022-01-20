@@ -1,6 +1,6 @@
 //! --class-path src
 import Sys.*;
-import Tools.compress;
+import Tools;
 import akismet.Version.*;
 
 /** Runs the script. **/
