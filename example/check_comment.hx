@@ -2,7 +2,6 @@ import akismet.Author;
 import akismet.Blog;
 import akismet.Client;
 import akismet.Comment;
-
 using tink.CoreApi;
 
 /** Checks a comment against the Akismet service. **/

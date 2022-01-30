@@ -2,7 +2,6 @@ import akismet.Author;
 import akismet.Blog;
 import akismet.Client;
 import akismet.Comment;
-
 using tink.CoreApi;
 
 /** Submits ham to the Akismet service. **/

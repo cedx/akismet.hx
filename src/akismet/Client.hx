@@ -6,7 +6,6 @@ import tink.http.Client as HttpClient;
 import tink.http.Fetch.FetchOptions;
 import tink.http.Header.HeaderField;
 import tink.url.Query;
-
 using StringTools;
 using haxe.io.Path;
 using tink.CoreApi;

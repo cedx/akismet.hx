@@ -1,6 +1,5 @@
 import akismet.Blog;
 import akismet.Client;
-
 using tink.CoreApi;
 
 /** Verifies an Akismet API key. **/
