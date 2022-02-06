@@ -3,8 +3,7 @@
 --define no-deprecation-warnings
 --js var/build.js
 --library coconut.data
---library tink_http
---library tink_url
+--library tink_web
 
 akismet.Author
 akismet.Blog

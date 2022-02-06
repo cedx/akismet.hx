@@ -6,8 +6,7 @@
 --define no-deprecation-warnings
 --library coconut.data
 --library instrument
---library tink_http
 --library tink_unittest
---library tink_url
+--library tink_web
 --macro instrument.Instrumentation.coverage(['akismet'], ['src'])
 --main RunTests
