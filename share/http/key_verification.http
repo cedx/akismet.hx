@@ -1,0 +1,10 @@
+@apiKey = {{$processEnv AKISMET_API_KEY}}
+@baseUrl = https://rest.akismet.com/1.1
+
+###
+
+POST {{baseUrl}}/verify-key
+Content-Type: application/x-www-form-urlencoded
+
+blog=https://bitbucket.org/cedx/akismet.hx
+&key={{apiKey}}
