@@ -35,6 +35,16 @@ class Author implements Model {
 	/** The author's user agent, that is the string identifying the Web browser used to submit comments. **/
 	@:editable var userAgent: String;
 
+	/** Converts this object to form data. **/
+	public function toFormData() {
+		final data: AuthorFormData = {user_agent: userAgent, user_ip: ipAddress};
+		if (email.length > 0) data.comment_author_email = email;
+		if (name.length > 0) data.comment_author = name;
+		if ((role: String).length > 0) data.user_role = role;
+		if (url != null) data.comment_author_url = url;
+		return data;
+	}
+
 	/** Converts this object to a map. **/
 	public function toMap() {
 		final map: Map<String, String> = ["user_agent" => userAgent, "user_ip" => ipAddress];
@@ -44,6 +54,28 @@ class Author implements Model {
 		if (url != null) map["comment_author_url"] = url;
 		return map;
 	}
+}
+
+/** Defines the form data of an author. **/
+typedef AuthorFormData = {
+
+	/** The author's name. **/
+	var ?comment_author: String;
+
+	/** The author's mail address. **/
+	var ?comment_author_email: String;
+
+	/** The URL of the author's website. **/
+	var ?comment_author_url: String;
+
+	/** The author's user agent. **/
+	var user_agent: String;
+
+	/** The author's IP address. **/
+	var user_ip: String;
+
+	/** The author's role. **/
+	var ?user_role: String;
 }
 
 /** Specifies the role of an author. **/
