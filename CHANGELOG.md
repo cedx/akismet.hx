@@ -1,6 +1,8 @@
 # Changelog
 
-## Version [1.1.0](https://bitbucket.org/cedx/akismet.hx/branches/compare/v1.1.0..v1.0.2)
+## Version [2.0.0](https://bitbucket.org/cedx/akismet.hx/branches/compare/v2.0.0..v1.0.2)
+- Breaking change: removed the `toMap()` method from the model classes.
+- Added the `toFormData()` method to the model classes.
 - Replaced the HTTP client by [Tinkerbell Web](https://haxetink.github.io/tink_web) remoting.
 - Updated the package dependencies.
 
