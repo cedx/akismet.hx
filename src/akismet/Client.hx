@@ -3,6 +3,7 @@ package akismet;
 import akismet.RemoteApi.CommentCheckApi;
 import akismet.RemoteApi.KeyVerificationApi;
 import haxe.io.Bytes;
+import tink.Anon;
 import tink.Url;
 import tink.Web;
 import tink.http.Client as HttpClient;
@@ -18,6 +19,9 @@ using haxe.io.Path;
 
 /** Submits comments to the [Akismet](https://akismet.com) service. **/
 class Client {
+
+	/** The response returned by the `submit-ham` and `submit-spam` endpoints. **/
+	static inline final TODO = "Thanks for making the web a better place.";
 
 	/** The Akismet API key. **/
 	public final apiKey: String;
@@ -62,7 +66,8 @@ class Client {
 	}
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
-	public function checkComment(comment: Comment)
+	public function checkComment(comment: Comment) {
+		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
 		return fetch(endPoint.resolve("comment-check"), comment.toMap()).next(response ->
 			if (response.body.toString() == "false") CheckResult.Ham
 			else {
@@ -70,19 +75,27 @@ class Client {
 				akismetHeader.length > 0 && akismetHeader[0] == "discard" ? CheckResult.PervasiveSpam : CheckResult.Spam;
 			}
 		);
+	}
 
 	/** Submits the specified `comment` that was incorrectly marked as spam but should not have been. **/
-	public function submitHam(comment: Comment)
-		return fetch(endPoint.resolve("submit-ham"), comment.toMap()).noise();
+	public function submitHam(comment: Comment) {
+		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
+		// return remoteCommentCheck.submitHam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == TODO);
+		return fetch(endPoint.resolve("submit-ham"), comment.toMap()).next(response -> response.body.toString() == TODO);
+	}
 
 	/** Submits the specified `comment` that was not marked as spam but should have been. **/
-	public function submitSpam(comment: Comment)
-		return fetch(endPoint.resolve("submit-spam"), comment.toMap()).noise();
+	public function submitSpam(comment: Comment) {
+		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
+		// return remoteCommentCheck.submitSpam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == TODO);
+		return fetch(endPoint.resolve("submit-spam"), comment.toMap()).next(response -> response.body.toString() == TODO);
+	}
 
 	/** Checks the API key against the service database, and returns a value indicating whether it is valid. **/
-	public function verifyKey() return remoteKeyVerification.verifyKey({key: apiKey, blog: blog.url})
-		.next(IncomingResponse.readAll)
-		.next(chunk -> chunk.toString() == "valid");
+	public function verifyKey() {
+		final body = Anon.merge(blog.toFormData(), key = apiKey);
+		return remoteKeyVerification.verifyKey(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == "valid");
+	}
 
 	/** Queries the service by posting the specified fields and returns the response. **/
 	function fetch(url: Url, fields: Map<String, String>) {

@@ -1,6 +1,8 @@
 package akismet;
 
+import akismet.Author.AuthorFormData;
 import coconut.data.Model;
+import tink.Anon;
 import tink.Url;
 using DateTools;
 
@@ -46,7 +48,7 @@ class Comment implements Model {
 
 	/** Converts this object to form data. **/
 	public function toFormData() {
-		final data: CommentFormData = {};
+		final data: CommentFormData = Anon.merge(author.toFormData(), {});
 		if (content.length > 0) data.comment_content = content;
 		if (date != null) data.comment_date_gmt = toIsoString(date);
 		if (permalink != null) data.permalink = permalink;
@@ -76,7 +78,7 @@ class Comment implements Model {
 }
 
 /** Defines the form data of a comment. **/
-typedef CommentFormData = {
+typedef CommentFormData = AuthorFormData & {
 
 	/** The comment's content. **/
 	var ?comment_content: String;

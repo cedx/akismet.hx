@@ -1,6 +1,6 @@
 package akismet;
 
-using Lambda;
+import haxe.DynamicAccess;
 
 /** Tests the features of the `Author` class. **/
 @:asserts class AuthorTest {
@@ -8,29 +8,31 @@ using Lambda;
 	/** Creates a new test. **/
 	public function new() {}
 
-	/** Tests the `toMap()` method. **/
-	public function testToMap() {
+	/** Tests the `toFormData()` method. **/
+	public function testToFormData() {
+		var data: DynamicAccess<String>;
+
 		// It should return only the IP address and user agent with a newly created instance.
-		var map = new Author({ipAddress: "127.0.0.1", userAgent: "Doom/6.6.6"}).toMap();
-		asserts.assert(map.count() == 2);
-		asserts.assert(map["user_agent"] == "Doom/6.6.6");
-		asserts.assert(map["user_ip"] == "127.0.0.1");
+		data = new Author({ipAddress: "127.0.0.1", userAgent: "Doom/6.6.6"}).toFormData();
+		asserts.assert(data.keys().length == 2);
+		asserts.assert(data["user_agent"] == "Doom/6.6.6");
+		asserts.assert(data["user_ip"] == "127.0.0.1");
 
 		// It should return a non-empty map with an initialized instance.
-		map = new Author({
+		data = new Author({
 			email: "cedric@belin.io",
 			ipAddress: "192.168.0.1",
 			name: "Cédric Belin",
 			url: "https://belin.io",
 			userAgent: "Mozilla/5.0"
-		}).toMap();
+		}).toFormData();
 
-		asserts.assert(map.count() == 5);
-		asserts.assert(map["comment_author"] == "Cédric Belin");
-		asserts.assert(map["comment_author_email"] == "cedric@belin.io");
-		asserts.assert(map["comment_author_url"] == "https://belin.io");
-		asserts.assert(map["user_agent"] == "Mozilla/5.0");
-		asserts.assert(map["user_ip"] == "192.168.0.1");
+		asserts.assert(data.keys().length == 5);
+		asserts.assert(data["comment_author"] == "Cédric Belin");
+		asserts.assert(data["comment_author_email"] == "cedric@belin.io");
+		asserts.assert(data["comment_author_url"] == "https://belin.io");
+		asserts.assert(data["user_agent"] == "Mozilla/5.0");
+		asserts.assert(data["user_ip"] == "192.168.0.1");
 
 		return asserts.done();
 	}
