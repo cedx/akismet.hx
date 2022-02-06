@@ -59,19 +59,6 @@ class Comment implements Model {
 		return data;
 	}
 
-	/** Converts this object to a map. **/
-	public function toMap() {
-		final map = author.toMap();
-		if (content.length > 0) map["comment_content"] = content;
-		if (date != null) map["comment_date_gmt"] = toIsoString(date);
-		if (permalink != null) map["permalink"] = permalink;
-		if (postModified != null) map["comment_post_modified_gmt"] = toIsoString(postModified);
-		if (recheckReason.length > 0) map["recheck_reason"] = recheckReason;
-		if (referrer != null) map["referrer"] = referrer;
-		if ((type: String).length > 0) map["comment_type"] = type;
-		return map;
-	}
-
 	/** Converts a date to an ISO 8601 string, using the UTC time zone. **/
 	static function toIsoString(dateTime: Date)
 		return Date.fromTime(dateTime.getTime() + dateTime.getTimezoneOffset().minutes()).format("%FT%TZ");

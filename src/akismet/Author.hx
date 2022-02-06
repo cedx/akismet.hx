@@ -44,16 +44,6 @@ class Author implements Model {
 		if (url != null) data.comment_author_url = url;
 		return data;
 	}
-
-	/** Converts this object to a map. **/
-	public function toMap() {
-		final map: Map<String, String> = ["user_agent" => userAgent, "user_ip" => ipAddress];
-		if (email.length > 0) map["comment_author_email"] = email;
-		if (name.length > 0) map["comment_author"] = name;
-		if ((role: String).length > 0) map["user_role"] = role;
-		if (url != null) map["comment_author_url"] = url;
-		return map;
-	}
 }
 
 /** Defines the form data of an author. **/

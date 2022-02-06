@@ -2,17 +2,13 @@ package akismet;
 
 import akismet.RemoteApi.CommentCheckApi;
 import akismet.RemoteApi.KeyVerificationApi;
-import haxe.io.Bytes;
 import tink.Anon;
 import tink.Url;
 import tink.Web;
-import tink.http.Client as HttpClient;
-import tink.http.Fetch.FetchOptions;
+import tink.http.Fetch.FetchResponse;
 import tink.http.Header.HeaderField;
 import tink.http.Request.OutgoingRequest;
 import tink.http.Response.IncomingResponse;
-import tink.url.Query;
-import tink.web.proxy.ConnectOptions;
 import tink.web.proxy.Remote;
 using StringTools;
 using haxe.io.Path;
@@ -20,8 +16,8 @@ using haxe.io.Path;
 /** Submits comments to the [Akismet](https://akismet.com) service. **/
 class Client {
 
-	/** The response returned by the `submit-ham` and `submit-spam` endpoints. **/
-	static inline final TODO = "Thanks for making the web a better place.";
+	/** The response returned by the `submit-ham` and `submit-spam` endpoints when the outcome is a success. **/
+	static inline final successResponse = "Thanks for making the web a better place.";
 
 	/** The Akismet API key. **/
 	public final apiKey: String;
@@ -37,9 +33,6 @@ class Client {
 
 	/** The user agent string to use when making requests. **/
 	public final userAgent = 'Haxe/${Version.haxeVersion} | Akismet/${Version.packageVersion}';
-
-	/** The resolved API endpoint. **/
-	final endPoint: Url;
 
 	/** The remote API client for comment check. **/
 	final remoteCommentCheck: Remote<CommentCheckApi>;
@@ -58,21 +51,20 @@ class Client {
 			if (options.userAgent != null) userAgent = options.userAgent;
 		}
 
-		endPoint = '${baseUrl.scheme}://$apiKey.${baseUrl.host}${baseUrl.path}';
-
-		final handlers = {before: [onRequest], after: [onResponse]};
-		remoteCommentCheck = Web.connect(('${baseUrl.scheme}://$apiKey.${baseUrl.host}${baseUrl.path}': CommentCheckApi), {augment: handlers});
-		remoteKeyVerification = Web.connect((baseUrl: KeyVerificationApi), {augment: handlers});
+		final endPoint = Url.parse('${baseUrl.scheme}://$apiKey.${baseUrl.host}${baseUrl.path}');
+		final pipeline = {before: [onRequest], after: [onResponse]};
+		remoteCommentCheck = Web.connect((endPoint: CommentCheckApi), {augment: pipeline});
+		remoteKeyVerification = Web.connect((baseUrl: KeyVerificationApi), {augment: pipeline});
 	}
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
 	public function checkComment(comment: Comment) {
 		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
-		return fetch(endPoint.resolve("comment-check"), comment.toMap()).next(response ->
-			if (response.body.toString() == "false") CheckResult.Ham
+		return (remoteCommentCheck.checkComment(body): FetchResponse).all().next(message ->
+			if (message.body.toString() == "false") CheckResult.Ham
 			else {
-				final akismetHeader = response.header.get("x-akismet-pro-tip");
-				akismetHeader.length > 0 && akismetHeader[0] == "discard" ? CheckResult.PervasiveSpam : CheckResult.Spam;
+				final akismetHeaders = message.header.get("x-akismet-pro-tip");
+				akismetHeaders.length > 0 && akismetHeaders[0] == "discard" ? CheckResult.PervasiveSpam : CheckResult.Spam;
 			}
 		);
 	}
@@ -80,42 +72,19 @@ class Client {
 	/** Submits the specified `comment` that was incorrectly marked as spam but should not have been. **/
 	public function submitHam(comment: Comment) {
 		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
-		// return remoteCommentCheck.submitHam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == TODO);
-		return fetch(endPoint.resolve("submit-ham"), comment.toMap()).next(response -> response.body.toString() == TODO);
+		return remoteCommentCheck.submitHam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == successResponse);
 	}
 
 	/** Submits the specified `comment` that was not marked as spam but should have been. **/
 	public function submitSpam(comment: Comment) {
 		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
-		// return remoteCommentCheck.submitSpam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == TODO);
-		return fetch(endPoint.resolve("submit-spam"), comment.toMap()).next(response -> response.body.toString() == TODO);
+		return remoteCommentCheck.submitSpam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == successResponse);
 	}
 
 	/** Checks the API key against the service database, and returns a value indicating whether it is valid. **/
 	public function verifyKey() {
 		final body = Anon.merge(blog.toFormData(), key = apiKey);
 		return remoteKeyVerification.verifyKey(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == "valid");
-	}
-
-	/** Queries the service by posting the specified fields and returns the response. **/
-	function fetch(url: Url, fields: Map<String, String>) {
-		final body = Query.build();
-		for (key => value in blog.toMap()) body.add(key, value);
-		for (key => value in fields) body.add(key, value);
-		if (isTest) body.add("is_test", "true");
-
-		final bytes = Bytes.ofString(body.toString());
-		final headers = [
-			new HeaderField(CONTENT_LENGTH, bytes.length),
-			new HeaderField(CONTENT_TYPE, "application/x-www-form-urlencoded"),
-			new HeaderField(USER_AGENT, userAgent)
-		];
-
-		final options: FetchOptions = {method: POST, headers: headers, body: bytes};
-		return HttpClient.fetch(url, options).all().next(response -> {
-			final akismetHeader = response.header.get("x-akismet-debug-help");
-			akismetHeader.length > 0 ? new Error(UnprocessableEntity, akismetHeader[0]) : response;
-		});
 	}
 
 	/** Intercepts and modifies the outgoing requests. **/
@@ -125,7 +94,7 @@ class Client {
 	/** Intercepts and modifies the incoming responses. **/
 	function onResponse(request: OutgoingRequest) return function(response: IncomingResponse) {
 		final akismetHeaders = response.header.get("x-akismet-debug-help");
-		return akismetHeaders.length > 0 ? Promise.reject(new Error(UnprocessableEntity, akismetHeaders[0])) : Promise.resolve(response);
+		return akismetHeaders.length > 0 ? Promise.reject(new Error(BadRequest, akismetHeaders[0])) : Promise.resolve(response);
 	};
 }
 

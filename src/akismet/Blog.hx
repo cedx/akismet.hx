@@ -31,14 +31,6 @@ class Blog implements Model {
 		if (languages.length > 0) data.blog_lang = languages.toArray().join(",");
 		return data;
 	}
-
-	/** Converts this object to a map. **/
-	public function toMap() {
-		final map: Map<String, String> = ["blog" => url];
-		if (charset.length > 0) map["blog_charset"] = charset;
-		if (languages.length > 0) map["blog_lang"] = languages.toArray().join(",");
-		return map;
-	}
 }
 
 /** Defines the form data of a blog. **/
