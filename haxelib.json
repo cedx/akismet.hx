@@ -5,8 +5,8 @@
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
-	"releasenote": "Updated the documentation, updated the project URL.",
+	"releasenote": "Replaced the HTTP client by Tinkerbell Web remoting, updated the package dependencies.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://bitbucket.org/cedx/akismet.hx",
-	"version": "1.0.2"
+	"version": "1.1.0"
 }
