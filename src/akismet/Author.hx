@@ -26,7 +26,7 @@ class Author implements Model {
 	/** The author's name. If you set it to `"viagra-test-123"`, Akismet will always return `true`. **/
 	@:editable var name: String = @byDefault "";
 
-	/** The role of the author. If you set it to `"administrator"`, Akismet will always return `false`. **/
+	/** The author's role. If you set it to `"administrator"`, Akismet will always return `false`. **/
 	@:editable var role: AuthorRole = @byDefault "";
 
 	/** The URL of the author's website. **/

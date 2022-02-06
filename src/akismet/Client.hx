@@ -8,7 +8,6 @@ import tink.http.Header.HeaderField;
 import tink.url.Query;
 using StringTools;
 using haxe.io.Path;
-using tink.CoreApi;
 
 /** Submits comments to the [Akismet](https://akismet.com) service. **/
 class Client {
@@ -77,7 +76,7 @@ class Client {
 		final headers = [
 			new HeaderField(CONTENT_LENGTH, bytes.length),
 			new HeaderField(CONTENT_TYPE, "application/x-www-form-urlencoded"),
-			new HeaderField("user-agent", userAgent)
+			new HeaderField(USER_AGENT, userAgent)
 		];
 
 		final options: FetchOptions = {method: POST, headers: headers, body: bytes};
