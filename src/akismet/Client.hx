@@ -59,7 +59,7 @@ class Client {
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
 	public function checkComment(comment: Comment) {
-		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
+		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
 		return (remoteCommentCheck.checkComment(body): FetchResponse).all().next(message ->
 			if (message.body.toString() == "false") CheckResult.Ham
 			else {
@@ -71,13 +71,13 @@ class Client {
 
 	/** Submits the specified `comment` that was incorrectly marked as spam but should not have been. **/
 	public function submitHam(comment: Comment) {
-		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
+		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
 		return remoteCommentCheck.submitHam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == successResponse);
 	}
 
 	/** Submits the specified `comment` that was not marked as spam but should have been. **/
 	public function submitSpam(comment: Comment) {
-		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest);
+		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
 		return remoteCommentCheck.submitSpam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == successResponse);
 	}
 

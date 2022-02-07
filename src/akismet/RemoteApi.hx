@@ -30,7 +30,7 @@ interface CommentCheckApi {
 private typedef CommentCheckFormData = AuthorFormData & BlogFormData & CommentFormData & {
 
 	/** Value indicating whether the client operates in test mode. **/
-	var ?is_test: Bool;
+	var ?is_test: String;
 }
 
 /** Defines the interface of the key verification API. **/

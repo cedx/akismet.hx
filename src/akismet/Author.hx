@@ -33,15 +33,16 @@ class Author implements Model {
 	@:editable var url: Null<Url> = @byDefault null;
 
 	/** The author's user agent, that is the string identifying the Web browser used to submit comments. **/
-	@:editable var userAgent: String;
+	@:editable var userAgent: String = @byDefault "";
 
 	/** Converts this object to form data. **/
 	public function toFormData() {
-		final data: AuthorFormData = {user_agent: userAgent, user_ip: ipAddress};
+		final data: AuthorFormData = {user_ip: ipAddress};
 		if (email.length > 0) data.comment_author_email = email;
 		if (name.length > 0) data.comment_author = name;
 		if ((role: String).length > 0) data.user_role = role;
 		if (url != null) data.comment_author_url = url;
+		if (userAgent.length > 0) data.user_agent = userAgent;
 		return data;
 	}
 }
@@ -59,7 +60,7 @@ typedef AuthorFormData = {
 	var ?comment_author_url: String;
 
 	/** The author's user agent. **/
-	var user_agent: String;
+	var ?user_agent: String;
 
 	/** The author's IP address. **/
 	var user_ip: String;
