@@ -3,6 +3,7 @@
 ## Version [2.0.0](https://bitbucket.org/cedx/akismet.hx/branches/compare/v2.0.0..v1.0.2)
 - Breaking change: removed the `toMap()` method from the model classes.
 - Added the `toFormData()` method to the model classes.
+- Added support for the [Akismet response error codes](https://akismet.com/development/api/#error-codes).
 - Replaced the HTTP client by [Tinkerbell Web](https://haxetink.github.io/tink_web) remoting.
 - Updated the package dependencies.
 

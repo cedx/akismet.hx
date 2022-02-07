@@ -53,14 +53,14 @@ package akismet;
 	/** Tests the `submitHam()` method. **/
 	@:timeout(15000)
 	public function testSubmitHam() {
-		client.submitHam(ham).next(isSuccess -> asserts.assert(isSuccess)).handle(asserts.handle);
+		client.submitHam(ham).handle(asserts.handle);
 		return asserts;
 	}
 
 	/** Tests the `submitSpam()` method. **/
 	@:timeout(15000)
 	public function testSubmitSpam() {
-		client.submitSpam(spam).next(isSuccess -> asserts.assert(isSuccess)).handle(asserts.handle);
+		client.submitSpam(spam).handle(asserts.handle);
 		return asserts;
 	}
 

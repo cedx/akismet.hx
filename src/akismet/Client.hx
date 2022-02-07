@@ -17,7 +17,7 @@ using haxe.io.Path;
 class Client {
 
 	/** The response returned by the `submit-ham` and `submit-spam` endpoints when the outcome is a success. **/
-	static inline final successResponse = "Thanks for making the web a better place.";
+	static inline final successfulResponse = "Thanks for making the web a better place.";
 
 	/** The Akismet API key. **/
 	public final apiKey: String;
@@ -51,20 +51,19 @@ class Client {
 			if (options.userAgent != null) userAgent = options.userAgent;
 		}
 
-		final endPoint = Url.parse('${baseUrl.scheme}://$apiKey.${baseUrl.host}${baseUrl.path}');
+		final endpoint = '${baseUrl.scheme}://$apiKey.${baseUrl.host}${baseUrl.path}';
 		final pipeline = {before: [onRequest], after: [onResponse]};
-		remoteCommentCheck = Web.connect((endPoint: CommentCheckApi), {augment: pipeline});
+		remoteCommentCheck = Web.connect((endpoint: CommentCheckApi), {augment: pipeline});
 		remoteKeyVerification = Web.connect((baseUrl: KeyVerificationApi), {augment: pipeline});
 	}
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
 	public function checkComment(comment: Comment) {
 		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
-		return (remoteCommentCheck.checkComment(body): FetchResponse).all().next(message ->
-			if (message.body.toString() == "false") CheckResult.Ham
-			else {
-				final akismetHeaders = message.header.get("x-akismet-pro-tip");
-				akismetHeaders.length > 0 && akismetHeaders[0] == "discard" ? CheckResult.PervasiveSpam : CheckResult.Spam;
+		return (remoteCommentCheck.checkComment(body): FetchResponse).all().next(response ->
+			response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("x-akismet-pro-tip") {
+				case Success(proTip) if (proTip == "discard"): CheckResult.PervasiveSpam;
+				default: CheckResult.Spam;
 			}
 		);
 	}
@@ -72,30 +71,40 @@ class Client {
 	/** Submits the specified `comment` that was incorrectly marked as spam but should not have been. **/
 	public function submitHam(comment: Comment) {
 		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
-		return remoteCommentCheck.submitHam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == successResponse);
+		return remoteCommentCheck.submitHam(body)
+			.next(IncomingResponse.readAll)
+			.next(chunk -> chunk.toString() == successfulResponse ? Success(Noise) : Failure(new Error("Invalid server response.")));
 	}
 
 	/** Submits the specified `comment` that was not marked as spam but should have been. **/
 	public function submitSpam(comment: Comment) {
 		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
-		return remoteCommentCheck.submitSpam(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == successResponse);
+		return remoteCommentCheck.submitSpam(body)
+			.next(IncomingResponse.readAll)
+			.next(chunk -> chunk.toString() == successfulResponse ? Success(Noise) : Failure(new Error("Invalid server response.")));
 	}
 
 	/** Checks the API key against the service database, and returns a value indicating whether it is valid. **/
 	public function verifyKey() {
 		final body = Anon.merge(blog.toFormData(), key = apiKey);
-		return remoteKeyVerification.verifyKey(body).next(IncomingResponse.readAll).next(chunk -> chunk.toString() == "valid");
+		return remoteKeyVerification.verifyKey(body)
+			.next(IncomingResponse.readAll)
+			.next(chunk -> chunk.toString() == "valid");
 	}
 
 	/** Intercepts and modifies the outgoing requests. **/
-	function onRequest(request: OutgoingRequest)
-		return Promise.resolve(new OutgoingRequest(request.header.concat([new HeaderField(USER_AGENT, userAgent)]), request.body));
+	function onRequest(request: OutgoingRequest): Promise<OutgoingRequest>
+		return new OutgoingRequest(request.header.concat([new HeaderField(USER_AGENT, userAgent)]), request.body);
 
 	/** Intercepts and modifies the incoming responses. **/
-	function onResponse(request: OutgoingRequest) return function(response: IncomingResponse) {
-		final akismetHeaders = response.header.get("x-akismet-debug-help");
-		return akismetHeaders.length > 0 ? Promise.reject(new Error(BadRequest, akismetHeaders[0])) : Promise.resolve(response);
-	};
+	function onResponse(request: OutgoingRequest) return function(response: IncomingResponse): Promise<IncomingResponse>
+		return switch response.header.byName("x-akismet-alert-code") {
+			case Success(alertCode): Failure(new Error(Std.parseInt(alertCode), response.header.byName("x-akismet-alert-msg").sure()));
+			case Failure(_): switch response.header.byName("x-akismet-debug-help") {
+				case Success(debugHelp): Failure(new Error(BadRequest, debugHelp));
+				case Failure(_): Success(response);
+			}
+		}
 }
 
 /** Defines the options of a `Client` instance. **/
