@@ -31,6 +31,17 @@ class Comment implements Model {
 	/** The UTC timestamp of the creation of the comment. **/
 	@:editable var date: Null<Date> = @byDefault null;
 
+	/** The form data corresponding to this object. **/
+	@:computed var formData: CommentFormData = Anon.merge(author.formData, {
+		comment_content: content.length > 0 ? content : null,
+		comment_date_gmt: date != null ? toIsoString(date) : null,
+		comment_post_modified_gmt: postModified != null ? toIsoString(postModified) : null,
+		comment_type: (type: String).length > 0 ? type : null,
+		permalink: permalink != null ? permalink : null,
+		recheck_reason: recheckReason.length > 0 ? recheckReason : null,
+		referrer: referrer != null ? referrer : null
+	});
+
 	/** The permanent location of the entry the comment is submitted to. **/
 	@:editable var permalink: Null<Url> = @byDefault null;
 
@@ -46,19 +57,6 @@ class Comment implements Model {
 	/** The comment's type. **/
 	@:editable var type: CommentType = @byDefault "";
 
-	/** Converts this object to form data. **/
-	public function toFormData() {
-		final data: CommentFormData = Anon.merge(author.toFormData(), {});
-		if (content.length > 0) data.comment_content = content;
-		if (date != null) data.comment_date_gmt = toIsoString(date);
-		if (permalink != null) data.permalink = permalink;
-		if (postModified != null) data.comment_post_modified_gmt = toIsoString(postModified);
-		if (recheckReason.length > 0) data.recheck_reason = recheckReason;
-		if (referrer != null) data.referrer = referrer;
-		if ((type: String).length > 0) data.comment_type = type;
-		return data;
-	}
-
 	/** Converts a date to an ISO 8601 string, using the UTC time zone. **/
 	static function toIsoString(dateTime: Date)
 		return Date.fromTime(dateTime.getTime() + dateTime.getTimezoneOffset().minutes()).format("%FT%TZ");
@@ -68,25 +66,25 @@ class Comment implements Model {
 typedef CommentFormData = AuthorFormData & {
 
 	/** The comment's content. **/
-	var ?comment_content: String;
+	final ?comment_content: String;
 
 	/** The UTC timestamp of the creation of the comment. **/
-	var ?comment_date_gmt: String;
+	final ?comment_date_gmt: String;
 
 	/** The UTC timestamp of the publication time for the post, page or thread on which the comment was posted. **/
-	var ?comment_post_modified_gmt: String;
+	final ?comment_post_modified_gmt: String;
 
 	/** The comment's type. **/
-	var ?comment_type: String;
+	final ?comment_type: String;
 
 	/** The permanent location of the entry the comment is submitted to. **/
-	var ?permalink: String;
+	final ?permalink: String;
 
 	/** A string describing why the content is being rechecked. **/
-	var ?recheck_reason: String;
+	final ?recheck_reason: String;
 
 	/** The URL of the webpage that linked to the entry being requested. **/
-	var ?referrer: String;
+	final ?referrer: String;
 }
 
 /** Specifies the type of a comment. **/

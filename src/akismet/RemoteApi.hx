@@ -1,6 +1,5 @@
 package akismet;
 
-import akismet.Author.AuthorFormData;
 import akismet.Blog.BlogFormData;
 import akismet.Comment.CommentFormData;
 
@@ -27,10 +26,10 @@ interface CommentCheckApi {
 }
 
 /** Defines the form data of a comment check request. **/
-private typedef CommentCheckFormData = AuthorFormData & BlogFormData & CommentFormData & {
+private typedef CommentCheckFormData = BlogFormData & CommentFormData & {
 
 	/** Value indicating whether the client operates in test mode. **/
-	var ?is_test: String;
+	final ?is_test: String;
 }
 
 /** Defines the interface of the key verification API. **/
@@ -47,5 +46,5 @@ interface KeyVerificationApi {
 private typedef KeyVerificationFormData = BlogFormData & {
 
 	/** The API key to verify. **/
-	var key: String;
+	final key: String;
 }

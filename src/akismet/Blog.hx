@@ -18,30 +18,29 @@ class Blog implements Model {
 	/** The character encoding for the values included in comments. **/
 	@:editable var charset: String = @byDefault "";
 
+	/** The form data corresponding to this object. **/
+	@:computed var formData: BlogFormData = {
+		blog: url,
+		blog_charset: charset.length > 0 ? charset : null,
+		blog_lang: languages.length > 0 ? languages.toArray().join(",") : null
+	};
+
 	/** The languages in use on the blog or site, in ISO 639-1 format. **/
 	@:editable var languages: List<String> = @byDefault new List();
 
 	/** The blog or site URL. **/
 	@:editable var url: Url;
-
-	/** Converts this object to form data. **/
-	public function toFormData() {
-		final data: BlogFormData = {blog: url};
-		if (charset.length > 0) data.blog_charset = charset;
-		if (languages.length > 0) data.blog_lang = languages.toArray().join(",");
-		return data;
-	}
 }
 
 /** Defines the form data of a blog. **/
 typedef BlogFormData = {
 
 	/** The blog or site URL. **/
-	var blog: String;
+	final blog: String;
 
 	/** The character encoding for the values included in comments. **/
-	var ?blog_charset: String;
+	final ?blog_charset: String;
 
 	/** The languages in use on the blog or site. **/
-	var ?blog_lang: String;
+	final ?blog_lang: String;
 }

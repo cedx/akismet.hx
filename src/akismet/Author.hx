@@ -20,6 +20,16 @@ class Author implements Model {
 	/** The author's mail address. If you set it to `"akismet-guaranteed-spam@example.com"`, Akismet will always return `true`. **/
 	@:editable var email: String = @byDefault "";
 
+	/** The form data corresponding to this object. **/
+	@:computed var formData: AuthorFormData = {
+		comment_author: name.length > 0 ? name : null,
+		comment_author_email: email.length > 0 ? email : null,
+		comment_author_url: url != null ? url : null,
+		user_agent: userAgent.length > 0 ? userAgent : null,
+		user_ip: ipAddress,
+		user_role: (role: String).length > 0 ? role : null
+	};
+
 	/** The author's IP address. **/
 	@:editable var ipAddress: String;
 
@@ -34,39 +44,28 @@ class Author implements Model {
 
 	/** The author's user agent, that is the string identifying the Web browser used to submit comments. **/
 	@:editable var userAgent: String = @byDefault "";
-
-	/** Converts this object to form data. **/
-	public function toFormData() {
-		final data: AuthorFormData = {user_ip: ipAddress};
-		if (email.length > 0) data.comment_author_email = email;
-		if (name.length > 0) data.comment_author = name;
-		if ((role: String).length > 0) data.user_role = role;
-		if (url != null) data.comment_author_url = url;
-		if (userAgent.length > 0) data.user_agent = userAgent;
-		return data;
-	}
 }
 
 /** Defines the form data of an author. **/
 typedef AuthorFormData = {
 
 	/** The author's name. **/
-	var ?comment_author: String;
+	final ?comment_author: String;
 
 	/** The author's mail address. **/
-	var ?comment_author_email: String;
+	final ?comment_author_email: String;
 
 	/** The URL of the author's website. **/
-	var ?comment_author_url: String;
+	final ?comment_author_url: String;
 
 	/** The author's user agent. **/
-	var ?user_agent: String;
+	final ?user_agent: String;
 
 	/** The author's IP address. **/
-	var user_ip: String;
+	final user_ip: String;
 
 	/** The author's role. **/
-	var ?user_role: String;
+	final ?user_role: String;
 }
 
 /** Specifies the role of an author. **/
