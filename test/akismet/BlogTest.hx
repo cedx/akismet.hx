@@ -1,6 +1,8 @@
 package akismet;
 
-import haxe.DynamicAccess;
+import akismet.Blog.BlogFormData;
+import tink.QueryString;
+import tink.url.Query;
 
 /** Tests the features of the `Blog` class. **/
 @:asserts class BlogTest {
@@ -8,22 +10,24 @@ import haxe.DynamicAccess;
 	/** Creates a new test. **/
 	public function new() {}
 
-	/** Tests the `toFormData()` method. **/
-	public function testToFormData() {
-		var data: DynamicAccess<String>;
+	/** Tests the `formData` property. **/
+	public function testFormData() {
+		var formData: BlogFormData;
 
-		// It should return only the blog URL with a newly created instance.
-		data = new Blog({url: "https://bitbucket.org/cedx/akismet.hx"}).toFormData();
-		asserts.assert(data.keys().length == 1);
-		asserts.assert(data["blog"] == "https://bitbucket.org/cedx/akismet.hx");
+		formData = new Blog({url: "https://bitbucket.org/cedx/akismet.hx"}).formData;
+		asserts.assert(getFields(formData).length == 1);
+		asserts.assert(formData.blog == "https://bitbucket.org/cedx/akismet.hx");
 
-		// It should return a non-empty map with an initialized instance.
-		data = new Blog({charset: "UTF-8", languages: ["en", "fr"], url: "https://bitbucket.org/cedx/akismet.hx"}).toFormData();
-		asserts.assert(data.keys().length == 3);
-		asserts.assert(data["blog"] == "https://bitbucket.org/cedx/akismet.hx");
-		asserts.assert(data["blog_charset"] == "UTF-8");
-		asserts.assert(data["blog_lang"] == "en,fr");
+		formData = new Blog({charset: "UTF-8", languages: ["en", "fr"], url: "https://bitbucket.org/cedx/akismet.hx"}).formData;
+		asserts.assert(getFields(formData).length == 3);
+		asserts.assert(formData.blog == "https://bitbucket.org/cedx/akismet.hx");
+		asserts.assert(formData.blog_charset == "UTF-8");
+		asserts.assert(formData.blog_lang == "en,fr");
 
 		return asserts.done();
 	}
+
+	/** Gets the fields of the specified form data. **/
+	function getFields(formData: BlogFormData)
+		return [for (param in Query.parseString(QueryString.build(formData))) param.name];
 }
