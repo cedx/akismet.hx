@@ -8,5 +8,5 @@
 	"releasenote": "Added support for the Akismet response error codes, replaced the HTTP client by Tinkerbell Web remoting, updated the package dependencies.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://bitbucket.org/cedx/akismet.hx",
-	"version": "2.0.0"
+	"version": "2.1.0"
 }
