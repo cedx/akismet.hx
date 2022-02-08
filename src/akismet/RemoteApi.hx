@@ -26,7 +26,7 @@ interface CommentCheckApi {
 }
 
 /** Defines the form data of a comment check request. **/
-private typedef CommentCheckFormData = BlogFormData & CommentFormData & {
+typedef CommentCheckFormData = BlogFormData & CommentFormData & {
 
 	/** Value indicating whether the client operates in test mode. **/
 	?is_test: String
@@ -43,7 +43,7 @@ interface KeyVerificationApi {
 }
 
 /** Defines the form data of a key verification request. **/
-private typedef KeyVerificationFormData = BlogFormData & {
+typedef KeyVerificationFormData = BlogFormData & {
 
 	/** The API key to verify. **/
 	key: String
