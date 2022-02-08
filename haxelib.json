@@ -5,7 +5,7 @@
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
-	"releasenote": "Added support for the Akismet response error codes, replaced the HTTP client by Tinkerbell Web remoting, updated the package dependencies.",
+	"releasenote": "Replaced the `toFormData()` methods by computed properties.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://bitbucket.org/cedx/akismet.hx",
 	"version": "2.1.0"

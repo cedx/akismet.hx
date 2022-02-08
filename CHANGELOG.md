@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [2.1.0](https://bitbucket.org/cedx/akismet.hx/branches/compare/v2.1.0..v2.0.0)
+- Replaced the `toFormData()` methods by computed properties.
+
 ## Version [2.0.0](https://bitbucket.org/cedx/akismet.hx/branches/compare/v2.0.0..v1.0.2)
 - Breaking change: removed the `toMap()` method from the model classes.
 - Added the `toFormData()` method to the model classes.
