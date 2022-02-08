@@ -58,39 +58,30 @@ class Client {
 	}
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
-	public function checkComment(comment: Comment) {
-		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
-		return (remoteCommentCheck.checkComment(body): FetchResponse).all().next(response ->
-			response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("x-akismet-pro-tip") {
+	public function checkComment(comment: Comment)
+		return (remoteCommentCheck.checkComment(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null)): FetchResponse).all()
+			.next(response -> response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("x-akismet-pro-tip") {
 				case Success(proTip) if (proTip == "discard"): CheckResult.PervasiveSpam;
 				default: CheckResult.Spam;
-			}
-		);
-	}
+			});
 
 	/** Submits the specified `comment` that was incorrectly marked as spam but should not have been. **/
-	public function submitHam(comment: Comment) {
-		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
-		return remoteCommentCheck.submitHam(body)
+	public function submitHam(comment: Comment)
+		return remoteCommentCheck.submitHam(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == successfulResponse ? Success(Noise) : Failure(new Error("Invalid server response.")));
-	}
 
 	/** Submits the specified `comment` that was not marked as spam but should have been. **/
-	public function submitSpam(comment: Comment) {
-		final body = Anon.merge(blog.toFormData(), comment.toFormData(), is_test = isTest ? "1" : "0");
-		return remoteCommentCheck.submitSpam(body)
+	public function submitSpam(comment: Comment)
+		return remoteCommentCheck.submitSpam(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == successfulResponse ? Success(Noise) : Failure(new Error("Invalid server response.")));
-	}
 
 	/** Checks the API key against the service database, and returns a value indicating whether it is valid. **/
-	public function verifyKey() {
-		final body = Anon.merge(blog.toFormData(), key = apiKey);
-		return remoteKeyVerification.verifyKey(body)
+	public function verifyKey()
+		return remoteKeyVerification.verifyKey(Anon.merge(blog.formData, key = apiKey))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == "valid");
-	}
 
 	/** Intercepts and modifies the outgoing requests. **/
 	function onRequest(request: OutgoingRequest): Promise<OutgoingRequest>
@@ -111,11 +102,11 @@ class Client {
 typedef ClientOptions = {
 
 	/** The base URL of the remote API endpoint. **/
-	var ?baseUrl: Url;
+	?baseUrl: Url,
 
 	/** Value indicating whether the client operates in test mode. **/
-	var ?isTest: Bool;
+	?isTest: Bool,
 
 	/** The user agent string to use when making requests. **/
-	var ?userAgent: String;
+	?userAgent: String
 }
