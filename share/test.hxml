@@ -9,5 +9,4 @@
 --library tink_unittest
 --library tink_web
 --macro instrument.Instrumentation.coverage(['akismet'], ['src'])
---macro nullSafety('akismet')
 --main RunTests

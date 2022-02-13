@@ -4,7 +4,6 @@
 --js var/build.js
 --library coconut.data
 --library tink_web
---macro nullSafety('akismet')
 
 akismet.Author
 akismet.Blog
