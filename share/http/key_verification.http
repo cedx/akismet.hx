@@ -1,11 +1,6 @@
-@apiKey = {{$processEnv AKISMET_API_KEY}}
-@baseUrl = https://rest.akismet.com/1.1
-
-###
-
 // Checks the specified API key against the service database, and returns a value indicating whether it is valid.
 POST {{baseUrl}}/verify-key
 Content-Type: application/x-www-form-urlencoded
 
 blog=https://bitbucket.org/cedx/akismet.hx
-&key={{apiKey}}
+&key={{$processEnv %apiKey}}

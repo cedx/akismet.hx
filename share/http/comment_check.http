@@ -1,5 +1,4 @@
-@apiKey = {{$processEnv AKISMET_API_KEY}}
-@baseUrl = https://{{apiKey}}.rest.akismet.com/1.1
+@baseUrl = https://{{$processEnv %apiKey}}.rest.akismet.com/1.1
 
 ###
 
