@@ -4,7 +4,6 @@ import coconut.data.Model;
 import tink.Url;
 
 /** Represents the author of a comment. **/
-#if tink_json
 @:jsonParse(json -> new akismet.Author(json))
 @:jsonStringify(author -> {
 	email: author.email,
@@ -14,7 +13,6 @@ import tink.Url;
 	url: author.url,
 	userAgent: author.userAgent
 })
-#end
 class Author implements Model {
 
 	/** The author's mail address. If you set it to `"akismet-guaranteed-spam@example.com"`, Akismet will always return `true`. **/

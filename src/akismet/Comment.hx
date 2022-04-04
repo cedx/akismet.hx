@@ -7,7 +7,6 @@ import tink.Url;
 using DateTools;
 
 /** Represents a comment submitted by an author. **/
-#if tink_json
 @:jsonParse(json -> new akismet.Comment(json))
 @:jsonStringify(comment -> {
 	author: comment.author,
@@ -19,7 +18,6 @@ using DateTools;
 	referrer: comment.referrer,
 	type: comment.type
 })
-#end
 class Comment implements Model {
 
 	/** The comment's author. **/
