@@ -14,13 +14,13 @@ import tink.url.Query;
 	public function testFormData() {
 		var formData: BlogFormData;
 
-		formData = new Blog({url: "https://bitbucket.org/cedx/akismet.hx"}).formData;
+		formData = new Blog({url: "https://github.com/cedx/akismet.hx"}).formData;
 		asserts.assert(getFields(formData).length == 1);
-		asserts.assert(formData.blog == "https://bitbucket.org/cedx/akismet.hx");
+		asserts.assert(formData.blog == "https://github.com/cedx/akismet.hx");
 
-		formData = new Blog({charset: "UTF-8", languages: ["en", "fr"], url: "https://bitbucket.org/cedx/akismet.hx"}).formData;
+		formData = new Blog({charset: "UTF-8", languages: ["en", "fr"], url: "https://github.com/cedx/akismet.hx"}).formData;
 		asserts.assert(getFields(formData).length == 3);
-		asserts.assert(formData.blog == "https://bitbucket.org/cedx/akismet.hx");
+		asserts.assert(formData.blog == "https://github.com/cedx/akismet.hx");
 		asserts.assert(formData.blog_charset == "UTF-8");
 		asserts.assert(formData.blog_lang == "en,fr");
 

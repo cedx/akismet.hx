@@ -2,5 +2,5 @@
 POST {{baseUrl}}/verify-key
 Content-Type: application/x-www-form-urlencoded
 
-blog=https://bitbucket.org/cedx/akismet.hx
+blog=https://github.com/cedx/akismet.hx
 &key={{$processEnv %apiKey}}

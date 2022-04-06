@@ -6,7 +6,7 @@ package akismet;
 	/** The client used to query the service database. **/
 	final client = new Client(
 		Sys.getEnv("AKISMET_API_KEY"),
-		new Blog({url: "https://bitbucket.org/cedx/akismet.hx"}),
+		new Blog({url: "https://github.com/cedx/akismet.hx"}),
 		{isTest: true}
 	);
 

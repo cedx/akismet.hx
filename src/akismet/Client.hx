@@ -102,11 +102,11 @@ class Client {
 typedef ClientOptions = {
 
 	/** The base URL of the remote API endpoint. **/
-	?baseUrl: Url,
+	var ?baseUrl: Url;
 
 	/** Value indicating whether the client operates in test mode. **/
-	?isTest: Bool,
+	var ?isTest: Bool;
 
 	/** The user agent string to use when making requests. **/
-	?userAgent: String
+	var ?userAgent: String;
 }

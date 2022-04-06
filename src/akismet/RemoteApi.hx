@@ -29,7 +29,7 @@ interface CommentCheckApi {
 typedef CommentCheckFormData = BlogFormData & CommentFormData & {
 
 	/** Value indicating whether the client operates in test mode. **/
-	?is_test: String
+	var ?is_test: String;
 }
 
 /** Defines the interface of the key verification API. **/
@@ -46,5 +46,5 @@ interface KeyVerificationApi {
 typedef KeyVerificationFormData = BlogFormData & {
 
 	/** The API key to verify. **/
-	key: String
+	var key: String;
 }
