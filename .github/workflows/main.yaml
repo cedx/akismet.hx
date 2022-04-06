@@ -103,7 +103,7 @@ jobs:
           path-to-lcov: var/lcov.info
   coverage:
     runs-on: ubuntu-latest
-    needs: [hl, js, jvm, php]
+    needs: [hl, js, java, php]
     steps:
       - name: Upload code coverage
         uses: coverallsapp/github-action@master
