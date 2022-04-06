@@ -1,6 +1,11 @@
 # Changelog
 
-## Version [2.1.0](https://bitbucket.org/cedx/akismet.hx/branches/compare/v2.1.0..v2.0.0)
+## Version [2.2.0](https://github.com/cedx/akismet.hx/compare/v2.1.0...v2.2.0)
+- Made public the type definitions of the remote API.
+- Restored the [HashLink](https://hashlink.haxe.org) tests.
+- Updated the project URL.
+
+## Version [2.1.0](https://github.com/cedx/akismet.hx/compare/v2.0.0...v2.1.0)
 - Replaced the `toFormData()` methods by computed properties.
 
 ## Version [2.0.0](https://github.com/cedx/akismet.hx/compare/v1.0.2...v2.0.0)

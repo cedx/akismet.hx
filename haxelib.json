@@ -5,7 +5,7 @@
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
-	"releasenote": "Replaced the `toFormData()` methods by computed properties.",
+	"releasenote": "Made public the type definitions of the remote API, restored the HashLink tests, updated the project URL.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://github.com/cedx/akismet.hx",
 	"version": "2.2.0"
