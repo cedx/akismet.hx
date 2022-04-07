@@ -24,32 +24,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           parallel: true
           path-to-lcov: var/lcov.info
-  js:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fetch sources
-        uses: actions/checkout@v3
-      - name: Set up Lix
-        uses: lix-pm/setup-lix@master
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Install dependencies
-        run: lix download
-      - name: Run tests
-        env:
-          AKISMET_API_KEY: ${{secrets.AKISMET_API_KEY}}
-        run: haxe test_js.hxml
-      - name: Collect code coverage
-        if: success()
-        uses: coverallsapp/github-action@master
-        with:
-          flag-name: JavaScript
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          parallel: true
-          path-to-lcov: var/lcov.info
-  jvm:
+  java:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch sources
@@ -72,6 +47,31 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           flag-name: Java
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          parallel: true
+          path-to-lcov: var/lcov.info
+  js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch sources
+        uses: actions/checkout@v3
+      - name: Set up Lix
+        uses: lix-pm/setup-lix@master
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: lix download
+      - name: Run tests
+        env:
+          AKISMET_API_KEY: ${{secrets.AKISMET_API_KEY}}
+        run: haxe test_js.hxml
+      - name: Collect code coverage
+        if: success()
+        uses: coverallsapp/github-action@master
+        with:
+          flag-name: JavaScript
           github-token: ${{secrets.GITHUB_TOKEN}}
           parallel: true
           path-to-lcov: var/lcov.info
@@ -103,7 +103,7 @@ jobs:
           path-to-lcov: var/lcov.info
   coverage:
     runs-on: ubuntu-latest
-    needs: [hl, js, jvm, php]
+    needs: [hl, java, js, php]
     steps:
       - name: Upload code coverage
         uses: coverallsapp/github-action@master
