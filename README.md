@@ -1,5 +1,5 @@
 # Akismet for Haxe
-![Haxe](https://badgen.net/badge/haxe/%3E%3D4.2.0/green) ![Haxelib](https://badgen.net/haxelib/v/akismet) ![License](https://badgen.net/haxelib/license/akismet) ![Downloads](https://badgen.net/haxelib/d/akismet) ![Coverage](https://badgen.net/coveralls/c/github/cedx/akismet.hx)
+![Haxe](https://badgen.net/badge/haxe/%3E%3D4.2.0/green) ![Haxelib](https://badgen.net/haxelib/v/akismet) ![License](https://badgen.net/haxelib/license/akismet) ![Downloads](https://badgen.net/haxelib/d/akismet) ![Coverage](https://badgen.net/codecov/c/github/cedx/akismet.hx)
 
 Prevent comment spam using [Akismet](https://akismet.com) service, in [Haxe](https://haxe.org).
 

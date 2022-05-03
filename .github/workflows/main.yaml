@@ -27,7 +27,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           files: var/lcov.info
-          flags: HashLink
+          name: HashLink
   java:
     runs-on: ubuntu-latest
     steps:
@@ -58,7 +58,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           files: var/lcov.info
-          flags: Java
+          name: Java
   js:
     runs-on: ubuntu-latest
     steps:
@@ -87,7 +87,7 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           files: var/lcov.info
-          flags: JavaScript
+          name: JavaScript
   php:
     runs-on: ubuntu-latest
     steps:
@@ -117,4 +117,4 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           files: var/lcov.info
-          flags: PHP
+          name: PHP
