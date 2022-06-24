@@ -6,9 +6,11 @@ using tink.CoreApi;
 
 /** Submits ham to the Akismet service. **/
 function main() {
-	final client = new Client("123YourAPIKey", new Blog({url: "https://www.yourblog.com"}));
+	final blog = new Blog({url: "https://www.yourblog.com"});
+	final client = new Client("123YourAPIKey", blog);
+
 	final comment = new Comment({
-		content: "A user comment",
+		content: "I'm testing out the Service API.",
 		author: new Author({
 			ipAddress: "192.168.123.456",
 			userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"

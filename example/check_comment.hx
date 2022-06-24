@@ -22,7 +22,12 @@ function main() {
 		type: ContactForm
 	});
 
-	final blog = new Blog({charset: "UTF-8", languages: ["fr"], url: "https://www.yourblog.com"});
+	final blog = new Blog({
+		charset: "UTF-8",
+		languages: ["fr"],
+		url: "https://www.yourblog.com"
+	});
+
 	new Client("123YourAPIKey", blog).checkComment(comment).handle(outcome -> switch outcome {
 		case Success(result): trace(result == Ham ? "The comment is ham." : "The comment is spam.");
 		case Failure(error): trace('An error occurred: ${error.message}');
