@@ -60,7 +60,7 @@ class Client {
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
 	public function checkComment(comment: Comment)
 		return (remoteCommentCheck.checkComment(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null)): FetchResponse).all()
-			.next(response -> response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("x-akismet-pro-tip") {
+			.next(response -> response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("X-akismet-pro-tip") {
 				case Success(proTip) if (proTip == "discard"): CheckResult.PervasiveSpam;
 				default: CheckResult.Spam;
 			});
@@ -89,9 +89,9 @@ class Client {
 
 	/** Intercepts and modifies the incoming responses. **/
 	function onResponse(request: OutgoingRequest) return function(response: IncomingResponse): Promise<IncomingResponse>
-		return switch response.header.byName("x-akismet-alert-code") {
-			case Success(alertCode): Failure(new Error(Std.parseInt(alertCode), response.header.byName("x-akismet-alert-msg").sure()));
-			case Failure(_): switch response.header.byName("x-akismet-debug-help") {
+		return switch response.header.byName("X-akismet-alert-code") {
+			case Success(alertCode): Failure(new Error(Std.parseInt(alertCode), response.header.byName("X-akismet-alert-msg").sure()));
+			case Failure(_): switch response.header.byName("X-akismet-debug-help") {
 				case Success(debugHelp): Failure(new Error(BadRequest, debugHelp));
 				case Failure(_): Success(response);
 			}
