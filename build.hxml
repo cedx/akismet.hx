@@ -1,7 +1,7 @@
 --class-path src
 --define analyzer-optimize
 --define no-deprecation-warnings
---js var/build.cjs
+--js var/build.js
 --library coconut.data
 --library tink_web
 
