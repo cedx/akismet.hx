@@ -14,7 +14,7 @@ using StringTools;
 using haxe.io.Path;
 
 /** Submits comments to the [Akismet](https://akismet.com) service. **/
-class Client {
+final class Client {
 
 	/** The response returned by the `submit-ham` and `submit-spam` endpoints when the outcome is a success. **/
 	static inline final successfulResponse = "Thanks for making the web a better place.";

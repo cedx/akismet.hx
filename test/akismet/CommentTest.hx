@@ -5,7 +5,7 @@ import tink.QueryString;
 import tink.url.Query;
 
 /** Tests the features of the `Comment` class. **/
-@:asserts class CommentTest {
+@:asserts final class CommentTest {
 
 	/** Creates a new test. **/
 	public function new() {}

@@ -1,7 +1,7 @@
 package akismet;
 
 /** Tests the features of the `Client` class. **/
-@:asserts class ClientTest {
+@:asserts final class ClientTest {
 
 	/** The client used to query the service database. **/
 	final client = new Client(

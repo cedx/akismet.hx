@@ -5,7 +5,7 @@ import tink.QueryString;
 import tink.url.Query;
 
 /** Tests the features of the `Author` class. **/
-@:asserts class AuthorTest {
+@:asserts final class AuthorTest {
 
 	/** Creates a new test. **/
 	public function new() {}
