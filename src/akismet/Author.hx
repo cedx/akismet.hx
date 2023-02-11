@@ -5,14 +5,7 @@ import tink.Url;
 
 /** Represents the author of a comment. **/
 @:jsonParse(json -> new akismet.Author(json))
-@:jsonStringify(author -> {
-	email: author.email,
-	ipAddress: author.ipAddress,
-	name: author.name,
-	role: author.role,
-	url: author.url,
-	userAgent: author.userAgent
-})
+@:jsonStringify(author -> author.formData)
 class Author implements Model {
 
 	/** The author's mail address. If you set it to `"akismet-guaranteed-spam@example.com"`, Akismet will always return `true`. **/

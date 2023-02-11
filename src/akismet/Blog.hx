@@ -6,11 +6,7 @@ import tink.Url;
 
 /** Represents the front page or home URL transmitted when making requests. **/
 @:jsonParse(json -> new akismet.Blog(json))
-@:jsonStringify(blog -> {
-	charset: blog.charset,
-	languages: blog.languages,
-	url: blog.url
-})
+@:jsonStringify(blog -> blog.formData)
 class Blog implements Model {
 
 	/** The character encoding for the values included in comments. **/

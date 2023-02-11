@@ -8,16 +8,7 @@ using DateTools;
 
 /** Represents a comment submitted by an author. **/
 @:jsonParse(json -> new akismet.Comment(json))
-@:jsonStringify(comment -> {
-	author: comment.author,
-	content: comment.content,
-	date: comment.date,
-	permalink: comment.permalink,
-	postModified: comment.postModified,
-	recheckReason: comment.recheckReason,
-	referrer: comment.referrer,
-	type: comment.type
-})
+@:jsonStringify(comment -> comment.formData)
 class Comment implements Model {
 
 	/** The comment's author. **/
