@@ -46,7 +46,7 @@ class Comment implements Model {
 	/** The comment's type. **/
 	@:editable var type: CommentType = @byDefault "";
 
-	/** Converts a date to an ISO 8601 string, using the UTC time zone. **/
+	/** Converts the specified date to an ISO 8601 string, using the UTC time zone. **/
 	static function toIsoString(dateTime: Date)
 		return Date.fromTime(dateTime.getTime() + dateTime.getTimezoneOffset().minutes()).format("%FT%TZ");
 }
