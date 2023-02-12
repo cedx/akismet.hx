@@ -17,7 +17,7 @@ using haxe.io.Path;
 final class Client {
 
 	/** The response returned by the `submit-ham` and `submit-spam` endpoints when the outcome is a success. **/
-	static inline final successfulResponse = "Thanks for making the web a better place.";
+	static final success = "Thanks for making the web a better place.";
 
 	/** The Akismet API key. **/
 	public final apiKey: String;
@@ -69,13 +69,13 @@ final class Client {
 	public function submitHam(comment: Comment)
 		return remoteCommentCheck.submitHam(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null))
 			.next(IncomingResponse.readAll)
-			.next(chunk -> chunk.toString() == successfulResponse ? Success(Noise) : Failure(new Error("Invalid server response.")));
+			.next(chunk -> chunk.toString() == success ? Success(Noise) : Failure(new Error("Invalid server response.")));
 
 	/** Submits the specified `comment` that was not marked as spam but should have been. **/
 	public function submitSpam(comment: Comment)
 		return remoteCommentCheck.submitSpam(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null))
 			.next(IncomingResponse.readAll)
-			.next(chunk -> chunk.toString() == successfulResponse ? Success(Noise) : Failure(new Error("Invalid server response.")));
+			.next(chunk -> chunk.toString() == success ? Success(Noise) : Failure(new Error("Invalid server response.")));
 
 	/** Checks the API key against the service database, and returns a value indicating whether it is valid. **/
 	public function verifyKey()
