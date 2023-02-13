@@ -5,12 +5,12 @@ import coconut.data.Model;
 import tink.Url;
 
 /** Represents the front page or home URL transmitted when making requests. **/
-@:jsonParse(json -> new akismet.Blog(json))
-@:jsonStringify(blog -> {
-	charset: blog.charset,
-	languages: blog.languages,
-	url: blog.url
-})
+@:jsonParse((json: akismet.Blog.BlogFormData) -> new akismet.Blog({
+	charset: json.blog_charset != null ? json.blog_charset : "",
+	languages: json.blog_lang != null ? json.blog_lang.split(",").map(language -> StringTools.trim(language)) : [],
+	url: json.blog
+}))
+@:jsonStringify(blog -> blog.formData)
 class Blog implements Model {
 
 	/** The character encoding for the values included in comments. **/

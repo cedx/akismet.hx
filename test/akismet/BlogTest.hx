@@ -1,6 +1,7 @@
 package akismet;
 
 import akismet.Blog.BlogFormData;
+import tink.Json;
 import tink.QueryString;
 import tink.url.Query;
 
@@ -23,6 +24,23 @@ import tink.url.Query;
 		asserts.assert(formData.blog == "https://github.com/cedx/akismet.hx");
 		asserts.assert(formData.blog_charset == "UTF-8");
 		asserts.assert(formData.blog_lang == "en,fr");
+
+		return asserts.done();
+	}
+
+	/** Tests the JSON parsing. **/
+	public function testFromJson() {
+		var blog: Blog;
+
+		blog = Json.parse('{"blog": "https://github.com/cedx/akismet.hx"}');
+		asserts.assert(blog.charset == "");
+		asserts.assert(blog.languages.length == 0);
+		asserts.assert(blog.url == "https://github.com/cedx/akismet.hx");
+
+		blog = Json.parse('{"blog": "https://github.com/cedx/akismet.hx", "blog_charset": "UTF-8", "blog_lang": "en, fr"}');
+		asserts.assert(blog.charset == "UTF-8");
+		asserts.compare(blog.languages.toArray(), ["en", "fr"]);
+		asserts.assert(blog.url == "https://github.com/cedx/akismet.hx");
 
 		return asserts.done();
 	}

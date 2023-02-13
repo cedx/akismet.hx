@@ -1,8 +1,10 @@
 package akismet;
 
 import akismet.Comment.CommentFormData;
+import tink.Json;
 import tink.QueryString;
 import tink.url.Query;
+using DateTools;
 
 /** Tests the features of the `Comment` class. **/
 @:asserts final class CommentTest {
@@ -39,6 +41,43 @@ import tink.url.Query;
 
 		return asserts.done();
 	}
+
+	#if !java
+	/** Tests the JSON parsing. **/
+	public function testFromJson() {
+		var comment: Comment;
+
+		comment = Json.parse('{"user_ip": "127.0.0.1"}');
+		asserts.assert(comment.author.ipAddress == "127.0.0.1");
+		asserts.assert(comment.content.length == 0);
+		asserts.assert(comment.date == null);
+		asserts.assert(comment.permalink == "");
+		asserts.assert(comment.postModified == null);
+		asserts.assert(comment.recheckReason.length == 0);
+		asserts.assert(comment.referrer == "");
+		asserts.assert((comment.type: String).length == 0);
+
+		comment = Json.parse('{
+			"comment_author": "Cédric Belin",
+			"comment_content": "A user comment.",
+			"comment_date_gmt": "2000-01-01T00:00:00.000Z",
+			"comment_type": "blog-post",
+			"recheck_reason": "The comment has been changed.",
+			"referrer": "https://belin.io",
+			"user_ip": "127.0.0.1"
+		}');
+
+		asserts.assert(comment.author.ipAddress == "127.0.0.1");
+		asserts.assert(comment.author.name == "Cédric Belin");
+		asserts.assert(comment.content == "A user comment.");
+		asserts.assert(Tools.toIsoString(comment.date) == "2000-01-01T00:00:00Z");
+		asserts.assert(comment.recheckReason == "The comment has been changed.");
+		asserts.assert(comment.referrer == "https://belin.io");
+		asserts.assert(comment.type == BlogPost);
+
+		return asserts.done();
+	}
+	#end
 
 	/** Gets the fields of the specified form data. **/
 	function getFields(formData: CommentFormData)

@@ -4,20 +4,26 @@ import akismet.Author.AuthorFormData;
 import coconut.data.Model;
 import tink.Anon;
 import tink.Url;
-using DateTools;
 
 /** Represents a comment submitted by an author. **/
-@:jsonParse(json -> new akismet.Comment(json))
-@:jsonStringify(comment -> {
-	author: comment.author,
-	content: comment.content,
-	date: comment.date,
-	permalink: comment.permalink,
-	postModified: comment.postModified,
-	recheckReason: comment.recheckReason,
-	referrer: comment.referrer,
-	type: comment.type
-})
+@:jsonParse((json: akismet.Comment.CommentFormData) -> new akismet.Comment({
+	author: new akismet.Author({
+		email: json.comment_author_email != null ? json.comment_author_email : "",
+		ipAddress: json.user_ip,
+		name: json.comment_author != null ? json.comment_author : "",
+		role: json.user_role != null ? json.user_role : "",
+		url: json.comment_author_url,
+		userAgent: json.user_agent != null ? json.user_agent : ""
+	}),
+	content: json.comment_content != null ? json.comment_content : "",
+	date: json.comment_date_gmt != null ? (json.comment_date_gmt: tink.Stringly) : null,
+	permalink: json.permalink,
+	postModified: json.comment_post_modified_gmt != null ? (json.comment_post_modified_gmt: tink.Stringly) : null,
+	recheckReason: json.recheck_reason != null ? json.recheck_reason : "",
+	referrer: json.referrer,
+	type: json.comment_type != null ? json.comment_type : ""
+}))
+@:jsonStringify(comment -> comment.formData)
 class Comment implements Model {
 
 	/** The comment's author. **/
@@ -32,8 +38,8 @@ class Comment implements Model {
 	/** The form data corresponding to this object. **/
 	@:computed var formData: CommentFormData = Anon.merge(author.formData, {
 		comment_content: content.length > 0 ? content : null,
-		comment_date_gmt: date != null ? toIsoString(date) : null,
-		comment_post_modified_gmt: postModified != null ? toIsoString(postModified) : null,
+		comment_date_gmt: date != null ? Tools.toIsoString(date) : null,
+		comment_post_modified_gmt: postModified != null ? Tools.toIsoString(postModified) : null,
 		comment_type: (type: String).length > 0 ? type : null,
 		permalink: permalink != null ? permalink : null,
 		recheck_reason: recheckReason.length > 0 ? recheckReason : null,
@@ -54,10 +60,6 @@ class Comment implements Model {
 
 	/** The comment's type. **/
 	@:editable var type: CommentType = @byDefault "";
-
-	/** Converts the specified date to an ISO 8601 string, using the UTC time zone. **/
-	static function toIsoString(dateTime: Date)
-		return Date.fromTime(dateTime.getTime() + dateTime.getTimezoneOffset().minutes()).format("%FT%TZ");
 }
 
 /** Defines the form data of a comment. **/
