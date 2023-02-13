@@ -23,7 +23,7 @@ final class Client {
 	public final apiKey: String;
 
 	/** The base URL of the remote API endpoint. **/
-	public final baseUrl: Url = "https://rest.akismet.com/1.1/";
+	public final baseUrl: Url = "https://rest.akismet.com/";
 
 	/** The front page or home URL of the instance making requests. **/
 	public final blog: Blog;

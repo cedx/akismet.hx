@@ -8,19 +8,19 @@ interface CommentCheckApi {
 
 	/** Checks the specified comment against the service database, and returns a value indicating whether it is spam. **/
 	@:consumes("application/x-www-form-urlencoded")
-	@:post("/comment-check")
+	@:post("/1.1/comment-check")
 	@:produces("text/plain")
 	function checkComment(body: CommentCheckFormData): String;
 
 	/** Submits the specified comment that was incorrectly marked as spam but should not have been. **/
 	@:consumes("application/x-www-form-urlencoded")
-	@:post("/submit-ham")
+	@:post("/1.1/submit-ham")
 	@:produces("text/plain")
 	function submitHam(body: CommentCheckFormData): String;
 
 	/** Submits the specified comment that was not marked as spam but should have been. **/
 	@:consumes("application/x-www-form-urlencoded")
-	@:post("/submit-spam")
+	@:post("/1.1/submit-spam")
 	@:produces("text/plain")
 	function submitSpam(body: CommentCheckFormData): String;
 }
@@ -37,7 +37,7 @@ interface KeyVerificationApi {
 
 	/** Checks the specified API key against the service database, and returns a value indicating whether it is valid. **/
 	@:consumes("application/x-www-form-urlencoded")
-	@:post("/verify-key")
+	@:post("/1.1/verify-key")
 	@:produces("text/plain")
 	function verifyKey(body: KeyVerificationFormData): String;
 }
