@@ -4,14 +4,7 @@ import coconut.data.Model;
 import tink.Url;
 
 /** Represents the author of a comment. **/
-@:jsonParse((json: akismet.Author.AuthorFormData) -> new akismet.Author({
-	email: json.comment_author_email != null ? json.comment_author_email : "",
-	ipAddress: json.user_ip,
-	name: json.comment_author != null ? json.comment_author : "",
-	role: json.user_role != null ? json.user_role : "",
-	url: json.comment_author_url,
-	userAgent: json.user_agent != null ? json.user_agent : ""
-}))
+@:jsonParse(json -> akismet.Author.fromJson(json))
 @:jsonStringify(author -> author.formData)
 class Author implements Model {
 
@@ -42,6 +35,16 @@ class Author implements Model {
 
 	/** The author's user agent, that is the string identifying the Web browser used to submit comments. **/
 	@:editable var userAgent: String = @byDefault "";
+
+	/** Creates a new author from the specified JSON object. **/
+	public static function fromJson(json: AuthorFormData) return new Author({
+		email: json.comment_author_email != null ? json.comment_author_email : "",
+		ipAddress: json.user_ip,
+		name: json.comment_author != null ? json.comment_author : "",
+		role: json.user_role != null ? json.user_role : "",
+		url: json.comment_author_url,
+		userAgent: json.user_agent != null ? json.user_agent : ""
+	});
 }
 
 /** Defines the form data of an author. **/

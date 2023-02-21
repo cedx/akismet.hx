@@ -5,11 +5,7 @@ import coconut.data.Model;
 import tink.Url;
 
 /** Represents the front page or home URL transmitted when making requests. **/
-@:jsonParse((json: akismet.Blog.BlogFormData) -> new akismet.Blog({
-	charset: json.blog_charset != null ? json.blog_charset : "",
-	languages: json.blog_lang != null ? json.blog_lang.split(",").map(language -> StringTools.trim(language)) : [],
-	url: json.blog
-}))
+@:jsonParse(json -> akismet.Blog.fromJson(json))
 @:jsonStringify(blog -> blog.formData)
 class Blog implements Model {
 
@@ -28,6 +24,13 @@ class Blog implements Model {
 
 	/** The blog or site URL. **/
 	@:editable var url: Url;
+
+	/** Creates a new blog from the specified JSON object. **/
+	public static function fromJson(json: BlogFormData) return new Blog({
+		charset: json.blog_charset != null ? json.blog_charset : "",
+		languages: json.blog_lang != null ? json.blog_lang.split(",").map(language -> StringTools.trim(language)) : [],
+		url: json.blog
+	});
 }
 
 /** Defines the form data of a blog. **/

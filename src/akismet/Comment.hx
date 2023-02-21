@@ -6,23 +6,7 @@ import tink.Anon;
 import tink.Url;
 
 /** Represents a comment submitted by an author. **/
-@:jsonParse((json: akismet.Comment.CommentFormData) -> new akismet.Comment({
-	author: new akismet.Author({
-		email: json.comment_author_email != null ? json.comment_author_email : "",
-		ipAddress: json.user_ip,
-		name: json.comment_author != null ? json.comment_author : "",
-		role: json.user_role != null ? json.user_role : "",
-		url: json.comment_author_url,
-		userAgent: json.user_agent != null ? json.user_agent : ""
-	}),
-	content: json.comment_content != null ? json.comment_content : "",
-	date: json.comment_date_gmt != null ? (json.comment_date_gmt: tink.Stringly) : null,
-	permalink: json.permalink,
-	postModified: json.comment_post_modified_gmt != null ? (json.comment_post_modified_gmt: tink.Stringly) : null,
-	recheckReason: json.recheck_reason != null ? json.recheck_reason : "",
-	referrer: json.referrer,
-	type: json.comment_type != null ? json.comment_type : ""
-}))
+@:jsonParse(json -> akismet.Comment.fromJson(json))
 @:jsonStringify(comment -> comment.formData)
 class Comment implements Model {
 
@@ -60,6 +44,18 @@ class Comment implements Model {
 
 	/** The comment's type. **/
 	@:editable var type: CommentType = @byDefault "";
+
+	/** Creates a new comment from the specified JSON object. **/
+	public static function fromJson(json: CommentFormData) return new Comment({
+		author: Author.fromJson(json),
+		content: json.comment_content != null ? json.comment_content : "",
+		date: json.comment_date_gmt != null ? (json.comment_date_gmt: tink.Stringly) : null,
+		permalink: json.permalink,
+		postModified: json.comment_post_modified_gmt != null ? (json.comment_post_modified_gmt: tink.Stringly) : null,
+		recheckReason: json.recheck_reason != null ? json.recheck_reason : "",
+		referrer: json.referrer,
+		type: json.comment_type != null ? json.comment_type : ""
+	});
 }
 
 /** Defines the form data of a comment. **/
