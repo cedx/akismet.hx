@@ -42,7 +42,6 @@ using DateTools;
 		return asserts.done();
 	}
 
-	#if !java
 	/** Tests the JSON parsing. **/
 	public function testFromJson() {
 		var comment: Comment;
@@ -77,7 +76,6 @@ using DateTools;
 
 		return asserts.done();
 	}
-	#end
 
 	/** Gets the fields of the specified form data. **/
 	function getFields(formData: CommentFormData)
