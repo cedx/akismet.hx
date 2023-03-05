@@ -9,5 +9,5 @@
 --library instrument
 --library tink_unittest
 --library tink_web
---macro instrument.Instrumentation.coverage(['akismet'], ['src'])
+--macro instrument.Instrumentation.coverage(["akismet"], ["src"])
 --main RunTests
