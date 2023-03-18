@@ -39,7 +39,7 @@ import tink.url.Query;
 
 		blog = Json.parse('{"blog": "https://github.com/cedx/akismet.hx", "blog_charset": "UTF-8", "blog_lang": "en, fr"}');
 		asserts.assert(blog.charset == "UTF-8");
-		asserts.compare(blog.languages.toArray(), ["en", "fr"]);
+		asserts.compare(["en", "fr"], blog.languages.toArray());
 		asserts.assert(blog.url == "https://github.com/cedx/akismet.hx");
 
 		return asserts.done();
