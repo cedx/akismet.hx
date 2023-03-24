@@ -28,7 +28,7 @@ class Blog implements Model {
 	/** Creates a new blog from the specified JSON object. **/
 	public static function fromJson(json: BlogFormData) return new Blog({
 		charset: json.blog_charset != null ? json.blog_charset : "",
-		languages: json.blog_lang != null ? json.blog_lang.split(",").map(language -> StringTools.trim(language)) : [],
+		languages: json.blog_lang != null ? json.blog_lang.split(",").map(StringTools.trim) : [],
 		url: json.blog
 	});
 }
