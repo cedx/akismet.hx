@@ -5,7 +5,7 @@
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
-	"releasenote": "Made public the type definitions of the remote API, restored the HashLink tests, updated the project URL.",
+	"releasenote": "Raised the required Haxe version, using Haxe 4.3 features like the null coalescing operator.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://github.com/cedx/akismet.hx",
 	"version": "2.2.0"
