@@ -23,16 +23,16 @@ final class Client {
 	public final apiKey: String;
 
 	/** The base URL of the remote API endpoint. **/
-	public final baseUrl: Url = "https://rest.akismet.com/";
+	public final baseUrl: Url;
 
 	/** The front page or home URL of the instance making requests. **/
 	public final blog: Blog;
 
 	/** Value indicating whether the client operates in test mode. **/
-	public final isTest = false;
+	public final isTest: Bool;
 
 	/** The user agent string to use when making requests. **/
-	public final userAgent = 'Haxe/${Version.haxeVersion} | Akismet/${Version.packageVersion}';
+	public final userAgent: String;
 
 	/** The remote API client for comment check. **/
 	final remoteCommentCheck: Remote<CommentCheckApi>;
@@ -44,12 +44,9 @@ final class Client {
 	public function new(apiKey: String, blog: Blog, ?options: ClientOptions) {
 		this.apiKey = apiKey;
 		this.blog = blog;
-
-		if (options != null) {
-			if (options.baseUrl != null) baseUrl = Path.addTrailingSlash(options.baseUrl);
-			if (options.isTest != null) isTest = options.isTest;
-			if (options.userAgent != null) userAgent = options.userAgent;
-		}
+		baseUrl = Path.addTrailingSlash(options?.baseUrl ?? "https://rest.akismet.com");
+		isTest = options?.isTest ?? false;
+		userAgent = options?.userAgent ?? 'Haxe/${Version.haxeVersion} | Akismet/${Version.packageVersion}';
 
 		final endpoint = '${baseUrl.scheme}://$apiKey.${baseUrl.host}${baseUrl.path}';
 		final pipeline = {before: [onRequest], after: [onResponse]};

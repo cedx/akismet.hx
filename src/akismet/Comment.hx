@@ -48,13 +48,13 @@ class Comment implements Model {
 	/** Creates a new comment from the specified JSON object. **/
 	public static function fromJson(json: CommentFormData) return new Comment({
 		author: Author.fromJson(json),
-		content: json.comment_content != null ? json.comment_content : "",
+		content: json.comment_content ?? "",
 		date: json.comment_date_gmt != null ? (json.comment_date_gmt: tink.Stringly) : null,
 		permalink: json.permalink,
 		postModified: json.comment_post_modified_gmt != null ? (json.comment_post_modified_gmt: tink.Stringly) : null,
-		recheckReason: json.recheck_reason != null ? json.recheck_reason : "",
+		recheckReason: json.recheck_reason ?? "",
 		referrer: json.referrer,
-		type: json.comment_type != null ? json.comment_type : ""
+		type: json.comment_type ?? ""
 	});
 }
 

@@ -38,12 +38,12 @@ class Author implements Model {
 
 	/** Creates a new author from the specified JSON object. **/
 	public static function fromJson(json: AuthorFormData) return new Author({
-		email: json.comment_author_email != null ? json.comment_author_email : "",
+		email: json.comment_author_email ?? "",
 		ipAddress: json.user_ip,
-		name: json.comment_author != null ? json.comment_author : "",
-		role: json.user_role != null ? json.user_role : "",
+		name: json.comment_author ?? "",
+		role: json.user_role ?? "",
 		url: json.comment_author_url,
-		userAgent: json.user_agent != null ? json.user_agent : ""
+		userAgent: json.user_agent ?? ""
 	});
 }
 
