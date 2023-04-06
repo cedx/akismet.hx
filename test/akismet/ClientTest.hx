@@ -17,7 +17,7 @@ package akismet;
 			name: "Akismet",
 			role: Administrator,
 			url: "https://belin.io",
-			userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36 Edg/109.0.1518.78"
+			userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"
 		}),
 		content: "I'm testing out the Service API.",
 		referrer: "https://lib.haxe.org/p/akismet",

@@ -1,8 +1,8 @@
 # Changelog
 
-## Version [3.0.0](https://github.com/cedx/akismet.hx/compare/v2.2.0...v3.0.0)
-- Breaking change: raised the required [Haxe](https://haxe.org) version.
-- Breaking change: using Haxe 4.3 features like the null coalescing operator.
+## Version [2.3.0](https://github.com/cedx/akismet.hx/compare/v2.2.0...v2.3.0)
+- Updated the dependencies.
+- Use the null coalescing operator.
 
 ## Version [2.2.0](https://github.com/cedx/akismet.hx/compare/v2.1.0...v2.2.0)
 - Made public the type definitions of the remote API.
