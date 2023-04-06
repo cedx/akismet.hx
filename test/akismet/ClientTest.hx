@@ -40,7 +40,7 @@ package akismet;
 	public function new() {}
 
 	/** Tests the `checkComment()` method. **/
-	@:timeout(15000)
+	@:timeout(15_000)
 	public function testCheckComment() {
 		Promise.inParallel([
 			client.checkComment(ham).next(result -> asserts.assert(result == Ham)),
@@ -51,21 +51,21 @@ package akismet;
 	}
 
 	/** Tests the `submitHam()` method. **/
-	@:timeout(15000)
+	@:timeout(15_000)
 	public function testSubmitHam() {
 		client.submitHam(ham).handle(asserts.handle);
 		return asserts;
 	}
 
 	/** Tests the `submitSpam()` method. **/
-	@:timeout(15000)
+	@:timeout(15_000)
 	public function testSubmitSpam() {
 		client.submitSpam(spam).handle(asserts.handle);
 		return asserts;
 	}
 
 	/** Tests the `verifyKey()` method. **/
-	@:timeout(15000)
+	@:timeout(15_000)
 	public function testVerifyKey() {
 		Promise.inParallel([
 			client.verifyKey().next(isValid -> asserts.assert(isValid)),
