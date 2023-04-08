@@ -5,7 +5,7 @@ Prevent comment spam using [Akismet](https://akismet.com) service, in [Haxe](htt
 
 ## Documentation
 - [User guide](https://github.com/cedx/akismet.hx/wiki)
-- [API reference](https://cedx.github.io/akismet.hx)
+- [API reference](https://docs.belin.io/akismet.hx)
 
 ## Development
 - [Git repository](https://github.com/cedx/akismet.hx)
