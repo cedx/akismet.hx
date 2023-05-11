@@ -3,6 +3,7 @@ package akismet;
 import akismet.Author.AuthorFormData;
 import coconut.data.Model;
 import tink.Anon;
+import tink.Stringly;
 import tink.Url;
 
 /** Represents a comment submitted by an author. **/
@@ -49,9 +50,9 @@ class Comment implements Model {
 	public static function fromJson(json: CommentFormData) return new Comment({
 		author: Author.fromJson(json),
 		content: json.comment_content ?? "",
-		date: json.comment_date_gmt != null ? (json.comment_date_gmt: tink.Stringly) : null,
+		date: json.comment_date_gmt != null ? (json.comment_date_gmt: Stringly) : null,
 		permalink: json.permalink,
-		postModified: json.comment_post_modified_gmt != null ? (json.comment_post_modified_gmt: tink.Stringly) : null,
+		postModified: json.comment_post_modified_gmt != null ? (json.comment_post_modified_gmt: Stringly) : null,
 		recheckReason: json.recheck_reason ?? "",
 		referrer: json.referrer,
 		type: json.comment_type ?? ""
