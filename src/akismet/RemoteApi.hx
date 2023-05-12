@@ -4,7 +4,7 @@ import akismet.Blog.BlogFormData;
 import akismet.Comment.CommentFormData;
 
 /** Defines the interface of the comment check API. **/
-interface CommentCheckApi {
+@:noDoc interface CommentCheckApi {
 
 	/** Checks the specified comment against the service database, and returns a value indicating whether it is spam. **/
 	@:consumes("application/x-www-form-urlencoded")
@@ -26,14 +26,14 @@ interface CommentCheckApi {
 }
 
 /** Defines the form data of a comment check request. **/
-typedef CommentCheckFormData = BlogFormData & CommentFormData & {
+private typedef CommentCheckFormData = BlogFormData & CommentFormData & {
 
 	/** Value indicating whether the client operates in test mode. **/
 	var ?is_test: String;
 }
 
 /** Defines the interface of the key verification API. **/
-interface KeyVerificationApi {
+@:noDoc interface KeyVerificationApi {
 
 	/** Checks the specified API key against the service database, and returns a value indicating whether it is valid. **/
 	@:consumes("application/x-www-form-urlencoded")
@@ -43,7 +43,7 @@ interface KeyVerificationApi {
 }
 
 /** Defines the form data of a key verification request. **/
-typedef KeyVerificationFormData = BlogFormData & {
+private typedef KeyVerificationFormData = BlogFormData & {
 
 	/** The API key to verify. **/
 	var key: String;
