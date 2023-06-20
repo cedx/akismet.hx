@@ -3,6 +3,7 @@ package akismet;
 import akismet.Blog.BlogFormData;
 import akismet.Comment.CommentFormData;
 
+/** Defines the interface of the remote API. **/
 @:noDoc interface RemoteApi {
 
 	/** Checks the specified comment against the service database, and returns a value indicating whether it is spam. **/
