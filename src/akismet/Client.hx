@@ -1,6 +1,5 @@
 package akismet;
 
-import akismet.RemoteApi;
 import tink.Anon;
 import tink.Url;
 import tink.Web;
