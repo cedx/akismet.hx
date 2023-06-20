@@ -1,7 +1,6 @@
 package akismet;
 
-import akismet.RemoteApi.CommentCheckApi;
-import akismet.RemoteApi.KeyVerificationApi;
+import akismet.RemoteApi;
 import tink.Anon;
 import tink.Url;
 import tink.Web;
@@ -34,11 +33,8 @@ final class Client {
 	/** The user agent string to use when making requests. **/
 	public final userAgent: String;
 
-	/** The remote API client for comment check. **/
-	final remoteCommentCheck: Remote<CommentCheckApi>;
-
-	/** The remote API client for key verification. **/
-	final remoteKeyVerification: Remote<KeyVerificationApi>;
+	/** The remote API client. **/
+	final remote: Remote<RemoteApi>;
 
 	/** Creates a new client. **/
 	public function new(apiKey: String, blog: Blog, ?options: ClientOptions) {
@@ -46,17 +42,13 @@ final class Client {
 		this.blog = blog;
 		baseUrl = Path.addTrailingSlash(options?.baseUrl ?? "https://rest.akismet.com");
 		isTest = options?.isTest ?? false;
+		remote = Web.connect((baseUrl: RemoteApi), {augment: {before: [onRequest], after: [onResponse]}});
 		userAgent = options?.userAgent ?? 'Haxe/${Version.haxeVersion} | Akismet/${Version.packageVersion}';
-
-		final endpoint = '${baseUrl.scheme}://$apiKey.${baseUrl.host}${baseUrl.path}';
-		final pipeline = {before: [onRequest], after: [onResponse]};
-		remoteCommentCheck = Web.connect((endpoint: CommentCheckApi), {augment: pipeline});
-		remoteKeyVerification = Web.connect((baseUrl: KeyVerificationApi), {augment: pipeline});
 	}
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
 	public function checkComment(comment: Comment)
-		return (remoteCommentCheck.checkComment(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null)): FetchResponse).all()
+		return (remote.checkComment(Anon.merge(blog.formData, comment.formData, {api_key: apiKey, is_test: isTest ? "1" : null})): FetchResponse).all()
 			.next(response -> response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("X-akismet-pro-tip") {
 				case Success(proTip) if (proTip == "discard"): CheckResult.PervasiveSpam;
 				default: CheckResult.Spam;
@@ -64,19 +56,19 @@ final class Client {
 
 	/** Submits the specified `comment` that was incorrectly marked as spam but should not have been. **/
 	public function submitHam(comment: Comment)
-		return remoteCommentCheck.submitHam(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null))
+		return remote.submitHam(Anon.merge(blog.formData, comment.formData, {api_key: apiKey, is_test: isTest ? "1" : null}))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == success ? Success(Noise) : Failure(new Error("Invalid server response.")));
 
 	/** Submits the specified `comment` that was not marked as spam but should have been. **/
 	public function submitSpam(comment: Comment)
-		return remoteCommentCheck.submitSpam(Anon.merge(blog.formData, comment.formData, is_test = isTest ? "1" : null))
+		return remote.submitSpam(Anon.merge(blog.formData, comment.formData, {api_key: apiKey, is_test: isTest ? "1" : null}))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == success ? Success(Noise) : Failure(new Error("Invalid server response.")));
 
 	/** Checks the API key against the service database, and returns a value indicating whether it is valid. **/
 	public function verifyKey()
-		return remoteKeyVerification.verifyKey(Anon.merge(blog.formData, key = apiKey))
+		return remote.verifyKey(Anon.merge(blog.formData, key = apiKey))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == "valid");
 

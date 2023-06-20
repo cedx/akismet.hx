@@ -3,8 +3,7 @@ package akismet;
 import akismet.Blog.BlogFormData;
 import akismet.Comment.CommentFormData;
 
-/** Defines the interface of the comment check API. **/
-@:noDoc interface CommentCheckApi {
+@:noDoc interface RemoteApi {
 
 	/** Checks the specified comment against the service database, and returns a value indicating whether it is spam. **/
 	@:consumes("application/x-www-form-urlencoded")
@@ -23,17 +22,6 @@ import akismet.Comment.CommentFormData;
 	@:post("/1.1/submit-spam")
 	@:produces("text/plain")
 	function submitSpam(body: CommentCheckFormData): String;
-}
-
-/** Defines the form data of a comment check request. **/
-private typedef CommentCheckFormData = BlogFormData & CommentFormData & {
-
-	/** Value indicating whether the client operates in test mode. **/
-	var ?is_test: String;
-}
-
-/** Defines the interface of the key verification API. **/
-@:noDoc interface KeyVerificationApi {
 
 	/** Checks the specified API key against the service database, and returns a value indicating whether it is valid. **/
 	@:consumes("application/x-www-form-urlencoded")
@@ -42,9 +30,19 @@ private typedef CommentCheckFormData = BlogFormData & CommentFormData & {
 	function verifyKey(body: KeyVerificationFormData): String;
 }
 
+/** Defines the form data of a comment check request. **/
+private typedef CommentCheckFormData = BlogFormData & CommentFormData & {
+
+	/** The API key. **/
+	var api_key: String;
+
+	/** Value indicating whether the client operates in test mode. **/
+	var ?is_test: String;
+}
+
 /** Defines the form data of a key verification request. **/
 private typedef KeyVerificationFormData = BlogFormData & {
 
-	/** The API key to verify. **/
+	/** The API key. **/
 	var key: String;
 }
