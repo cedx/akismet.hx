@@ -1,6 +1,6 @@
 package akismet;
 
-import akismet.Author.AuthorFormData;
+import akismet.Author.AuthorData;
 import tink.Json;
 import tink.QueryString;
 import tink.url.Query;
@@ -13,7 +13,7 @@ import tink.url.Query;
 
 	/** Tests the `formData` property. **/
 	public function testFormData() {
-		var formData: AuthorFormData;
+		var formData: AuthorData;
 
 		formData = new Author({ipAddress: "127.0.0.1"}).formData;
 		asserts.assert(getFields(formData).length == 1);
@@ -69,6 +69,6 @@ import tink.url.Query;
 	}
 
 	/** Gets the fields of the specified form data. **/
-	function getFields(formData: AuthorFormData)
+	function getFields(formData: AuthorData)
 		return [for (param in Query.parseString(QueryString.build(formData))) param.name];
 }

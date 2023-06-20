@@ -12,7 +12,7 @@ class Author implements Model {
 	@:editable var email: String = @byDefault "";
 
 	/** The form data corresponding to this object. **/
-	@:computed var formData: AuthorFormData = {
+	@:computed var formData: AuthorData = {
 		comment_author: name.length > 0 ? name : null,
 		comment_author_email: email.length > 0 ? email : null,
 		comment_author_url: url != null ? url : null,
@@ -37,7 +37,7 @@ class Author implements Model {
 	@:editable var userAgent: String = @byDefault "";
 
 	/** Creates a new author from the specified JSON object. **/
-	public static function fromJson(json: AuthorFormData) return new Author({
+	public static function fromJson(json: AuthorData) return new Author({
 		email: json.comment_author_email ?? "",
 		ipAddress: json.user_ip,
 		name: json.comment_author ?? "",
@@ -47,8 +47,8 @@ class Author implements Model {
 	});
 }
 
-/** Defines the form data of an author. **/
-typedef AuthorFormData = {
+/** Defines the data of an author. **/
+typedef AuthorData = {
 
 	/** The author's name. **/
 	final ?comment_author: String;

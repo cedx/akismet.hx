@@ -1,6 +1,6 @@
 package akismet;
 
-import akismet.Author.AuthorFormData;
+import akismet.Author.AuthorData;
 import coconut.data.Model;
 import tink.Anon;
 import tink.Stringly;
@@ -21,7 +21,7 @@ class Comment implements Model {
 	@:editable var date: Null<Date> = @byDefault null;
 
 	/** The form data corresponding to this object. **/
-	@:computed var formData: CommentFormData = Anon.merge(author.formData, {
+	@:computed var formData: CommentData = Anon.merge(author.formData, {
 		comment_content: content.length > 0 ? content : null,
 		comment_date_gmt: date != null ? Tools.toIsoString(date) : null,
 		comment_post_modified_gmt: postModified != null ? Tools.toIsoString(postModified) : null,
@@ -47,7 +47,7 @@ class Comment implements Model {
 	@:editable var type: CommentType = @byDefault "";
 
 	/** Creates a new comment from the specified JSON object. **/
-	public static function fromJson(json: CommentFormData) return new Comment({
+	public static function fromJson(json: CommentData) return new Comment({
 		author: Author.fromJson(json),
 		content: json.comment_content ?? "",
 		date: json.comment_date_gmt != null ? (json.comment_date_gmt: Stringly) : null,
@@ -59,8 +59,8 @@ class Comment implements Model {
 	});
 }
 
-/** Defines the form data of a comment. **/
-typedef CommentFormData = AuthorFormData & {
+/** Defines the data of a comment. **/
+typedef CommentData = AuthorData & {
 
 	/** The comment's content. **/
 	final ?comment_content: String;

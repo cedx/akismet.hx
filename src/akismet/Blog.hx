@@ -13,7 +13,7 @@ class Blog implements Model {
 	@:editable var charset: String = @byDefault "";
 
 	/** The form data corresponding to this object. **/
-	@:computed var formData: BlogFormData = {
+	@:computed var formData: BlogData = {
 		blog: url,
 		blog_charset: charset.length > 0 ? charset : null,
 		blog_lang: languages.length > 0 ? languages.toArray().join(",") : null
@@ -26,15 +26,15 @@ class Blog implements Model {
 	@:editable var url: Url;
 
 	/** Creates a new blog from the specified JSON object. **/
-	public static function fromJson(json: BlogFormData) return new Blog({
+	public static function fromJson(json: BlogData) return new Blog({
 		charset: json.blog_charset ?? "",
 		languages: json.blog_lang != null ? json.blog_lang.split(",").map(StringTools.trim) : [],
 		url: json.blog
 	});
 }
 
-/** Defines the form data of a blog. **/
-typedef BlogFormData = {
+/** Defines the data of a blog. **/
+typedef BlogData = {
 
 	/** The blog or site URL. **/
 	final blog: String;

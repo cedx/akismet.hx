@@ -1,6 +1,6 @@
 package akismet;
 
-import akismet.Blog.BlogFormData;
+import akismet.Blog.BlogData;
 import tink.Json;
 import tink.QueryString;
 import tink.url.Query;
@@ -13,7 +13,7 @@ import tink.url.Query;
 
 	/** Tests the `formData` property. **/
 	public function testFormData() {
-		var formData: BlogFormData;
+		var formData: BlogData;
 
 		formData = new Blog({url: "https://github.com/cedx/akismet.hx"}).formData;
 		asserts.assert(getFields(formData).length == 1);
@@ -46,6 +46,6 @@ import tink.url.Query;
 	}
 
 	/** Gets the fields of the specified form data. **/
-	function getFields(formData: BlogFormData)
+	function getFields(formData: BlogData)
 		return [for (param in Query.parseString(QueryString.build(formData))) param.name];
 }

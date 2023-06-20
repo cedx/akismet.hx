@@ -1,6 +1,6 @@
 package akismet;
 
-import akismet.Comment.CommentFormData;
+import akismet.Comment.CommentData;
 import tink.Json;
 import tink.QueryString;
 import tink.url.Query;
@@ -14,7 +14,7 @@ using DateTools;
 
 	/** Tests the `formData` property. **/
 	public function testFormData() {
-		var formData: CommentFormData;
+		var formData: CommentData;
 
 		// It should return only the author info with a newly created instance.
 		formData = new Comment({author: new Author({ipAddress: "127.0.0.1"})}).formData;
@@ -78,6 +78,6 @@ using DateTools;
 	}
 
 	/** Gets the fields of the specified form data. **/
-	function getFields(formData: CommentFormData)
+	function getFields(formData: CommentData)
 		return [for (param in Query.parseString(QueryString.build(formData))) param.name];
 }

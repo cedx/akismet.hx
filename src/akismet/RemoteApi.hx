@@ -1,7 +1,7 @@
 package akismet;
 
-import akismet.Blog.BlogFormData;
-import akismet.Comment.CommentFormData;
+import akismet.Blog.BlogData;
+import akismet.Comment.CommentData;
 
 /** Defines the interface of the remote API. **/
 @:noDoc interface RemoteApi {
@@ -10,29 +10,29 @@ import akismet.Comment.CommentFormData;
 	@:consumes("application/x-www-form-urlencoded")
 	@:post("/1.1/comment-check")
 	@:produces("text/plain")
-	function checkComment(body: CommentCheckFormData): String;
+	function checkComment(body: CommentBody): String;
 
 	/** Submits the specified comment that was incorrectly marked as spam but should not have been. **/
 	@:consumes("application/x-www-form-urlencoded")
 	@:post("/1.1/submit-ham")
 	@:produces("text/plain")
-	function submitHam(body: CommentCheckFormData): String;
+	function submitHam(body: CommentBody): String;
 
 	/** Submits the specified comment that was not marked as spam but should have been. **/
 	@:consumes("application/x-www-form-urlencoded")
 	@:post("/1.1/submit-spam")
 	@:produces("text/plain")
-	function submitSpam(body: CommentCheckFormData): String;
+	function submitSpam(body: CommentBody): String;
 
 	/** Checks the specified API key against the service database, and returns a value indicating whether it is valid. **/
 	@:consumes("application/x-www-form-urlencoded")
 	@:post("/1.1/verify-key")
 	@:produces("text/plain")
-	function verifyKey(body: KeyVerificationFormData): String;
+	function verifyKey(body: KeyBody): String;
 }
 
-/** Defines the form data of a comment check request. **/
-private typedef CommentCheckFormData = BlogFormData & CommentFormData & {
+/** Defines the body of a comment check/submission request. **/
+private typedef CommentBody = BlogData & CommentData & {
 
 	/** The API key. **/
 	var api_key: String;
@@ -41,8 +41,8 @@ private typedef CommentCheckFormData = BlogFormData & CommentFormData & {
 	var ?is_test: String;
 }
 
-/** Defines the form data of a key verification request. **/
-private typedef KeyVerificationFormData = BlogFormData & {
+/** Defines the body of a key verification request. **/
+private typedef KeyBody = BlogData & {
 
 	/** The API key. **/
 	var key: String;
