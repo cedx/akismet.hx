@@ -1,6 +1,7 @@
 package akismet;
 
 import akismet.Author.AuthorData;
+import coconut.data.List;
 import coconut.data.Model;
 import tink.Anon;
 import tink.Stringly;
@@ -17,12 +18,16 @@ class Comment implements Model {
 	/** The comment's content. **/
 	@:editable var content: String = @byDefault "";
 
+	/** The context in which this comment was posted. **/
+	@:editable var context: List<String> = @byDefault new List();
+
 	/** The UTC timestamp of the creation of the comment. **/
 	@:editable var date: Null<Date> = @byDefault null;
 
 	/** The form data corresponding to this object. **/
 	@:computed var formData: CommentData = Anon.merge(author.formData, {
 		comment_content: content.length > 0 ? content : null,
+		comment_context: context.length > 0 ? context.toArray() : null,
 		comment_date_gmt: date != null ? Tools.toIsoString(date) : null,
 		comment_post_modified_gmt: postModified != null ? Tools.toIsoString(postModified) : null,
 		comment_type: (type: String).length > 0 ? type : null,
@@ -50,6 +55,7 @@ class Comment implements Model {
 	public static function fromJson(json: CommentData) return new Comment({
 		author: Author.fromJson(json),
 		content: json.comment_content ?? "",
+		context: json.comment_context ?? [],
 		date: json.comment_date_gmt != null ? (json.comment_date_gmt: Stringly) : null,
 		permalink: json.permalink,
 		postModified: json.comment_post_modified_gmt != null ? (json.comment_post_modified_gmt: Stringly) : null,
@@ -64,6 +70,9 @@ typedef CommentData = AuthorData & {
 
 	/** The comment's content. **/
 	final ?comment_content: String;
+
+	/** The context in which this comment was posted. **/
+	final ?comment_context: Array<String>;
 
 	/** The UTC timestamp of the creation of the comment. **/
 	final ?comment_date_gmt: String;
