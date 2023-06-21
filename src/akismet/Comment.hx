@@ -25,16 +25,17 @@ class Comment implements Model {
 	@:editable var date: Null<Date> = @byDefault null;
 
 	/** The form data corresponding to this object. **/
-	@:computed var formData: CommentData = Anon.merge(author.formData, {
-		comment_content: content.length > 0 ? content : null,
-		comment_context: context.length > 0 ? context.toArray() : null,
-		comment_date_gmt: date != null ? Tools.toIsoString(date) : null,
-		comment_post_modified_gmt: postModified != null ? Tools.toIsoString(postModified) : null,
-		comment_type: (type: String).length > 0 ? type : null,
-		permalink: permalink != null ? permalink : null,
-		recheck_reason: recheckReason.length > 0 ? recheckReason : null,
-		referrer: referrer != null ? referrer : null
-	});
+	public var formData(get, never): CommentData;
+		function get_formData() return Anon.merge(author.formData, {
+			comment_content: content.length > 0 ? content : null,
+			comment_context: context.length > 0 ? context.toArray() : null,
+			comment_date_gmt: date != null ? Tools.toIsoString(date) : null,
+			comment_post_modified_gmt: postModified != null ? Tools.toIsoString(postModified) : null,
+			comment_type: (type: String).length > 0 ? type : null,
+			permalink: permalink != null ? permalink : null,
+			recheck_reason: recheckReason.length > 0 ? recheckReason : null,
+			referrer: referrer != null ? referrer : null
+		});
 
 	/** The permanent location of the entry the comment is submitted to. **/
 	@:editable var permalink: Null<Url> = @byDefault null;

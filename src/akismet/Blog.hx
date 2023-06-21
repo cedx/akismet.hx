@@ -13,11 +13,12 @@ class Blog implements Model {
 	@:editable var charset: String = @byDefault "";
 
 	/** The form data corresponding to this object. **/
-	@:computed var formData: BlogData = {
-		blog: url,
-		blog_charset: charset.length > 0 ? charset : null,
-		blog_lang: languages.length > 0 ? languages.toArray().join(",") : null
-	};
+	public var formData(get, never): BlogData;
+		function get_formData() return {
+			blog: url,
+			blog_charset: charset.length > 0 ? charset : null,
+			blog_lang: languages.length > 0 ? languages.toArray().join(",") : null
+		};
 
 	/** The languages in use on the blog or site, in ISO 639-1 format. **/
 	@:editable var languages: List<String> = @byDefault new List();

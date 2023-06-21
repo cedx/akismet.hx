@@ -12,14 +12,15 @@ class Author implements Model {
 	@:editable var email: String = @byDefault "";
 
 	/** The form data corresponding to this object. **/
-	@:computed var formData: AuthorData = {
-		comment_author: name.length > 0 ? name : null,
-		comment_author_email: email.length > 0 ? email : null,
-		comment_author_url: url != null ? url : null,
-		user_agent: userAgent.length > 0 ? userAgent : null,
-		user_ip: ipAddress,
-		user_role: (role: String).length > 0 ? role : null
-	};
+	public var formData(get, never): AuthorData;
+		function get_formData() return {
+			comment_author: name.length > 0 ? name : null,
+			comment_author_email: email.length > 0 ? email : null,
+			comment_author_url: url != null ? url : null,
+			user_agent: userAgent.length > 0 ? userAgent : null,
+			user_ip: ipAddress,
+			user_role: (role: String).length > 0 ? role : null
+		};
 
 	/** The author's IP address. **/
 	@:editable var ipAddress: String;
