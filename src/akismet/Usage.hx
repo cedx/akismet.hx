@@ -3,25 +3,25 @@ package akismet;
 import haxe.extern.EitherType;
 import coconut.data.Model;
 
-/** TODO **/
+/** Provides API usage for a given month. **/
 @:jsonParse(json -> akismet.Usage.fromJson(json))
 class Usage implements Model {
 
-	/** TODO **/
+	/** The number of monthly API calls your plan entitles you to. **/
 	@:constant var limit: Int = @byDefault -1;
 
-	/** TODO **/
+	/** The percentage of the limit used since the beginning of the month. **/
 	@:constant var percentage: Float = @byDefault 0;
 
-	/** TODO **/
+	/** Value indicating whether the requests are being throttled for having consistently gone over the limit. **/
 	@:constant var throttled: Bool = @byDefault false;
 
-	/** TODO **/
+	/** The number of calls (spam + ham) since the beginning of the month. **/
 	@:constant var usage: Int = @byDefault -1;
 
 	/** Creates a new usage from the specified JSON object. **/
 	public static function fromJson(json: UsageData) return new Usage({
-		limit: json.limit == "none" ? -1 : json.limit,
+		limit: json.limit is String ? -1 : json.limit,
 		percentage: json.percentage,
 		throttled: json.throttled,
 		usage: json.usage
@@ -31,15 +31,15 @@ class Usage implements Model {
 /** Defines the data of an author. **/
 typedef UsageData = {
 
-	/** TODO **/
+	/** The number of monthly API calls your plan entitles you to. **/
 	final limit: EitherType<Int, String>;
 
-	/** TODO **/
+	/** The percentage of the limit used since the beginning of the month. **/
 	final percentage: Float;
 
-	/** TODO **/
+	/** Value indicating whether the requests are being throttled for having consistently gone over the limit. **/
 	final throttled: Bool;
 
-	/** TODO **/
+	/** The number of calls (spam + ham) since the beginning of the month. **/
 	final usage: Int;
 }
