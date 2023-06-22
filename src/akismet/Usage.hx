@@ -17,7 +17,7 @@ class Usage implements Model {
 	@:constant var throttled: Bool = @byDefault false;
 
 	/** The number of calls (spam + ham) since the beginning of the month. **/
-	@:constant var usage: Int = @byDefault -1;
+	@:constant var usage: Int = @byDefault 0;
 
 	/** Creates a new usage from the specified JSON object. **/
 	public static function fromJson(json: UsageData) return new Usage({
