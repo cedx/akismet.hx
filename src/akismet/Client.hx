@@ -42,7 +42,7 @@ final class Client {
 		baseUrl = Path.addTrailingSlash(options?.baseUrl ?? "https://rest.akismet.com");
 		isTest = options?.isTest ?? false;
 		remote = Web.connect((baseUrl: RemoteApi), {augment: {before: [onRequest], after: [onResponse]}});
-		userAgent = options?.userAgent ?? 'Haxe/${Version.haxeVersion} | Akismet/${Version.packageVersion}';
+		userAgent = options?.userAgent ?? 'Haxe/${Platform.haxeVersion} | Akismet/${Platform.packageVersion}';
 	}
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/

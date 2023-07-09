@@ -1,5 +1,5 @@
 //! --class-path src --library tink_core
-import akismet.Version;
+import akismet.Platform;
 import sys.FileSystem;
 import sys.io.File;
 
@@ -12,7 +12,7 @@ function main() {
 		"--define", "description", "Prevent comment spam using the Akismet service, in Haxe.",
 		"--define", "source-path", "https://github.com/cedx/akismet.hx/blob/main/src",
 		"--define", "themeColor", "0xea8220",
-		"--define", "version", Version.packageVersion,
+		"--define", "version", Platform.packageVersion,
 		"--define", "website", "https://docs.belin.io/akismet.hx",
 		"--input-path", "var",
 		"--output-path", "docs",
