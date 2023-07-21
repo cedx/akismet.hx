@@ -13,7 +13,7 @@ using DateTools;
 	public function new() {}
 
 	/** Tests the `formData` property. **/
-	public function testFormData() {
+	public function formData() {
 		var formData: CommentData;
 
 		// It should return only the author info with a newly created instance.
@@ -43,7 +43,7 @@ using DateTools;
 	}
 
 	/** Tests the JSON parsing. **/
-	public function testFromJson() {
+	public function fromJson() {
 		var comment: Comment;
 
 		comment = Json.parse('{"user_ip": "127.0.0.1"}');

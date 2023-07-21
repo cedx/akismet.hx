@@ -3,5 +3,4 @@ package akismet;
 import coconut.data.Model;
 
 /** TODO **/
-class Activity implements Model {
-}
+class Activity implements Model {}

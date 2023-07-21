@@ -12,7 +12,7 @@ import tink.url.Query;
 	public function new() {}
 
 	/** Tests the `formData` property. **/
-	public function testFormData() {
+	public function formData() {
 		var formData: AuthorData;
 
 		formData = new Author({ipAddress: "127.0.0.1"}).formData;
@@ -38,7 +38,7 @@ import tink.url.Query;
 	}
 
 	/** Tests the JSON parsing. **/
-	public function testFromJson() {
+	public function fromJson() {
 		var author: Author;
 
 		author = Json.parse('{"user_ip": "192.168.0.1"}');

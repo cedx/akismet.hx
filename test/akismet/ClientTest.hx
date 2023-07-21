@@ -41,7 +41,7 @@ package akismet;
 
 	/** Tests the `checkComment()` method. **/
 	@:timeout(15_000)
-	public function testCheckComment() {
+	public function checkComment() {
 		Promise.inParallel([
 			client.checkComment(ham).next(result -> asserts.assert(result == Ham)),
 			client.checkComment(spam).next(result -> asserts.assert([CheckResult.Spam, CheckResult.PervasiveSpam].contains(result)))
@@ -52,21 +52,21 @@ package akismet;
 
 	/** Tests the `submitHam()` method. **/
 	@:timeout(15_000)
-	public function testSubmitHam() {
+	public function submitHam() {
 		client.submitHam(ham).handle(asserts.handle);
 		return asserts;
 	}
 
 	/** Tests the `submitSpam()` method. **/
 	@:timeout(15_000)
-	public function testSubmitSpam() {
+	public function submitSpam() {
 		client.submitSpam(spam).handle(asserts.handle);
 		return asserts;
 	}
 
 	/** Tests the `verifyKey()` method. **/
 	@:timeout(15_000)
-	public function testVerifyKey() {
+	public function verifyKey() {
 		Promise.inParallel([
 			client.verifyKey().next(isValid -> asserts.assert(isValid)),
 			new Client("0123456789-ABCDEF", client.blog, {isTest: true}).verifyKey().next(isValid -> asserts.assert(!isValid))

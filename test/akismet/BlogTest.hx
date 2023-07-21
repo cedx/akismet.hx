@@ -12,7 +12,7 @@ import tink.url.Query;
 	public function new() {}
 
 	/** Tests the `formData` property. **/
-	public function testFormData() {
+	public function formData() {
 		var formData: BlogData;
 
 		formData = new Blog({url: "https://github.com/cedx/akismet.hx"}).formData;
@@ -29,7 +29,7 @@ import tink.url.Query;
 	}
 
 	/** Tests the JSON parsing. **/
-	public function testFromJson() {
+	public function fromJson() {
 		var blog: Blog;
 
 		blog = Json.parse('{"blog": "https://github.com/cedx/akismet.hx"}');
