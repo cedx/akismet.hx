@@ -3,7 +3,7 @@ package akismet;
 /** Tests the features of the `Client` class. **/
 @:asserts final class ClientTest {
 
-	/** The client used to query the service database. **/
+	/** The client used to query the remote API. **/
 	final client = new Client(
 		Sys.getEnv("AKISMET_API_KEY"),
 		new Blog({url: "https://github.com/cedx/akismet.hx"}),
