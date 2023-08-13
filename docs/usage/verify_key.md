@@ -25,6 +25,7 @@ It can also rejects with a custom error code and message (respectively provided 
 See [Response Error Codes](https://akismet.com/developers/errors) for more information.
 
 ## Example
+
 ```haxe
 import akismet.Blog;
 import akismet.Client;
