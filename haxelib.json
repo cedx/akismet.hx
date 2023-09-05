@@ -5,7 +5,7 @@
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
-	"releasenote": "Updated the dependencies, use the null coalescing operator.",
+	"releasenote": "Improved the compatibility with Haxe 4.3.2.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://docs.belin.io/akismet.hx",
 	"version": "2.3.1"
