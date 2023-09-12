@@ -1,2 +1,0 @@
-// TODO
-GET {{baseUrl}}/1.2/usage-limit?api_key={{$processEnv %apiKey}}

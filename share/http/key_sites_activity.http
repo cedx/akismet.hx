@@ -1,2 +1,0 @@
-// TODO
-GET {{baseUrl}}/1.2/key-sites?api_key={{$processEnv %apiKey}}
