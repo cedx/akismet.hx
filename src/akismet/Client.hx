@@ -39,7 +39,7 @@ final class Client {
 	public function new(apiKey: String, blog: Blog, ?options: ClientOptions) {
 		this.apiKey = apiKey;
 		this.blog = blog;
-		baseUrl = Path.addTrailingSlash(options != null && options.baseUrl != null ? options.baseUrl.toString() : "https://rest.akismet.com");
+		baseUrl = (options?.baseUrl?.toString() ?? "https://rest.akismet.com").addTrailingSlash();
 		isTest = options?.isTest ?? false;
 		remote = Web.connect((baseUrl: RemoteApi), {augment: {before: [onRequest], after: [onResponse]}});
 		userAgent = options?.userAgent ?? 'Haxe/${Platform.haxeVersion} | Akismet/${Platform.packageVersion}';
