@@ -11,10 +11,6 @@ import tink.web.proxy.Remote;
 using StringTools;
 using haxe.io.Path;
 
-#if js
-import tink.http.clients.JsFetchClient;
-#end
-
 /** Submits comments to the [Akismet](https://akismet.com) service. **/
 final class Client {
 
@@ -45,7 +41,7 @@ final class Client {
 		this.blog = blog;
 		baseUrl = Path.addTrailingSlash(options != null && options.baseUrl != null ? options.baseUrl.toString() : "https://rest.akismet.com");
 		isTest = options?.isTest ?? false;
-		remote = Web.connect((baseUrl: RemoteApi), {augment: {before: [onRequest], after: [onResponse]} #if js, client: new JsFetchClient() #end});
+		remote = Web.connect((baseUrl: RemoteApi), {augment: {before: [onRequest], after: [onResponse]}});
 		userAgent = options?.userAgent ?? 'Haxe/${Platform.haxeVersion} | Akismet/${Platform.packageVersion}';
 	}
 
