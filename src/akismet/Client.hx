@@ -29,9 +29,6 @@ final class Client {
 	/** Value indicating whether the client operates in test mode. **/
 	public final isTest: Bool;
 
-	/** The user agent string to use when making requests. **/
-	public final userAgent: String;
-
 	/** The remote API client. **/
 	final remote: Remote<RemoteApi>;
 
@@ -41,8 +38,10 @@ final class Client {
 		this.blog = blog;
 		baseUrl = (options?.baseUrl?.toString() ?? "https://rest.akismet.com").addTrailingSlash();
 		isTest = options?.isTest ?? false;
-		remote = Web.connect((baseUrl: RemoteApi), {augment: {before: [onRequest], after: [onResponse]}});
-		userAgent = options?.userAgent ?? 'Haxe/${Platform.haxeVersion} | Akismet/${Platform.packageVersion}';
+		remote = Web.connect((baseUrl: RemoteApi), {
+			augment: {after: [onResponse]},
+			headers: [new HeaderField(USER_AGENT, options?.userAgent ?? 'Haxe/${Platform.haxeVersion} | Akismet/${Platform.packageVersion}')]
+		});
 	}
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
@@ -70,10 +69,6 @@ final class Client {
 		return remote.verifyKey(Anon.merge(blog.formData, key = apiKey))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == "valid");
-
-	/** Intercepts and modifies the outgoing requests. **/
-	function onRequest(request: OutgoingRequest): Promise<OutgoingRequest>
-		return new OutgoingRequest(request.header.concat([new HeaderField(USER_AGENT, userAgent)]), request.body);
 
 	/** Intercepts and modifies the incoming responses. **/
 	function onResponse(request: OutgoingRequest) return function(response: IncomingResponse): Promise<IncomingResponse>
