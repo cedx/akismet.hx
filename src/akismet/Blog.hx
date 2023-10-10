@@ -13,12 +13,11 @@ class Blog implements Model {
 	@:editable var charset: String = @byDefault "";
 
 	/** The form data corresponding to this object. **/
-	public var formData(get, never): BlogData;
-		function get_formData() return {
-			blog: url,
-			blog_charset: charset.length > 0 ? charset : null,
-			blog_lang: languages.length > 0 ? languages.toArray().join(",") : null
-		};
+	@:computed var formData: BlogData = {
+		blog: url,
+		blog_charset: charset.length > 0 ? charset : null,
+		blog_lang: languages.length > 0 ? languages.toArray().join(",") : null
+	};
 
 	/** The languages in use on the blog or site, in ISO 639-1 format. **/
 	@:editable var languages: List<String> = @byDefault new List();
@@ -28,7 +27,7 @@ class Blog implements Model {
 
 	/** Creates a new blog from the specified JSON object. **/
 	public static function fromJson(json: BlogData) return new Blog({
-		charset: json.blog_charset ?? "",
+		charset: json.blog_charset,
 		languages: json.blog_lang != null ? json.blog_lang.split(",").map(StringTools.trim) : [],
 		url: json.blog
 	});

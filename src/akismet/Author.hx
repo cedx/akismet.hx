@@ -12,15 +12,14 @@ class Author implements Model {
 	@:editable var email: String = @byDefault "";
 
 	/** The form data corresponding to this object. **/
-	public var formData(get, never): AuthorData;
-		function get_formData() return {
-			comment_author: name.length > 0 ? name : null,
-			comment_author_email: email.length > 0 ? email : null,
-			comment_author_url: url != null ? url : null,
-			user_agent: userAgent.length > 0 ? userAgent : null,
-			user_ip: ipAddress,
-			user_role: (role: String).length > 0 ? role : null
-		};
+	@:computed var formData: AuthorData = {
+		comment_author: name.length > 0 ? name : null,
+		comment_author_email: email.length > 0 ? email : null,
+		comment_author_url: url != null ? url : null,
+		user_agent: userAgent.length > 0 ? userAgent : null,
+		user_ip: ipAddress,
+		user_role: (role: String).length > 0 ? role : null
+	};
 
 	/** The author's IP address. **/
 	@:editable var ipAddress: String;
@@ -39,12 +38,12 @@ class Author implements Model {
 
 	/** Creates a new author from the specified JSON object. **/
 	public static function fromJson(json: AuthorData) return new Author({
-		email: json.comment_author_email ?? "",
+		email: json.comment_author_email,
 		ipAddress: json.user_ip,
-		name: json.comment_author ?? "",
-		role: json.user_role ?? "",
+		name: json.comment_author,
+		role: json.user_role,
 		url: json.comment_author_url,
-		userAgent: json.user_agent ?? ""
+		userAgent: json.user_agent
 	});
 }
 
