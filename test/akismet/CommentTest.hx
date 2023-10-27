@@ -12,37 +12,7 @@ using DateTools;
 	/** Creates a new test. **/
 	public function new() {}
 
-	/** Tests the `formData` property. **/
-	public function formData() {
-		var formData: CommentData;
-
-		// It should return only the author info with a newly created instance.
-		formData = new Comment({author: new Author({ipAddress: "127.0.0.1"})}).formData;
-		asserts.assert(getFields(formData).length == 1);
-		asserts.assert(formData.user_ip == "127.0.0.1");
-
-		// It should return a non-empty map with an initialized instance.
-		formData = new Comment({
-			author: new Author({ipAddress: "127.0.0.1", name: "Cédric Belin", userAgent: "Doom/6.6.6"}),
-			content: "A user comment.",
-			date: Date.fromString("2000-01-01 00:00:00"),
-			referrer: "https://belin.io",
-			type: BlogPost
-		}).formData;
-
-		asserts.assert(getFields(formData).length == 7);
-		asserts.assert(formData.comment_author == "Cédric Belin");
-		asserts.assert(formData.comment_content == "A user comment.");
-		asserts.assert(~/^\d{4}(-\d{2}){2}T\d{2}(:\d{2}){2}Z$/.match(formData.comment_date_gmt));
-		asserts.assert(formData.comment_type == "blog-post");
-		asserts.assert(formData.referrer == "https://belin.io");
-		asserts.assert(formData.user_agent == "Doom/6.6.6");
-		asserts.assert(formData.user_ip == "127.0.0.1");
-
-		return asserts.done();
-	}
-
-	/** Tests the JSON parsing. **/
+	/** Tests the `fromJson()` method. **/
 	public function fromJson() {
 		var comment: Comment;
 
@@ -73,6 +43,36 @@ using DateTools;
 		asserts.assert(comment.recheckReason == "The comment has been changed.");
 		asserts.assert(comment.referrer == "https://belin.io");
 		asserts.assert(comment.type == BlogPost);
+
+		return asserts.done();
+	}
+
+	/** Tests the `toJson()` method. **/
+	public function toJson() {
+		var json: CommentData;
+
+		// It should return only the author info with a newly created instance.
+		json = new Comment({author: new Author({ipAddress: "127.0.0.1"})}).toJson();
+		asserts.assert(getFields(json).length == 1);
+		asserts.assert(json.user_ip == "127.0.0.1");
+
+		// It should return a non-empty map with an initialized instance.
+		json = new Comment({
+			author: new Author({ipAddress: "127.0.0.1", name: "Cédric Belin", userAgent: "Doom/6.6.6"}),
+			content: "A user comment.",
+			date: Date.fromString("2000-01-01 00:00:00"),
+			referrer: "https://belin.io",
+			type: BlogPost
+		}).toJson();
+
+		asserts.assert(getFields(json).length == 7);
+		asserts.assert(json.comment_author == "Cédric Belin");
+		asserts.assert(json.comment_content == "A user comment.");
+		asserts.assert(~/^\d{4}(-\d{2}){2}T\d{2}(:\d{2}){2}Z$/.match(json.comment_date_gmt));
+		asserts.assert(json.comment_type == "blog-post");
+		asserts.assert(json.referrer == "https://belin.io");
+		asserts.assert(json.user_agent == "Doom/6.6.6");
+		asserts.assert(json.user_ip == "127.0.0.1");
 
 		return asserts.done();
 	}

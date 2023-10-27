@@ -9,7 +9,7 @@ import tink.Url;
 
 /** Represents a comment submitted by an author. **/
 @:jsonParse(json -> akismet.Comment.fromJson(json))
-@:jsonStringify(comment -> comment.formData)
+@:jsonStringify(comment -> comment.toJson())
 class Comment implements Model {
 
 	/** The comment's author. **/
@@ -23,18 +23,6 @@ class Comment implements Model {
 
 	/** The UTC timestamp of the creation of the comment. **/
 	@:editable var date: Null<Date> = @byDefault null;
-
-	/** The form data corresponding to this object. **/
-	@:skipCheck @:computed var formData: CommentData = Anon.merge(author.formData, {
-		comment_content: content.length > 0 ? content : null,
-		comment_context: context.length > 0 ? context.toArray() : null,
-		comment_date_gmt: date != null ? Tools.toIsoString(date) : null,
-		comment_post_modified_gmt: postModified != null ? Tools.toIsoString(postModified) : null,
-		comment_type: (type: String).length > 0 ? type : null,
-		permalink: permalink != null ? permalink : null,
-		recheck_reason: recheckReason.length > 0 ? recheckReason : null,
-		referrer: referrer != null ? referrer : null
-	});
 
 	/** The permanent location of the entry the comment is submitted to. **/
 	@:editable var permalink: Null<Url> = @byDefault null;
@@ -63,34 +51,46 @@ class Comment implements Model {
 		referrer: json.referrer,
 		type: json.comment_type
 	});
+
+	/** Converts this object to a map in JSON format. **/
+	public function toJson(): CommentData return Anon.merge(author.toJson(), {
+		comment_content: content.length > 0 ? content : null,
+		comment_context: context.length > 0 ? context.toArray() : null,
+		comment_date_gmt: date != null ? Tools.toIsoString(date) : null,
+		comment_post_modified_gmt: postModified != null ? Tools.toIsoString(postModified) : null,
+		comment_type: (type: String).length > 0 ? type : null,
+		permalink: permalink != null ? permalink : null,
+		recheck_reason: recheckReason.length > 0 ? recheckReason : null,
+		referrer: referrer != null ? referrer : null
+	});
 }
 
 /** Defines the data of a comment. **/
 typedef CommentData = AuthorData & {
 
 	/** The comment's content. **/
-	final ?comment_content: String;
+	var ?comment_content: String;
 
 	/** The context in which this comment was posted. **/
-	final ?comment_context: Array<String>;
+	var ?comment_context: Array<String>;
 
 	/** The UTC timestamp of the creation of the comment. **/
-	final ?comment_date_gmt: String;
+	var ?comment_date_gmt: String;
 
 	/** The UTC timestamp of the publication time for the post, page or thread on which the comment was posted. **/
-	final ?comment_post_modified_gmt: String;
+	var ?comment_post_modified_gmt: String;
 
 	/** The comment's type. **/
-	final ?comment_type: String;
+	var ?comment_type: String;
 
 	/** The permanent location of the entry the comment is submitted to. **/
-	final ?permalink: String;
+	var ?permalink: String;
 
 	/** A string describing why the content is being rechecked. **/
-	final ?recheck_reason: String;
+	var ?recheck_reason: String;
 
 	/** The URL of the webpage that linked to the entry being requested. **/
-	final ?referrer: String;
+	var ?referrer: String;
 }
 
 /** Specifies the type of a comment. **/

@@ -5,21 +5,11 @@ import tink.Url;
 
 /** Represents the author of a comment. **/
 @:jsonParse(json -> akismet.Author.fromJson(json))
-@:jsonStringify(author -> author.formData)
+@:jsonStringify(author -> author.toJson())
 class Author implements Model {
 
 	/** The author's mail address. If you set it to `"akismet-guaranteed-spam@example.com"`, Akismet will always return `true`. **/
 	@:editable var email: String = @byDefault "";
-
-	/** The form data corresponding to this object. **/
-	@:computed var formData: AuthorData = {
-		comment_author: name.length > 0 ? name : null,
-		comment_author_email: email.length > 0 ? email : null,
-		comment_author_url: url != null ? url : null,
-		user_agent: userAgent.length > 0 ? userAgent : null,
-		user_ip: ipAddress,
-		user_role: (role: String).length > 0 ? role : null
-	};
 
 	/** The author's IP address. **/
 	@:editable var ipAddress: String;
@@ -45,28 +35,38 @@ class Author implements Model {
 		url: json.comment_author_url,
 		userAgent: json.user_agent
 	});
+
+	/** Converts this object to a map in JSON format. **/
+	public function toJson(): AuthorData return {
+		comment_author: name.length > 0 ? name : null,
+		comment_author_email: email.length > 0 ? email : null,
+		comment_author_url: url != null ? url : null,
+		user_agent: userAgent.length > 0 ? userAgent : null,
+		user_ip: ipAddress,
+		user_role: (role: String).length > 0 ? role : null
+	};
 }
 
 /** Defines the data of an author. **/
 typedef AuthorData = {
 
 	/** The author's name. **/
-	final ?comment_author: String;
+	var ?comment_author: String;
 
 	/** The author's mail address. **/
-	final ?comment_author_email: String;
+	var ?comment_author_email: String;
 
 	/** The URL of the author's website. **/
-	final ?comment_author_url: String;
+	var ?comment_author_url: String;
 
 	/** The author's user agent. **/
-	final ?user_agent: String;
+	var ?user_agent: String;
 
 	/** The author's IP address. **/
-	final user_ip: String;
+	var user_ip: String;
 
 	/** The author's role. **/
-	final ?user_role: String;
+	var ?user_role: String;
 }
 
 /** Specifies the role of an author. **/

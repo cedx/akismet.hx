@@ -11,33 +11,7 @@ import tink.url.Query;
 	/** Creates a new test. **/
 	public function new() {}
 
-	/** Tests the `formData` property. **/
-	public function formData() {
-		var formData: AuthorData;
-
-		formData = new Author({ipAddress: "127.0.0.1"}).formData;
-		asserts.assert(getFields(formData).length == 1);
-		asserts.assert(formData.user_ip == "127.0.0.1");
-
-		formData = new Author({
-			email: "cedric@belin.io",
-			ipAddress: "192.168.0.1",
-			name: "Cédric Belin",
-			url: "https://belin.io",
-			userAgent: "Mozilla/5.0"
-		}).formData;
-
-		asserts.assert(getFields(formData).length == 5);
-		asserts.assert(formData.comment_author == "Cédric Belin");
-		asserts.assert(formData.comment_author_email == "cedric@belin.io");
-		asserts.assert(formData.comment_author_url == "https://belin.io");
-		asserts.assert(formData.user_agent == "Mozilla/5.0");
-		asserts.assert(formData.user_ip == "192.168.0.1");
-
-		return asserts.done();
-	}
-
-	/** Tests the JSON parsing. **/
+	/** Tests the `fromJson()` method. **/
 	public function fromJson() {
 		var author: Author;
 
@@ -64,6 +38,32 @@ import tink.url.Query;
 		asserts.assert(author.role == Administrator);
 		asserts.assert(author.url == "https://belin.io");
 		asserts.assert(author.userAgent == "Mozilla/5.0");
+
+		return asserts.done();
+	}
+
+	/** Tests the `toJson()` method. **/
+	public function toJson() {
+		var json: AuthorData;
+
+		json = new Author({ipAddress: "127.0.0.1"}).toJson();
+		asserts.assert(getFields(json).length == 1);
+		asserts.assert(json.user_ip == "127.0.0.1");
+
+		json = new Author({
+			email: "cedric@belin.io",
+			ipAddress: "192.168.0.1",
+			name: "Cédric Belin",
+			url: "https://belin.io",
+			userAgent: "Mozilla/5.0"
+		}).toJson();
+
+		asserts.assert(getFields(json).length == 5);
+		asserts.assert(json.comment_author == "Cédric Belin");
+		asserts.assert(json.comment_author_email == "cedric@belin.io");
+		asserts.assert(json.comment_author_url == "https://belin.io");
+		asserts.assert(json.user_agent == "Mozilla/5.0");
+		asserts.assert(json.user_ip == "192.168.0.1");
 
 		return asserts.done();
 	}
