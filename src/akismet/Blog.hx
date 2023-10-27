@@ -5,7 +5,7 @@ import coconut.data.Model;
 import tink.Url;
 
 /** Represents the front page or home URL transmitted when making requests. **/
-@:jsonParse(json -> akismet.Blog.fromJson(json))
+@:jsonParse(akismet.Blog.fromJson)
 @:jsonStringify(blog -> blog.toJson())
 class Blog implements Model {
 

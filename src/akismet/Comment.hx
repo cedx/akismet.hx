@@ -8,7 +8,7 @@ import tink.Stringly;
 import tink.Url;
 
 /** Represents a comment submitted by an author. **/
-@:jsonParse(json -> akismet.Comment.fromJson(json))
+@:jsonParse(akismet.Comment.fromJson)
 @:jsonStringify(comment -> comment.toJson())
 class Comment implements Model {
 

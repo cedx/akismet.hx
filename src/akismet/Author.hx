@@ -4,7 +4,7 @@ import coconut.data.Model;
 import tink.Url;
 
 /** Represents the author of a comment. **/
-@:jsonParse(json -> akismet.Author.fromJson(json))
+@:jsonParse(akismet.Author.fromJson)
 @:jsonStringify(author -> author.toJson())
 class Author implements Model {
 
