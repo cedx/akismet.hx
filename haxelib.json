@@ -7,6 +7,6 @@
 	"name": "akismet",
 	"releasenote": "Improved the compatibility with Haxe 4.3.2.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
-	"url": "https://docs.belin.io/akismet.hx",
+	"url": "https://cedx.github.io/akismet.hx",
 	"version": "2.3.1"
 }

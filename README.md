@@ -4,8 +4,8 @@
 Prevent comment spam using [Akismet](https://akismet.com) service, in [Haxe](https://haxe.org).
 
 ## Documentation
-- [User guide](https://docs.belin.io/akismet.hx)
-- [API reference](https://docs.belin.io/akismet.hx/api)
+- [User guide](https://cedx.github.io/akismet.hx)
+- [API reference](https://cedx.github.io/akismet.hx/api)
 
 ## Development
 - [Git repository](https://github.com/cedx/akismet.hx)
@@ -13,4 +13,4 @@ Prevent comment spam using [Akismet](https://akismet.com) service, in [Haxe](htt
 - [Submit an issue](https://github.com/cedx/akismet.hx/issues)
 
 ## License
-[Akismet for Haxe](https://docs.belin.io/akismet.hx) is distributed under the MIT License.
+[Akismet for Haxe](https://cedx.github.io/akismet.hx) is distributed under the MIT License.
