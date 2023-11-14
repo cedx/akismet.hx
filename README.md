@@ -13,4 +13,4 @@ Prevent comment spam using [Akismet](https://akismet.com) service, in [Haxe](htt
 - [Submit an issue](https://github.com/cedx/akismet.hx/issues)
 
 ## License
-[Akismet for Haxe](https://cedx.github.io/akismet.hx) is distributed under the MIT License.
+[Akismet for Haxe](https://github.com/cedx/akismet.hx) is distributed under the MIT License.
