@@ -49,7 +49,7 @@ final class Client {
 		return (remote.checkComment(Anon.merge(blog.toJson(), comment.toJson(), {api_key: apiKey, is_test: isTest ? "1" : null})): FetchResponse).all()
 			.next(response -> response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("X-akismet-pro-tip") {
 				case Success(proTip) if (proTip == "discard"): CheckResult.PervasiveSpam;
-				default: CheckResult.Spam;
+				case _: CheckResult.Spam;
 			});
 
 	/** Submits the specified `comment` that was incorrectly marked as spam but should not have been. **/
