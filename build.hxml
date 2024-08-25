@@ -6,9 +6,3 @@
 --js var/build.js
 --library coconut.data
 --library tink_web
-
-akismet.Author
-akismet.Blog
-akismet.CheckResult
-akismet.Client
-akismet.Comment
