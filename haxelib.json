@@ -8,5 +8,5 @@
 	"releasenote": "Improved the compatibility with Haxe 4.3.2.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://github.com/cedx/akismet.hx",
-	"version": "2.3.1"
+	"version": "2.4.0"
 }
