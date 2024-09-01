@@ -1,6 +1,7 @@
 # Changelog
 
-## Version [2.4.0](https://github.com/cedx/akismet.hx/compare/v2.3.1...v2.4.0)
+## Version [3.0.0](https://github.com/cedx/akismet.hx/compare/v2.3.1...v3.0.0)
+- Breaking change: replaced the `formData` property by the `toJson()` method.
 - Updated the package dependencies.
 
 ## Version [2.3.1](https://github.com/cedx/akismet.hx/compare/v2.3.0...v2.3.1)
