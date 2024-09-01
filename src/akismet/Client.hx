@@ -1,6 +1,7 @@
 package akismet;
 
 import tink.Anon;
+import tink.Chunk;
 import tink.Url;
 import tink.Web;
 import tink.http.Fetch.FetchResponse;
@@ -68,6 +69,7 @@ final class Client {
 	public function verifyKey(): Promise<Bool>
 		return remote.verifyKey(Anon.merge(blog.toJson(), api_key = apiKey))
 			.next(IncomingResponse.readAll)
+			.tryRecover(_ -> Chunk.ofString("invalid"))
 			.next(chunk -> chunk.toString() == "valid");
 
 	/** Intercepts and modifies the incoming responses. **/

@@ -32,18 +32,17 @@ interface RemoteApi {
 }
 
 /** Defines the body of a comment check/submission request. **/
-private typedef CommentBody = BlogData & CommentData & {
+private typedef CommentBody = BlogData & CommentData & SharedBody;
+
+/** Defines the body of a key verification request. **/
+private typedef KeyBody = BlogData & SharedBody;
+
+/** Defines the partial body shared by all endpoints. **/
+private typedef SharedBody = {
 
 	/** The API key. **/
 	var api_key: String;
 
 	/** Value indicating whether the client operates in test mode. **/
 	var ?is_test: String;
-}
-
-/** Defines the body of a key verification request. **/
-private typedef KeyBody = BlogData & {
-
-	/** The API key. **/
-	var key: String;
 }
