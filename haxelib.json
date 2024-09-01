@@ -5,7 +5,7 @@
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
-	"releasenote": "Improved the compatibility with Haxe 4.3.2.",
+	"releasenote": "Updated the package dependencies.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://github.com/cedx/akismet.hx",
 	"version": "2.4.0"

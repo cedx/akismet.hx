@@ -1,10 +1,13 @@
 # Changelog
 
+## Version [2.4.0](https://github.com/cedx/akismet.hx/compare/v2.3.1...v2.4.0)
+- Updated the package dependencies.
+
 ## Version [2.3.1](https://github.com/cedx/akismet.hx/compare/v2.3.0...v2.3.1)
 - Improved the compatibility with [Haxe](https://haxe.org) 4.3.2.
 
 ## Version [2.3.0](https://github.com/cedx/akismet.hx/compare/v2.2.0...v2.3.0)
-- Updated the dependencies.
+- Updated the package dependencies.
 - Use the null coalescing operator.
 
 ## Version [2.2.0](https://github.com/cedx/akismet.hx/compare/v2.1.0...v2.2.0)
