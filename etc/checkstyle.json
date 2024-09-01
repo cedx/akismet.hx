@@ -2,7 +2,12 @@
 	"defaultSeverity": "ERROR",
 	"exclude": {
 		"path": "RELATIVE_TO_PROJECT",
-		"MemberName": ["src/akismet/Author", "src/akismet/Blog", "src/akismet/Comment"]
+		"MemberName": [
+			"src/akismet/Author",
+			"src/akismet/Blog",
+			"src/akismet/Comment",
+			"src/akismet/RemoteApi"
+		]
 	},
 	"checks": [
 		{"type": "ArrayAccess"},
