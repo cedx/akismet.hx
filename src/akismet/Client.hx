@@ -45,36 +45,36 @@ final class Client {
 	}
 
 	/** Checks the specified `comment` against the service database, and returns a value indicating whether it is spam. **/
-	public function checkComment(comment: Comment)
+	public function checkComment(comment: Comment): Promise<CheckResult>
 		return (remote.checkComment(Anon.merge(blog.toJson(), comment.toJson(), {api_key: apiKey, is_test: isTest ? "1" : null})): FetchResponse).all()
-			.next(response -> response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("X-akismet-pro-tip") {
+			.next(response -> response.body.toString() == "false" ? CheckResult.Ham : switch response.header.byName("x-akismet-pro-tip") {
 				case Success(proTip) if (proTip == "discard"): CheckResult.PervasiveSpam;
 				case _: CheckResult.Spam;
 			});
 
 	/** Submits the specified `comment` that was incorrectly marked as spam but should not have been. **/
-	public function submitHam(comment: Comment)
+	public function submitHam(comment: Comment): Promise<Noise>
 		return remote.submitHam(Anon.merge(blog.toJson(), comment.toJson(), {api_key: apiKey, is_test: isTest ? "1" : null}))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == success ? Success(Noise) : Failure(new Error("Invalid server response.")));
 
 	/** Submits the specified `comment` that was not marked as spam but should have been. **/
-	public function submitSpam(comment: Comment)
+	public function submitSpam(comment: Comment): Promise<Noise>
 		return remote.submitSpam(Anon.merge(blog.toJson(), comment.toJson(), {api_key: apiKey, is_test: isTest ? "1" : null}))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == success ? Success(Noise) : Failure(new Error("Invalid server response.")));
 
 	/** Checks the API key against the service database, and returns a value indicating whether it is valid. **/
-	public function verifyKey()
-		return remote.verifyKey(Anon.merge(blog.toJson(), key = apiKey))
+	public function verifyKey(): Promise<Bool>
+		return remote.verifyKey(Anon.merge(blog.toJson(), api_key = apiKey))
 			.next(IncomingResponse.readAll)
 			.next(chunk -> chunk.toString() == "valid");
 
 	/** Intercepts and modifies the incoming responses. **/
 	function onResponse(request: OutgoingRequest) return function(response: IncomingResponse): Promise<IncomingResponse>
-		return switch response.header.byName("X-akismet-alert-code") {
-			case Success(alertCode): Failure(new Error(Std.parseInt(alertCode), response.header.byName("X-akismet-alert-msg").sure()));
-			case Failure(_): switch response.header.byName("X-akismet-debug-help") {
+		return switch response.header.byName("x-akismet-alert-code") {
+			case Success(alertCode): Failure(new Error(Std.parseInt(alertCode), response.header.byName("x-akismet-alert-msg").sure()));
+			case Failure(_): switch response.header.byName("x-akismet-debug-help") {
 				case Success(debugHelp): Failure(new Error(BadRequest, debugHelp));
 				case Failure(_): Success(response);
 			}

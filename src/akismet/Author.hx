@@ -27,24 +27,26 @@ class Author implements Model {
 	@:editable var userAgent: String = @byDefault "";
 
 	/** Creates a new author from the specified JSON object. **/
-	public static function fromJson(json: AuthorData) return new Author({
-		email: json.comment_author_email,
-		ipAddress: json.user_ip,
-		name: json.comment_author,
-		role: json.user_role,
-		url: json.comment_author_url,
-		userAgent: json.user_agent
-	});
+	public static function fromJson(json: AuthorData): Author
+		return new Author({
+			email: json.comment_author_email,
+			ipAddress: json.user_ip,
+			name: json.comment_author,
+			role: json.user_role,
+			url: json.comment_author_url,
+			userAgent: json.user_agent
+		});
 
 	/** Converts this object to a map in JSON format. **/
-	public function toJson(): AuthorData return {
-		comment_author: name.length > 0 ? name : null,
-		comment_author_email: email.length > 0 ? email : null,
-		comment_author_url: url != null ? url : null,
-		user_agent: userAgent.length > 0 ? userAgent : null,
-		user_ip: ipAddress,
-		user_role: (role: String).length > 0 ? role : null
-	};
+	public function toJson(): AuthorData
+		return {
+			comment_author: name.length > 0 ? name : null,
+			comment_author_email: email.length > 0 ? email : null,
+			comment_author_url: url != null ? url : null,
+			user_agent: userAgent.length > 0 ? userAgent : null,
+			user_ip: ipAddress,
+			user_role: (role: String).length > 0 ? role : null
+		};
 }
 
 /** Defines the data of an author. **/

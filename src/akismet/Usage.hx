@@ -20,12 +20,13 @@ class Usage implements Model {
 	@:constant var usage: Int = @byDefault 0;
 
 	/** Creates a new usage from the specified JSON object. **/
-	public static function fromJson(json: UsageData) return new Usage({
-		limit: json.limit is String ? -1 : json.limit,
-		percentage: json.percentage,
-		throttled: json.throttled,
-		usage: json.usage
-	});
+	public static function fromJson(json: UsageData): Usage
+		return new Usage({
+			limit: json.limit is String ? -1 : json.limit,
+			percentage: json.percentage,
+			throttled: json.throttled,
+			usage: json.usage
+		});
 }
 
 /** Defines the data of an author. **/
