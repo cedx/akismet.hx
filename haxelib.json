@@ -5,7 +5,7 @@
 	"description": "Prevent comment spam using the Akismet service.",
 	"license": "MIT",
 	"name": "akismet",
-	"releasenote": "Replaced the `formData` property by the `toJson()` method, updated the package dependencies.",
+	"releasenote": "Replaced the `formData` properties by the `toJson()` methods, updated the package dependencies.",
 	"tags": ["akismet", "api", "client", "cross", "spam", "tink", "validation"],
 	"url": "https://github.com/cedx/akismet.hx",
 	"version": "3.0.0"
