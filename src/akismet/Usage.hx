@@ -4,7 +4,7 @@ import haxe.extern.EitherType;
 import coconut.data.Model;
 
 /** Provides API usage for a given month. **/
-@:jsonParse(json -> akismet.Usage.fromJson(json))
+@:jsonParse(akismet.Usage.fromJson)
 class Usage implements Model {
 
 	/** The number of monthly API calls your plan entitles you to. **/
