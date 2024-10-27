@@ -69,6 +69,6 @@ import tink.url.Query;
 	}
 
 	/** Gets the fields of the specified form data. **/
-	function getFields(formData: AuthorData)
+	function getFields(formData: AuthorData): Array<String>
 		return [for (param in Query.parseString(QueryString.build(formData))) param.name];
 }

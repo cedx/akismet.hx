@@ -78,6 +78,6 @@ using DateTools;
 	}
 
 	/** Gets the fields of the specified form data. **/
-	function getFields(formData: CommentData)
+	function getFields(formData: CommentData): Array<String>
 		return [for (param in Query.parseString(QueryString.build(formData))) param.name];
 }
